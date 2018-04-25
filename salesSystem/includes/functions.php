@@ -95,6 +95,7 @@ function read_date($str){
 /* Function for  Readable Make date time
 /*--------------------------------------------------------------*/
 function make_date(){
+  date_default_timezone_set('America/Lima');
   return strftime("%Y-%m-%d %H:%M:%S", time());
 }
 /*--------------------------------------------------------------*/

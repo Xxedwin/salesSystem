@@ -4,8 +4,7 @@
   // Checkin What level user has permission to view this page
    page_require_level(3);
 ?>
-<?php
-
+<?php  
   if(isset($_POST['add_sale'])){
     $req_fields = array('s_id','quantity','price','total', 'date' );
     validate_fields($req_fields);
