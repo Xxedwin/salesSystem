@@ -1,10 +1,10 @@
 <ul>
-<!--   <li>
+  <li>
     <a href="admin.php">
       <i class="glyphicon glyphicon-home"></i>
       <span>Panel de control</span>
     </a>
-  </li> -->
+  </li>
   <li>
     <a href="#" class="submenu-toggle">
       <i class="glyphicon glyphicon-user"></i>

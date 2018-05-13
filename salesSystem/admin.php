@@ -43,7 +43,7 @@
         </div>
        </div>
     </div>
-    <div class="col-md-3">
+    <!-- <div class="col-md-3">
        <div class="panel panel-box clearfix">
          <div class="panel-icon pull-left bg-red">
           <i class="glyphicon glyphicon-list"></i>
@@ -53,7 +53,7 @@
           <p class="text-muted">Distribuidoras</p>
         </div>
        </div>
-    </div>
+    </div> -->
     <div class="col-md-3">
        <div class="panel panel-box clearfix">
          <div class="panel-icon pull-left bg-blue">
