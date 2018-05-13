@@ -5,7 +5,7 @@
   page_require_level(1);
 ?>
 <?php
-  //Display all catgories.
+  //Display all distributors.
   $distributor = find_by_id('distributors',(int)$_GET['id']);
   if(!$distributor){
     $session->msg("d","Missing distributor id.");
