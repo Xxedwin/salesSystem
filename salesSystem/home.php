@@ -3,7 +3,10 @@
   require_once('includes/load.php');
   if (!$session->isUserLoggedIn(true)) { redirect('index.php', false);}
 ?>
+<?php if($session->isUserLoggedIn(true)) { redirect('admin.php', false);} ?>
+<!-- 
 <?php include_once('layouts/header.php'); ?>
+
 <div class="row">
   <div class="col-md-12">
     <?php echo display_msg($msg); ?>
@@ -17,4 +20,5 @@
     </div>
  </div>
 </div>
-<?php include_once('layouts/footer.php'); ?>
+
+<?php include_once('layouts/footer.php'); ?> -->

@@ -12,6 +12,12 @@
     </a>
   </li>
   <li>
+    <a href="distributor.php" >
+      <i class="glyphicon glyphicon-indent-left"></i>
+      <span>Distribuidoras</span>
+    </a>
+  </li>
+  <li>
     <a href="#" class="submenu-toggle">
       <i class="glyphicon glyphicon-th-large"></i>
       <span>Productos</span>

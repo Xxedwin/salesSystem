@@ -94,4 +94,8 @@ function suggetion() {
             todayHighlight: true,
             autoclose: true
         });
+
+    
+    $('#example').DataTable();
+
   });

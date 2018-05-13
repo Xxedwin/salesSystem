@@ -1,29 +1,29 @@
 <?php
-  $page_title = 'Lista de categorías';
+  $page_title = 'Lista de distribuidores';
   require_once('includes/load.php');
   // Checkin What level user has permission to view this page
   page_require_level(1);
   
-  $all_categories = find_all('categories')
+  $all_distributor = find_all('distributors')
 ?>
 <?php
- if(isset($_POST['add_cat'])){
-   $req_field = array('categorie-name');
+ if(isset($_POST['add_dis'])){
+   $req_field = array('distributor-name');
    validate_fields($req_field);
-   $cat_name = remove_junk($db->escape($_POST['categorie-name']));
+   $dis_name = remove_junk($db->escape($_POST['distributor-name']));
    if(empty($errors)){
-      $sql  = "INSERT INTO categories (name)";
-      $sql .= " VALUES ('{$cat_name}')";
+      $sql  = "INSERT INTO distributors (name)";
+      $sql .= " VALUES ('{$dis_name}')";
       if($db->query($sql)){
-        $session->msg("s", "Categoría agregada exitosamente.");
-        redirect('categorie.php',false);
+        $session->msg("s", "Distribuidora agregada exitosamente.");
+        redirect('distributor.php',false);
       } else {
         $session->msg("d", "Lo siento, registro falló");
-        redirect('categorie.php',false);
+        redirect('distributor.php',false);
       }
    } else {
      $session->msg("d", $errors);
-     redirect('categorie.php',false);
+     redirect('distributor.php',false);
    }
  }
 ?>
@@ -40,15 +40,15 @@
         <div class="panel-heading">
           <strong>
             <span class="glyphicon glyphicon-th"></span>
-            <span>Agregar categoría</span>
+            <span>Agregar distribuidora</span>
          </strong>
         </div>
         <div class="panel-body">
-          <form method="post" action="categorie.php">
+          <form method="post" action="distributor.php">
             <div class="form-group">
-                <input type="text" class="form-control" name="categorie-name" placeholder="Nombre de la categoría" required>
+                <input type="text" class="form-control" name="distributor-name" placeholder="Nombre de la distribuidora" required>
             </div>
-            <button type="submit" name="add_cat" class="btn btn-primary">Agregar categoría</button>
+            <button type="submit" name="add_dis" class="btn btn-primary">Agregar distribuidora</button>
         </form>
         </div>
       </div>
@@ -58,7 +58,7 @@
       <div class="panel-heading">
         <strong>
           <span class="glyphicon glyphicon-th"></span>
-          <span>Lista de categorías</span>
+          <span>Lista de distribuidoras</span>
        </strong>
       </div>
         <div class="panel-body">
@@ -66,21 +66,21 @@
             <thead>
                 <tr>
                     <th class="text-center" style="width: 50px;">#</th>
-                    <th>Categorías</th>
+                    <th>Distribuidoras</th>
                     <th class="text-center" style="width: 100px;">Acciones</th>
                 </tr>
             </thead>
             <tbody>
-              <?php foreach ($all_categories as $cat):?>
+              <?php foreach ($all_distributor as $dis):?>
                 <tr>
                     <td class="text-center"><?php echo count_id();?></td>
-                    <td><?php echo remove_junk(ucfirst($cat['name'])); ?></td>
+                    <td><?php echo remove_junk(ucfirst($dis['name'])); ?></td>
                     <td class="text-center">
                       <div class="btn-group">
-                        <a href="edit_categorie.php?id=<?php echo (int)$cat['id'];?>"  class="btn btn-xs btn-warning" data-toggle="tooltip" title="Editar">
+                        <a href="edit_distributor.php?id=<?php echo (int)$dis['id'];?>"  class="btn btn-xs btn-warning" data-toggle="tooltip" title="Editar">
                           <span class="glyphicon glyphicon-edit"></span>
                         </a>
-                        <a href="delete_categorie.php?id=<?php echo (int)$cat['id'];?>"  class="btn btn-xs btn-danger" data-toggle="tooltip" title="Eliminar">
+                        <a href="delete_distributor.php?id=<?php echo (int)$dis['id'];?>"  class="btn btn-xs btn-danger" data-toggle="tooltip" title="Eliminar">
                           <span class="glyphicon glyphicon-trash"></span>
                         </a>
                       </div>

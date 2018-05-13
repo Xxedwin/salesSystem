@@ -45,6 +45,17 @@
     </div>
     <div class="col-md-3">
        <div class="panel panel-box clearfix">
+         <div class="panel-icon pull-left bg-red">
+          <i class="glyphicon glyphicon-list"></i>
+        </div>
+        <div class="panel-value pull-right">
+          <h2 class="margin-top"> <?php  echo $c_distributor['total']; ?> </h2>
+          <p class="text-muted">Distribuidoras</p>
+        </div>
+       </div>
+    </div>
+    <div class="col-md-3">
+       <div class="panel panel-box clearfix">
          <div class="panel-icon pull-left bg-blue">
           <i class="glyphicon glyphicon-shopping-cart"></i>
         </div>

@@ -1,10 +1,10 @@
 <ul>
-  <li>
+<!--   <li>
     <a href="admin.php">
       <i class="glyphicon glyphicon-home"></i>
       <span>Panel de control</span>
     </a>
-  </li>
+  </li> -->
   <li>
     <a href="#" class="submenu-toggle">
       <i class="glyphicon glyphicon-user"></i>
@@ -19,6 +19,12 @@
     <a href="categorie.php" >
       <i class="glyphicon glyphicon-indent-left"></i>
       <span>Categorías</span>
+    </a>
+  </li>
+  <li>
+    <a href="distributor.php" >
+      <i class="glyphicon glyphicon-indent-left"></i>
+      <span>Distribuidoras</span>
     </a>
   </li>
   <li>
