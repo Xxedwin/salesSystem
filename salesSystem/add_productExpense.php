@@ -132,7 +132,7 @@
 
               <div class="form-group">
                <div class="row">
-                  <div class="col-md-3">
+                  <div class="col-md-4">
                     <div class="input-group">
                       <span class="input-group-addon">
                         <i class="glyphicon glyphicon-usd"></i>
@@ -141,7 +141,7 @@
                       <span class="input-group-addon">.00</span>
                    </div>
                   </div>
-                 <div class="col-md-3">
+                 <div class="col-md-4">
                    <div class="input-group">
                      <span class="input-group-addon">
                       <i class="glyphicon glyphicon-shopping-cart"></i>
@@ -149,7 +149,7 @@
                      <input type="text" onblur="if(this.value == ''){this.value='0'}"  onKeyUp="cost();" class="form-control" id="productExpense-quantity" name="productExpense-quantity" placeholder="Cantidad">
                   </div>
                  </div>        
-                 <div class="col-md-3">
+                 <div class="col-md-4">
                    <div class="input-group">
                      <span class="input-group-addon">                      
                       <i class="glyphicon glyphicon-usd"></i>
