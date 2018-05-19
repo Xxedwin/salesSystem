@@ -4,6 +4,11 @@
   if($session->isUserLoggedIn(true)) { redirect('admin.php', false);}
 ?>
 <?php include_once('layouts/header.php'); ?>
+<style type="text/css">
+  .page{
+    padding: 0px;
+  }
+</style>
 <div class="login-page">
     <div class="text-center">
        <h1>Bienvenido</h1>

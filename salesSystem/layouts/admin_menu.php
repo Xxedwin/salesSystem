@@ -38,6 +38,26 @@
    </ul>
   </li>
   <li>
+    <a href="#" class="submenu-toggle">
+      <i class="glyphicon glyphicon-th-large"></i>
+      <span>Productos elaborados</span>
+    </a>
+    <ul class="nav submenu">
+       <li><a href="processed_products.php">Administrar productos elaborados</a> </li>
+       <li><a href="add_processProduct.php">Agregar productos elaborados</a> </li>
+   </ul>
+  </li>
+  <li>
+    <a href="#" class="submenu-toggle">
+      <i class="glyphicon glyphicon-th-large"></i>
+      <span>Gastos en Producción</span>
+    </a>
+    <ul class="nav submenu">
+       <li><a href="production_expenses.php">Administrar gastos en producción</a> </li>
+       <li><a href="add_productExpense.php">Agregar gastos en producción</a> </li>
+   </ul>
+  </li>
+  <li>
     <a href="media.php" >
       <i class="glyphicon glyphicon-picture"></i>
       <span>Media</span>
