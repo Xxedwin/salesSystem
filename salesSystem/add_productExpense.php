@@ -168,6 +168,7 @@
   </div>
 
   <script type="text/javascript">
+    //for know the cost of the product
     function cost(){
     var num1 = document.getElementById("buying-price");
     var num2 = document.getElementById("productExpense-quantity");
