@@ -1,9 +1,9 @@
 <?php
-  $page_title = 'Lista de productos';
+  $page_title = 'Lista de gastos en producción';
   require_once('includes/load.php');
   // Checkin What level user has permission to view this page
    page_require_level(2);
-  $products = join_product_table();
+  $productExpenses = join_productExpense_table();
 ?>
 <?php include_once('layouts/header.php'); ?>
   <div class="row">
@@ -14,7 +14,7 @@
       <div class="panel panel-default">
         <div class="panel-heading clearfix">
          <div class="pull-right">
-           <a href="add_product.php" class="btn btn-primary">Agregar producto</a>
+           <a href="add_productExpense.php" class="btn btn-primary">Agregar gasto en producción</a>
          </div>
         </div>
         <div class="panel-body">
@@ -30,39 +30,37 @@
                 <th class="text-center" style="width: 10%;"> Categoría </th>
                 <th class="text-center" style="width: 10%;"> Distribuidora </th>
                 <th class="text-center" style="width: 10%;"> Stock </th>
-                <th class="text-center" style="width: 10%;"> Precio de compra </th>
-                <th class="text-center" style="width: 10%;"> Precio de venta </th>
+                <th class="text-center" style="width: 10%;"> Precio de compra </th>                
                 <th class="text-center" style="width: 10%;"> Agregado </th>
                 <th class="text-center" style="width: 100px;"> Acciones </th>
               </tr>
             </thead>
             <tbody>
-              <?php foreach ($products as $product):?>
+              <?php foreach ($productExpenses as $productExpense):?>
               <tr>
                 <td class="text-center"><?php echo count_id();?></td>
                 <!-- <td>
-                  <?php if($product['media_id'] === '0'): ?>
+                  <?php if($productExpense['media_id'] === '0'): ?>
                     <img class="img-avatar img-circle" src="uploads/products/no_image.jpg" alt="">
                   <?php else: ?>
-                  <img class="img-avatar img-circle" src="uploads/products/<?php echo $product['image']; ?>" alt="">
+                  <img class="img-avatar img-circle" src="uploads/products/<?php echo $productExpense['image']; ?>" alt="">
                 <?php endif; ?>
                 </td> -->
-                <td> <?php echo remove_junk($product['name']); ?></td>
-                <td class="text-center"> <?php echo remove_junk($product['mark']); ?></td>
-                <td class="text-center"> <?php echo remove_junk($product['unit']); ?></td>
-                <td class="text-center"> <?php echo remove_junk($product['presentation']); ?></td>
-                <td class="text-center"> <?php echo remove_junk($product['categorie']); ?></td>
-                <td class="text-center"> <?php echo remove_junk($product['distributor']); ?></td>
-                <td class="text-center"> <?php echo remove_junk($product['quantity']); ?></td>
-                <td class="text-center"> <?php echo remove_junk($product['buy_price']); ?></td>
-                <td class="text-center"> <?php echo remove_junk($product['sale_price']); ?></td>
-                <td class="text-center"> <?php echo read_date($product['date']); ?></td>
+                <td> <?php echo remove_junk($productExpense['name']); ?></td>
+                <td class="text-center"> <?php echo remove_junk($productExpense['mark']); ?></td>
+                <td class="text-center"> <?php echo remove_junk($productExpense['unit']); ?></td>
+                <td class="text-center"> <?php echo remove_junk($productExpense['presentation']); ?></td>
+                <td class="text-center"> <?php echo remove_junk($productExpense['categorie']); ?></td>
+                <td class="text-center"> <?php echo remove_junk($productExpense['distributor']); ?></td>
+                <td class="text-center"> <?php echo remove_junk($productExpense['quantity']); ?></td>
+                <td class="text-center"> <?php echo remove_junk($productExpense['buy_price']); ?></td>                
+                <td class="text-center"> <?php echo read_date($productExpense['date']); ?></td>
                 <td class="text-center">
                   <div class="btn-group">
-                    <a href="edit_product.php?id=<?php echo (int)$product['id'];?>" class="btn btn-info btn-xs"  title="Editar" data-toggle="tooltip">
+                    <a href="edit_productExpense.php?id=<?php echo (int)$productExpense['id'];?>" class="btn btn-info btn-xs"  title="Editar" data-toggle="tooltip">
                       <span class="glyphicon glyphicon-edit"></span>
                     </a>
-                     <a href="delete_product.php?id=<?php echo (int)$product['id'];?>" class="btn btn-danger btn-xs"  title="Eliminar" data-toggle="tooltip">
+                     <a href="delete_productExpense.php?id=<?php echo (int)$productExpense['id'];?>" class="btn btn-danger btn-xs"  title="Eliminar" data-toggle="tooltip">
                       <span class="glyphicon glyphicon-trash"></span>
                     </a>
                   </div>
