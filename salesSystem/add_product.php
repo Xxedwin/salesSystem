@@ -56,7 +56,7 @@
   </div>
 </div>
   <div class="row">
-  <div class="col-md-9">
+  <div class="col-md-12">
       <div class="panel panel-default">
         <div class="panel-heading">
           <strong>
@@ -133,24 +133,32 @@
 
               <div class="form-group">
                <div class="row">
-                 <div class="col-md-4">
+                  <div class="col-md-3">
+                    <div class="input-group">
+                      <span class="input-group-addon">
+                        <i class="glyphicon glyphicon-usd"></i>
+                      </span>
+                      <input type="text" onblur="if(this.value == ''){this.value='0'}"  onKeyUp="cost();" class="form-control" id="buying-price" name="buying-price" placeholder="Precio de compra">
+                      <span class="input-group-addon">.00</span>
+                   </div>
+                  </div>
+                 <div class="col-md-3">
                    <div class="input-group">
                      <span class="input-group-addon">
                       <i class="glyphicon glyphicon-shopping-cart"></i>
                      </span>
-                     <input type="number" class="form-control" name="product-quantity" placeholder="Cantidad">
+                     <input type="text" onblur="if(this.value == ''){this.value='0'}"  onKeyUp="cost();" class="form-control" id="product-quantity" name="product-quantity" placeholder="Cantidad">
                   </div>
-                 </div>
-                 <div class="col-md-4">
+                 </div>        
+                 <div class="col-md-3">
                    <div class="input-group">
-                     <span class="input-group-addon">
-                       <i class="glyphicon glyphicon-usd"></i>
-                     </span>
-                     <input type="text" class="form-control" name="buying-price" placeholder="Precio de compra">
-                     <span class="input-group-addon">.00</span>
+                     <span class="input-group-addon">                      
+                      <i class="glyphicon glyphicon-usd"></i>
+                     </span>                     
+                     <div id="resultado" readonly class="form-control">Costo</div>                      
                   </div>
-                 </div>
-                  <div class="col-md-4">
+                 </div>          
+                  <div class="col-md-3">
                     <div class="input-group">
                       <span class="input-group-addon">
                         <i class="glyphicon glyphicon-usd"></i>
@@ -168,5 +176,15 @@
       </div>
     </div>
   </div>
+
+  <script type="text/javascript">
+    function cost(){
+    var num1 = document.getElementById("buying-price");
+    var num2 = document.getElementById("product-quantity");
+    var div = document.getElementById("resultado");
+    resultado = parseInt(num1.value) / parseInt(num2.value);
+    div.innerHTML= resultado; 
+    }
+  </script>
 
 <?php include_once('layouts/footer.php'); ?>
