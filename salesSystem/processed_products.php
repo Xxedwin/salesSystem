@@ -24,13 +24,13 @@
                 <th class="text-center" style="width: 50px;">#</th>
                 <!-- <th> Imagen</th> -->
                 <th> Descripción </th>
-                <th class="text-center" style="width: 10%;"> Marca </th>
+                <!-- <th class="text-center" style="width: 10%;"> Marca </th> -->
                 <th class="text-center" style="width: 10%;"> Unidad de medida </th>
                 <th class="text-center" style="width: 10%;"> Presentacion </th>
                 <th class="text-center" style="width: 10%;"> Categoría </th>
-                <th class="text-center" style="width: 10%;"> Distribuidora </th>
+                <!-- <th class="text-center" style="width: 10%;"> Distribuidora </th> -->
                 <th class="text-center" style="width: 10%;"> Stock </th>
-                <th class="text-center" style="width: 10%;"> Precio de compra </th>
+                <th class="text-center" style="width: 10%;"> Costo Unitario </th>
                 <th class="text-center" style="width: 10%;"> Precio de venta </th>
                 <th class="text-center" style="width: 10%;"> Agregado </th>
                 <th class="text-center" style="width: 100px;"> Acciones </th>
@@ -48,11 +48,11 @@
                 <?php endif; ?>
                 </td> -->
                 <td> <?php echo remove_junk($processed_product['name']); ?></td>
-                <td class="text-center"> <?php echo remove_junk($processed_product['mark']); ?></td>
+                <!-- <td class="text-center"> <?php echo remove_junk($processed_product['mark']); ?></td> -->
                 <td class="text-center"> <?php echo remove_junk($processed_product['unit']); ?></td>
                 <td class="text-center"> <?php echo remove_junk($processed_product['presentation']); ?></td>
                 <td class="text-center"> <?php echo remove_junk($processed_product['categorie']); ?></td>
-                <td class="text-center"> <?php echo remove_junk($processed_product['distributor']); ?></td>
+               <!--  <td class="text-center"> <?php echo remove_junk($processed_product['distributor']); ?></td> -->
                 <td class="text-center"> <?php echo remove_junk($processed_product['quantity']); ?></td>
                 <td class="text-center"> <?php echo remove_junk($processed_product['buy_price']); ?></td>
                 <td class="text-center"> <?php echo remove_junk($processed_product['sale_price']); ?></td>

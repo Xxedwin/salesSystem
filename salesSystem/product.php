@@ -5,6 +5,38 @@
    page_require_level(2);
   $products = join_product_table();
 ?>
+<?php 
+
+ if(isset($_POST['append_product'])){
+   $req_fields = array('append_quantity','quantity');
+   validate_fields($req_fields);
+   if(empty($errors)){
+     $p_qty   = remove_junk($db->escape($_POST['append_quantity']));
+     $qty   = remove_junk($db->escape($_POST['quantity']));
+     $id   = remove_junk($db->escape($_POST['id']));
+     $p_qty   = $p_qty + $qty;
+     
+     $query   = "UPDATE products SET";
+     $query  .=" quantity ='{$p_qty}'";
+     $query  .=" WHERE id ='{$id}'"; 
+     $result = $db->query($query);
+             if($result && $db->affected_rows() === 1){
+               $session->msg('s',"Producto ha sido actualizado. ");
+               redirect('product.php', false);
+             } else {
+               $session->msg('d',' Lo siento, actualización falló.');
+               /*redirect('edit_product.php?id='.$product['id'], false);*/
+             }
+
+   } else{
+     $session->msg("d", $errors);
+     redirect('product.php',false);
+   }
+
+ }
+
+?>
+
 <?php include_once('layouts/header.php'); ?>
   <div class="row">
      <div class="col-md-12">
@@ -24,9 +56,9 @@
                 <th class="text-center" style="width: 50px;">#</th>
                 <!-- <th> Imagen</th> -->
                 <th> Descripción </th>
-                <th class="text-center" style="width: 10%;"> Marca </th>
-                <th class="text-center" style="width: 10%;"> Unidad de medida </th>
-                <th class="text-center" style="width: 10%;"> Presentacion </th>
+                <!-- <th class="text-center" style="width: 10%;"> Marca </th> -->
+                <!-- <th class="text-center" style="width: 10%;"> Unidad de medida </th> -->
+                <!-- <th class="text-center" style="width: 10%;"> Presentacion </th> -->
                 <th class="text-center" style="width: 10%;"> Categoría </th>
                 <th class="text-center" style="width: 10%;"> Distribuidora </th>
                 <th class="text-center" style="width: 10%;"> Stock </th>
@@ -48,9 +80,9 @@
                 <?php endif; ?>
                 </td> -->
                 <td> <?php echo remove_junk($product['name']); ?></td>
-                <td class="text-center"> <?php echo remove_junk($product['mark']); ?></td>
-                <td class="text-center"> <?php echo remove_junk($product['unit']); ?></td>
-                <td class="text-center"> <?php echo remove_junk($product['presentation']); ?></td>
+                <!-- <td class="text-center"> <?php echo remove_junk($product['mark']); ?></td> -->
+                <!-- <td class="text-center"> <?php echo remove_junk($product['unit']); ?></td> -->
+                <!-- <td class="text-center"> <?php echo remove_junk($product['presentation']); ?></td> -->
                 <td class="text-center"> <?php echo remove_junk($product['categorie']); ?></td>
                 <td class="text-center"> <?php echo remove_junk($product['distributor']); ?></td>
                 <td class="text-center"> <?php echo remove_junk($product['quantity']); ?></td>
@@ -58,21 +90,54 @@
                 <td class="text-center"> <?php echo remove_junk($product['sale_price']); ?></td>
                 <td class="text-center"> <?php echo read_date($product['date']); ?></td>
                 <td class="text-center">
-                  <div class="btn-group">
+                  <div class="btn-group" style="display: flex;justify-content: space-between;">
                     <a href="edit_product.php?id=<?php echo (int)$product['id'];?>" class="btn btn-info btn-xs"  title="Editar" data-toggle="tooltip">
                       <span class="glyphicon glyphicon-edit"></span>
                     </a>
-                     <a href="delete_product.php?id=<?php echo (int)$product['id'];?>" class="btn btn-danger btn-xs"  title="Eliminar" data-toggle="tooltip">
+                     <a href="delete_product.php?id=<?php echo (int)$product['id'];?>" onclick="return confirm('¿Estas seguro que deseas eliminar?');" class="btn btn-danger btn-xs"  title="Eliminar" data-toggle="tooltip">
                       <span class="glyphicon glyphicon-trash"></span>
+                    </a>
+                     <a data-toggle="modal" data-target="#exampleModal" class="btn btn-danger btn-xs"  title="Adjuntar" data-toggle="tooltip">
+                      <span class="glyphicon glyphicon-plus"></span>
                     </a>
                   </div>
                 </td>
               </tr>
+
+              <!-- Modal -->
+              <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h3 class="modal-title text-center" id="exampleModalLabel">Nombre:<?php echo remove_junk($product['name']); ?> Existencia: <?php echo remove_junk($product['quantity']); ?> </h3>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <form method="post" action="product.php">
+                      <div class="modal-body"> 
+                          <div class="form-group">
+                            <label for="recipient-name" class="col-form-label">Cuantos desea añadir al inventario del producto:</label>
+                            <input type="text" class="form-control" name="append_quantity">
+                            <input type="hidden" class="form-control" name="quantity" value=<?php echo remove_junk($product['quantity']); ?> >
+                            <input type="hidden" class="form-control" name="id" value=<?php echo remove_junk($product['id']); ?> >
+                          </div>   
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <button type="submit" name="append_product"  class="btn btn-primary">Guardar cambios</button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+
              <?php endforeach; ?>
             </tbody>
           </table>
         </div>
       </div>
     </div>
-  </div>
+  </div> 
+   
   <?php include_once('layouts/footer.php'); ?>
