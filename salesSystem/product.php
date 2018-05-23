@@ -93,11 +93,11 @@
                   <div class="btn-group" style="display: flex;justify-content: space-between;">
                     <a href="edit_product.php?id=<?php echo (int)$product['id'];?>" class="btn btn-info btn-xs"  title="Editar" data-toggle="tooltip">
                       <span class="glyphicon glyphicon-edit"></span>
+                    </a>                     
+                     <a data-toggle="modal" data-target="#exampleModal2" class="btn btn-danger btn-xs"  title="Eliminar" data-toggle="tooltip">
+                      <span class="glyphicon  glyphicon-trash"></span>
                     </a>
-                     <a href="delete_product.php?id=<?php echo (int)$product['id'];?>" onclick="return confirm('¿Estas seguro que deseas eliminar?');" class="btn btn-danger btn-xs"  title="Eliminar" data-toggle="tooltip">
-                      <span class="glyphicon glyphicon-trash"></span>
-                    </a>
-                     <a data-toggle="modal" data-target="#exampleModal" class="btn btn-danger btn-xs"  title="Adjuntar" data-toggle="tooltip">
+                     <a data-toggle="modal" data-target="#exampleModal1" class="btn btn-danger btn-xs"  title="Agregar" data-toggle="tooltip">
                       <span class="glyphicon glyphicon-plus"></span>
                     </a>
                   </div>
@@ -105,7 +105,7 @@
               </tr>
 
               <!-- Modal -->
-              <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal fade" id="exampleModal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                   <div class="modal-content">
                     <div class="modal-header">
@@ -132,6 +132,26 @@
                 </div>
               </div>
 
+              <div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h3 class="modal-title text-center" id="exampleModalLabel">Estás seguro que deseas eliminar el producto?</h3>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <form method="post" action="delete_product.php?id=<?php echo (int)$product['id'];?>">
+                      
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-primary">Guardar cambios</button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+
              <?php endforeach; ?>
             </tbody>
           </table>
@@ -139,5 +159,11 @@
       </div>
     </div>
   </div> 
+
+  <script type="text/javascript">
+    
+      
+  </script>
+
    
   <?php include_once('layouts/footer.php'); ?>
