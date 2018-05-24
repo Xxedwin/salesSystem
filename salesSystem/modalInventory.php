@@ -48,8 +48,8 @@ $html2='
           <span aria-hidden="true">&times;</span>
         </button>
       </div> 
-      <form method="post" action="delete_product.php">
-        <input type="hidden" id="id" name="id" >                               
+      <form method="post" id="id_formulario" action=';$action='"delete_product.php">';
+ $html3='       <input type="hidden" id="id" name="id" >                               
         <div class="modal-footer">
           <button type="submit" class="btn btn-primary">Eliminar</button>
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
@@ -58,10 +58,8 @@ $html2='
       </form>                        
     </div>
   </div>
-</div>
-
-';
-
+</div>';
+  $html=$html2.$html3;
 
  ?>
 <?php
@@ -70,9 +68,15 @@ if(isset($_POST['id']) && isset($_POST['quantity'])){
   $quantity=$_POST['quantity'];    
   $idAdd=$_POST['id'];    
   $name=$_POST['name'];    
-  $data=array($quantity,$idAdd,$name,$html);
+  $data=array($quantity,$idAdd,$name,$html1);
   
-}else{
+}
+elseif (isset($_POST['id']) && $process=='true') {
+  $id=$_POST['id'];    
+  $val='';
+  $data=array($id,$val,$html);
+}
+else{
   $id=$_POST['id'];    
   $val='';
   $data=array($id,$val,$html2);
