@@ -53,14 +53,14 @@ if(isset($_POST['append_product'])){
                 <th class="text-center" style="width: 50px;">#</th>
                 <!-- <th> Imagen</th> -->
                 <th> Descripción </th>
-                <th class="text-center" style="width: 10%;"> Marca </th>
+                <!-- <th class="text-center" style="width: 10%;"> Marca </th> -->
                 <th class="text-center" style="width: 10%;"> Unidad de medida </th>
                 <th class="text-center" style="width: 10%;"> Presentacion </th>
                 <th class="text-center" style="width: 10%;"> Categoría </th>
                 <th class="text-center" style="width: 10%;"> Distribuidora </th>
                 <th class="text-center" style="width: 10%;"> Stock </th>
                 <th class="text-center" style="width: 10%;"> Precio de compra </th>                
-                <th class="text-center" style="width: 10%;"> Agregado </th>
+                <!-- <th class="text-center" style="width: 10%;"> Agregado </th> -->
                 <th class="text-center" style="width: 100px;"> Acciones </th>
               </tr>
             </thead>
@@ -76,14 +76,14 @@ if(isset($_POST['append_product'])){
                 <?php endif; ?>
                 </td> -->
                 <td> <?php echo $name=remove_junk($productExpense['name']); ?></td>
-                <td class="text-center"> <?php echo remove_junk($productExpense['mark']); ?></td>
+                <!-- <td class="text-center"> <?php echo remove_junk($productExpense['mark']); ?></td> -->
                 <td class="text-center"> <?php echo remove_junk($productExpense['unit']); ?></td>
                 <td class="text-center"> <?php echo remove_junk($productExpense['presentation']); ?></td>
                 <td class="text-center"> <?php echo remove_junk($productExpense['categorie']); ?></td>
                 <td class="text-center"> <?php echo remove_junk($productExpense['distributor']); ?></td>
                 <td class="text-center"> <?php echo $quantity=remove_junk($productExpense['quantity']); ?></td>
                 <td class="text-center"> <?php echo remove_junk($productExpense['buy_price']); ?></td>                
-                <td class="text-center"> <?php echo read_date($productExpense['date']); ?></td>
+                <!-- <td class="text-center"> <?php echo read_date($productExpense['date']); ?></td> -->
                 <td class="text-center">
                   <div class="btn-group">
                     <a href="edit_productExpense.php?id=<?php echo $id=(int)$productExpense['id'];?>" class="btn btn-info btn-xs"  title="Editar" data-toggle="tooltip">

@@ -16,7 +16,7 @@ if(!$product){
 ?>
 <?php
  if(isset($_POST['product'])){
-    $req_fields = array('product-title','product-mark','product-unit','product-presentation','product-categorie','product-distributor','product-quantity','buying-price', 'saleing-price' );
+    $req_fields = array('product-title','product-unit','product-categorie','product-quantity','buying-price', 'saleing-price' );
     validate_fields($req_fields);
 
    if(empty($errors)){
@@ -70,14 +70,14 @@ if(!$product){
          </strong>
         </div>
         <div class="panel-body">
-         <div class="col-md-7">
+         <div class="col-md-12">
            <form method="post" action="edit_product.php?id=<?php echo (int)$product['id'] ?>">
               <div class="form-group">
                 <div class="input-group">
                   <span class="input-group-addon">
                    <i class="glyphicon glyphicon-th-large"></i>
                   </span>
-                  <input type="text" class="form-control" name="product-title" value="<?php echo remove_junk($product['name']);?>">
+                  <input type="text" placeholder="Descripcion" class="form-control" name="product-title" value="<?php echo remove_junk($product['name']);?>">
                </div>
               </div>
               <div class="form-group">
@@ -85,7 +85,7 @@ if(!$product){
                   <span class="input-group-addon">
                    <i class="glyphicon glyphicon-th-large"></i>
                   </span>
-                  <input type="text" class="form-control" name="product-mark" value="<?php echo remove_junk($product['mark']);?>">
+                  <input type="text" placeholder="Marca" class="form-control" name="product-mark" value="<?php echo remove_junk($product['mark']);?>">
                </div>
               </div>
               <div class="form-group">
@@ -93,7 +93,7 @@ if(!$product){
                   <span class="input-group-addon">
                    <i class="glyphicon glyphicon-th-large"></i>
                   </span>
-                  <input type="text" class="form-control" name="product-unit" value="<?php echo remove_junk($product['unit']);?>">
+                  <input type="text" placeholder="Unidad de medida" class="form-control" name="product-unit" value="<?php echo remove_junk($product['unit']);?>">
                </div>
               </div>
               <div class="form-group">
@@ -101,7 +101,7 @@ if(!$product){
                   <span class="input-group-addon">
                    <i class="glyphicon glyphicon-th-large"></i>
                   </span>
-                  <input type="text" class="form-control" name="product-presentation" value="<?php echo remove_junk($product['presentation']);?>">
+                  <input type="text" placeholder="Presentacion" class="form-control" name="product-presentation" value="<?php echo remove_junk($product['presentation']);?>">
                </div>
               </div>
               <div class="form-group">
@@ -138,37 +138,46 @@ if(!$product){
 
               <div class="form-group">
                <div class="row">
-                 <div class="col-md-4">
+                <div class="col-md-3">
+                 <div class="form-group">
+                   <label for="qty">Precio de compra</label>
+                   <div class="input-group">
+                     <span class="input-group-addon">
+                       <i class="glyphicon glyphicon-usd"></i>
+                     </span>
+                     <input type="text" class="form-control" id="buying-price" name="buying-price" value="<?php echo remove_junk($product['buy_price']);?>">
+                     <span class="input-group-addon">.00</span>
+                  </div>
+                 </div>
+                </div>
+                 <div class="col-md-3">
                   <div class="form-group">
                     <label for="qty">Cantidad</label>
                     <div class="input-group">
                       <span class="input-group-addon">
                        <i class="glyphicon glyphicon-shopping-cart"></i>
                       </span>
-                      <input type="number" class="form-control" name="product-quantity" value="<?php echo remove_junk($product['quantity']); ?>">
+                      <input type="text" class="form-control" id="product-quantity" name="product-quantity" value="<?php echo remove_junk($product['quantity']); ?>">
                    </div>
                   </div>
                  </div>
-                 <div class="col-md-4">
-                  <div class="form-group">
-                    <label for="qty">Precio de compra</label>
-                    <div class="input-group">
-                      <span class="input-group-addon">
-                        <i class="glyphicon glyphicon-usd"></i>
-                      </span>
-                      <input type="number" class="form-control" name="buying-price" value="<?php echo remove_junk($product['buy_price']);?>">
-                      <span class="input-group-addon">.00</span>
-                   </div>
+                 <div class="col-md-3">
+                  <label for="qty">Precio de costo</label>
+                   <div class="input-group">
+                     <span class="input-group-addon">                      
+                      <i class="glyphicon glyphicon-usd"></i>
+                     </span>                     
+                     <div id="result" readonly class="form-control">Costo</div>                      
                   </div>
-                 </div>
-                  <div class="col-md-4">
+                 </div>                 
+                  <div class="col-md-3">
                    <div class="form-group">
                      <label for="qty">Precio de venta</label>
                      <div class="input-group">
                        <span class="input-group-addon">
                          <i class="glyphicon glyphicon-usd"></i>
                        </span>
-                       <input type="number" class="form-control" name="saleing-price" value="<?php echo remove_junk($product['sale_price']);?>">
+                       <input type="text" class="form-control" name="saleing-price" value="<?php echo remove_junk($product['sale_price']);?>">
                        <span class="input-group-addon">.00</span>
                     </div>
                    </div>
@@ -181,5 +190,17 @@ if(!$product){
         </div>
       </div>
   </div>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+  <script type="text/javascript">
+    $(document).ready(function() {
+      var num1 = document.getElementById("buying-price");
+      var num2 = document.getElementById("product-quantity");
+      var div = document.getElementById("result");
+      result = parseFloat(num1.value) / parseFloat(num2.value);    
+      result = Number(result.toFixed(2));
+      div.innerHTML= result; 
+    });
+
+  </script>
 
 <?php include_once('layouts/footer.php'); ?>

@@ -9,7 +9,7 @@
 ?>
 <?php 
  if(isset($_POST['add_product'])){
-   $req_fields = array('product-title','product-mark','product-unit','product-presentation','product-categorie','product-distributor','product-quantity','buying-price', 'saleing-price' );
+   $req_fields = array('product-title','product-unit','product-categorie','product-quantity','buying-price', 'saleing-price' );
    validate_fields($req_fields);
    if(empty($errors)){
      $p_name  = remove_junk($db->escape($_POST['product-title']));
@@ -133,7 +133,8 @@
 
               <div class="form-group">
                <div class="row">
-                  <div class="col-md-3">
+                  <div class="col-md-3">                    
+                    <label for="qty">Precio de compra</label>
                     <div class="input-group">
                       <span class="input-group-addon">
                         <i class="glyphicon glyphicon-usd"></i>
@@ -143,6 +144,7 @@
                    </div>
                   </div>
                  <div class="col-md-3">
+                  <label for="qty">Cantidad</label>
                    <div class="input-group">
                      <span class="input-group-addon">
                       <i class="glyphicon glyphicon-shopping-cart"></i>
@@ -151,14 +153,16 @@
                   </div>
                  </div>        
                  <div class="col-md-3">
+                  <label for="qty">Precio de costo</label>
                    <div class="input-group">
                      <span class="input-group-addon">                      
                       <i class="glyphicon glyphicon-usd"></i>
                      </span>                     
-                     <div id="resultado" readonly class="form-control">Costo</div>                      
+                     <div id="result" readonly class="form-control">Costo</div>                      
                   </div>
                  </div>          
                   <div class="col-md-3">
+                    <label for="qty">Precio de venta</label>
                     <div class="input-group">
                       <span class="input-group-addon">
                         <i class="glyphicon glyphicon-usd"></i>
@@ -181,9 +185,10 @@
     function cost(){
     var num1 = document.getElementById("buying-price");
     var num2 = document.getElementById("product-quantity");
-    var div = document.getElementById("resultado");
-    resultado = parseInt(num1.value) / parseInt(num2.value);
-    div.innerHTML= resultado; 
+    var div = document.getElementById("result");
+    result = parseFloat(num1.value) / parseFloat(num2.value);    
+    result = Number(result.toFixed(2));
+    div.innerHTML= result; 
     }
   </script>
 

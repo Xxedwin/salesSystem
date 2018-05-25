@@ -61,7 +61,7 @@ if(isset($_POST['append_product'])){
                 <th class="text-center" style="width: 10%;"> Stock </th>
                 <th class="text-center" style="width: 10%;"> Costo Unitario </th>
                 <th class="text-center" style="width: 10%;"> Precio de venta </th>
-                <th class="text-center" style="width: 10%;"> Agregado </th>
+                <!-- <th class="text-center" style="width: 10%;"> Agregado </th> -->
                 <th class="text-center" style="width: 100px;"> Acciones </th>
               </tr>
             </thead>
@@ -85,7 +85,7 @@ if(isset($_POST['append_product'])){
                 <td class="text-center"> <?php echo $quantity=remove_junk($processed_product['quantity']); ?></td>
                 <td class="text-center"> <?php echo remove_junk($processed_product['buy_price']); ?></td>
                 <td class="text-center"> <?php echo remove_junk($processed_product['sale_price']); ?></td>
-                <td class="text-center"> <?php echo read_date($processed_product['date']); ?></td>
+                <!-- <td class="text-center"> <?php echo read_date($processed_product['date']); ?></td> -->
                 <td class="text-center">
                   <div class="btn-group">
                     <a href="edit_processProduct.php?id=<?php echo $id=(int)$processed_product['id'];?>" class="btn btn-info btn-xs"  title="Editar" data-toggle="tooltip">

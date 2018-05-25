@@ -16,7 +16,7 @@ if(!$processProduct){
 ?>
 <?php
  if(isset($_POST['processProduct'])){
-    $req_fields = array('processProduct-title','processProduct-mark','processProduct-unit','processProduct-presentation','processProduct-categorie','processProduct-distributor','processProduct-quantity','buying-price', 'saleing-price' );
+    $req_fields = array('processProduct-title','processProduct-unit','processProduct-categorie','processProduct-distributor','processProduct-quantity','buying-price', 'saleing-price' );
     validate_fields($req_fields);
 
    if(empty($errors)){
@@ -70,14 +70,14 @@ if(!$processProduct){
          </strong>
         </div>
         <div class="panel-body">
-         <div class="col-md-7">
+         <div class="col-md-12">
            <form method="post" action="edit_processProduct.php?id=<?php echo (int)$processProduct['id'] ?>">
               <div class="form-group">
                 <div class="input-group">
                   <span class="input-group-addon">
                    <i class="glyphicon glyphicon-th-large"></i>
                   </span>
-                  <input type="text" class="form-control" name="processProduct-title" value="<?php echo remove_junk($processProduct['name']);?>">
+                  <input type="text" placeholder="Descripcion" class="form-control" name="processProduct-title" value="<?php echo remove_junk($processProduct['name']);?>">
                </div>
               </div>
               <div class="form-group">
@@ -85,7 +85,7 @@ if(!$processProduct){
                   <span class="input-group-addon">
                    <i class="glyphicon glyphicon-th-large"></i>
                   </span>
-                  <input type="text" class="form-control" name="processProduct-mark" value="<?php echo remove_junk($processProduct['mark']);?>">
+                  <input type="text" placeholder="Marca" class="form-control" name="processProduct-mark" value="<?php echo remove_junk($processProduct['mark']);?>">
                </div>
               </div>
               <div class="form-group">
@@ -93,7 +93,7 @@ if(!$processProduct){
                   <span class="input-group-addon">
                    <i class="glyphicon glyphicon-th-large"></i>
                   </span>
-                  <input type="text" class="form-control" name="processProduct-unit" value="<?php echo remove_junk($processProduct['unit']);?>">
+                  <input type="text" placeholder="Unidad de medida" class="form-control" name="processProduct-unit" value="<?php echo remove_junk($processProduct['unit']);?>">
                </div>
               </div>
               <div class="form-group">
@@ -101,7 +101,7 @@ if(!$processProduct){
                   <span class="input-group-addon">
                    <i class="glyphicon glyphicon-th-large"></i>
                   </span>
-                  <input type="text" class="form-control" name="processProduct-presentation" value="<?php echo remove_junk($processProduct['presentation']);?>">
+                  <input type="text" placeholder="Presentacion" class="form-control" name="processProduct-presentation" value="<?php echo remove_junk($processProduct['presentation']);?>">
                </div>
               </div>
               <div class="form-group">
@@ -138,30 +138,39 @@ if(!$processProduct){
 
               <div class="form-group">
                <div class="row">
-                 <div class="col-md-4">
+                <div class="col-md-3">
+                 <div class="form-group">
+                   <label for="qty">Precio de compra</label>
+                   <div class="input-group">
+                     <span class="input-group-addon">
+                       <i class="glyphicon glyphicon-usd"></i>
+                     </span>
+                     <input type="number" class="form-control" id="buying-price" name="buying-price" value="<?php echo remove_junk($processProduct['buy_price']);?>">
+                     <span class="input-group-addon">.00</span>
+                  </div>
+                 </div>
+                </div>
+                 <div class="col-md-3">
                   <div class="form-group">
                     <label for="qty">Cantidad</label>
                     <div class="input-group">
                       <span class="input-group-addon">
                        <i class="glyphicon glyphicon-shopping-cart"></i>
                       </span>
-                      <input type="number" class="form-control" name="processProduct-quantity" value="<?php echo remove_junk($processProduct['quantity']); ?>">
+                      <input type="number" class="form-control" id="processProduct-quantity" name="processProduct-quantity" value="<?php echo remove_junk($processProduct['quantity']); ?>">
                    </div>
                   </div>
                  </div>
-                 <div class="col-md-4">
-                  <div class="form-group">
-                    <label for="qty">Precio de compra</label>
-                    <div class="input-group">
-                      <span class="input-group-addon">
-                        <i class="glyphicon glyphicon-usd"></i>
-                      </span>
-                      <input type="number" class="form-control" name="buying-price" value="<?php echo remove_junk($processProduct['buy_price']);?>">
-                      <span class="input-group-addon">.00</span>
-                   </div>
+                 <div class="col-md-3">
+                  <label for="qty">Precio de costo</label>
+                   <div class="input-group">
+                     <span class="input-group-addon">                      
+                      <i class="glyphicon glyphicon-usd"></i>
+                     </span>                     
+                     <div id="result" readonly class="form-control">Costo</div>                      
                   </div>
                  </div>
-                  <div class="col-md-4">
+                  <div class="col-md-3">
                    <div class="form-group">
                      <label for="qty">Precio de venta</label>
                      <div class="input-group">
@@ -181,5 +190,17 @@ if(!$processProduct){
         </div>
       </div>
   </div>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+  <script type="text/javascript">
+    $(document).ready(function() {
+      var num1 = document.getElementById("buying-price");
+      var num2 = document.getElementById("processProduct-quantity");
+      var div = document.getElementById("result");
+      result = parseFloat(num1.value) / parseFloat(num2.value);    
+      result = Number(result.toFixed(2));
+      div.innerHTML= result; 
+    });
+
+  </script>
 
 <?php include_once('layouts/footer.php'); ?>

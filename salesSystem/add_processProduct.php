@@ -9,7 +9,7 @@
 ?>
 <?php 
  if(isset($_POST['add_processProduct'])){
-   $req_fields = array('processProduct-title','processProduct-unit','processProduct-presentation','processProduct-categorie','processProduct-quantity','buying-price', 'saleing-price' );
+   $req_fields = array('processProduct-title','processProduct-unit','processProduct-categorie','processProduct-quantity','buying-price', 'saleing-price' );
    validate_fields($req_fields);
    if(empty($errors)){
      $p_name  = remove_junk($db->escape($_POST['processProduct-title']));

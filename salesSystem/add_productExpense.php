@@ -9,7 +9,7 @@
 ?>
 <?php 
  if(isset($_POST['add_productExpense'])){
-   $req_fields = array('productExpense-title','productExpense-mark','productExpense-unit','productExpense-presentation','productExpense-categorie','productExpense-distributor','productExpense-quantity','buying-price' );
+   $req_fields = array('productExpense-title','productExpense-unit','productExpense-categorie','productExpense-quantity','buying-price' );
    validate_fields($req_fields);
    if(empty($errors)){
      $p_name  = remove_junk($db->escape($_POST['productExpense-title']));
@@ -34,7 +34,7 @@
      $query .=" ON DUPLICATE KEY UPDATE name='{$p_name}'";
      if($db->query($query)){
        $session->msg('s',"Gasto en producción agregado exitosamente. ");
-       redirect('add_productExpense.php', false);
+       redirect('production_expenses.php', false);
      } else {
        $session->msg('d',' Lo siento, registro falló.');
        redirect('production_expenses.php', false);
@@ -133,6 +133,7 @@
               <div class="form-group">
                <div class="row">
                   <div class="col-md-4">
+                    <label for="qty">Precio de compra</label>
                     <div class="input-group">
                       <span class="input-group-addon">
                         <i class="glyphicon glyphicon-usd"></i>
@@ -142,6 +143,7 @@
                    </div>
                   </div>
                  <div class="col-md-4">
+                  <label for="qty">Cantidad</label>
                    <div class="input-group">
                      <span class="input-group-addon">
                       <i class="glyphicon glyphicon-shopping-cart"></i>
@@ -150,6 +152,7 @@
                   </div>
                  </div>        
                  <div class="col-md-4">
+                  <label for="qty">Precio de costo</label>
                    <div class="input-group">
                      <span class="input-group-addon">                      
                       <i class="glyphicon glyphicon-usd"></i>
