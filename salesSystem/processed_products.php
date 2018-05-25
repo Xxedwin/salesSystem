@@ -5,6 +5,34 @@
    page_require_level(2);
   $processed_products = join_processProduct_table();
 ?>
+<?php  
+if(isset($_POST['append_product'])){
+  $req_fields = array('append_quantity','quantity');
+  validate_fields($req_fields);
+  if(empty($errors)){
+    $p_qty   = remove_junk($db->escape($_POST['append_quantity']));
+    $qty   = remove_junk($db->escape($_POST['quantity']));
+    $id   = remove_junk($db->escape($_POST['idAdd']));
+    $p_qty   = $p_qty + $qty;
+    
+    $query   = "UPDATE processed_products SET";
+    $query  .=" quantity ='{$p_qty}'";
+    $query  .=" WHERE id ='{$id}'"; 
+    $result = $db->query($query);
+            if($result && $db->affected_rows() === 1){
+              $session->msg('s',"Producto elaborado ha sido actualizado. ");
+              redirect('processed_products.php', false);
+            } else {
+              $session->msg('d',' Lo siento, actualización falló.');
+              /*redirect('edit_product.php?id='.$product['id'], false);*/
+            }
+  } else{
+    $session->msg("d", $errors);
+    redirect('processed_products.php',false);
+  }
+}
+
+?>
 
 <?php include_once('layouts/header.php'); ?>
   <div class="row">
@@ -40,11 +68,7 @@
             <tbody>
               <?php foreach ($processed_products as $processed_product):?>
               <tr>
-                <td class="text-center"><?php echo count_id();?></td>
-                <?php $id=$processed_product['id']; ?>
-                <?php $quantity=$processed_product['quantity']; ?>                  
-                <?php $name=$processed_product['name']; ?> 
-                <?php $process='true'; ?>   
+                <td class="text-center"><?php echo count_id();?></td>                  
                 <!-- <td>
                   <?php if($product['media_id'] === '0'): ?>
                     <img class="img-avatar img-circle" src="uploads/products/no_image.jpg" alt="">
@@ -52,25 +76,22 @@
                   <img class="img-avatar img-circle" src="uploads/products/<?php echo $product['image']; ?>" alt="">
                 <?php endif; ?>
                 </td> -->
-                <td> <?php echo remove_junk($processed_product['name']); ?></td>
+                <td> <?php echo $name=remove_junk($processed_product['name']); ?></td>
                 <!-- <td class="text-center"> <?php echo remove_junk($processed_product['mark']); ?></td> -->
                 <td class="text-center"> <?php echo remove_junk($processed_product['unit']); ?></td>
                 <td class="text-center"> <?php echo remove_junk($processed_product['presentation']); ?></td>
                 <td class="text-center"> <?php echo remove_junk($processed_product['categorie']); ?></td>
                <!--  <td class="text-center"> <?php echo remove_junk($processed_product['distributor']); ?></td> -->
-                <td class="text-center"> <?php echo remove_junk($processed_product['quantity']); ?></td>
+                <td class="text-center"> <?php echo $quantity=remove_junk($processed_product['quantity']); ?></td>
                 <td class="text-center"> <?php echo remove_junk($processed_product['buy_price']); ?></td>
                 <td class="text-center"> <?php echo remove_junk($processed_product['sale_price']); ?></td>
                 <td class="text-center"> <?php echo read_date($processed_product['date']); ?></td>
                 <td class="text-center">
                   <div class="btn-group">
-                    <a href="edit_processProduct.php?id=<?php echo (int)$processed_product['id'];?>" class="btn btn-info btn-xs"  title="Editar" data-toggle="tooltip">
+                    <a href="edit_processProduct.php?id=<?php echo $id=(int)$processed_product['id'];?>" class="btn btn-info btn-xs"  title="Editar" data-toggle="tooltip">
                       <span class="glyphicon glyphicon-edit"></span>
                     </a>
-                     <!-- <a href="delete_processProduct.php?id=<?php echo (int)$processed_product['id'];?>" class="btn btn-danger btn-xs"  title="Eliminar" data-toggle="tooltip">
-                      <span class="glyphicon glyphicon-trash"></span>
-                    </a> -->
-                     <a <?php echo "onClick=\"idInventory('modalInventory.php','$id','$process')\"" ?> class="btn btn-danger btn-xs" title="Eliminar" >
+                     <a <?php echo "onClick=\"idInventory('modalInventory.php','$id')\"" ?> class="btn btn-danger btn-xs" title="Eliminar" >
                       <span class="glyphicon  glyphicon-trash" ></span>
                     </a> 
                     <a <?php echo "onClick=\"idInventory('modalInventory.php','$id','$quantity','$name')\"" ?> class="btn btn-danger btn-xs"  title="Agregar">
@@ -91,17 +112,14 @@
 
   <script type="text/javascript">
 
-    /*function cambiarAccion(url) {
-    document.getElementById("miFormulario").action = url;
-    }*/
-
     idInventory = function(jRuta,jid,jquantity,jname)
     {
-
+        var number=2;
          var parametros = {
              "id" : jid,
              "quantity" : jquantity,
-             "name" : jname
+             "name" : jname,
+             "number" : number
          };
          
          $.ajax({
@@ -140,7 +158,7 @@
 
   <style type="text/css">
     .close{
-      margin-top: -50px;
+      margin-top: -70px;
       font-size: 38px;
     }
     .modal-footer{

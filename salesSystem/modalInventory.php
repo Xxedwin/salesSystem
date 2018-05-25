@@ -15,8 +15,20 @@ $html ='
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <form method="post" action="product.php">
-        <div class="modal-body"> 
+      <form method="post" action=';      
+      switch ($_POST['number']) {
+        case 3:
+          $html.='"production_expenses.php">';          
+          break;
+        case 2:
+          $html.='"processed_products.php">';
+          break;        
+        default:
+          $html.='"product.php">';
+          break;
+      } 
+      
+$html.='  <div class="modal-body"> 
             <div class="form-group">
               <div style="text-align: center;">
                 <label for="recipient-name" class="col-form-label">Ingrese la cantidad para añadir al inventario:</label>  
@@ -48,8 +60,19 @@ $html2='
           <span aria-hidden="true">&times;</span>
         </button>
       </div> 
-      <form method="post" id="id_formulario" action=';$action='"delete_product.php">';
- $html3='       <input type="hidden" id="id" name="id" >                               
+      <form method="post" action=';
+      switch ($_POST['number']) {
+        case 3:
+          $html2.='"delete_productExpense.php">';          
+          break;
+        case 2:
+          $html2.='"delete_processProduct.php">';
+          break;        
+        default:
+          $html2.='"delete_product.php">';
+          break;
+      }           
+ $html2.='       <input type="hidden" id="id" name="id" >                               
         <div class="modal-footer">
           <button type="submit" class="btn btn-primary">Eliminar</button>
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
@@ -58,23 +81,17 @@ $html2='
       </form>                        
     </div>
   </div>
-</div>';
-  $html=$html2.$html3;
+</div>';  
 
  ?>
 <?php
 
-if(isset($_POST['id']) && isset($_POST['quantity'])){
+if(isset($_POST['id']) && isset($_POST['name'])){
   $quantity=$_POST['quantity'];    
   $idAdd=$_POST['id'];    
   $name=$_POST['name'];    
-  $data=array($quantity,$idAdd,$name,$html1);
+  $data=array($quantity,$idAdd,$name,$html);
   
-}
-elseif (isset($_POST['id']) && $process=='true') {
-  $id=$_POST['id'];    
-  $val='';
-  $data=array($id,$val,$html);
 }
 else{
   $id=$_POST['id'];    

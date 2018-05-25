@@ -69,9 +69,6 @@ if(isset($_POST['append_product'])){
               <?php foreach ($products as $product):?>
               <tr>
                 <td class="text-center"><?php echo count_id();?></td>
-                  <?php $id=$product['id']; ?>
-                  <?php $quantity=$product['quantity']; ?>                  
-                  <?php $name=$product['name']; ?>                  
                 <!-- <td>
                   <?php if($product['media_id'] === '0'): ?>
                     <img class="img-avatar img-circle" src="uploads/products/no_image.jpg" alt="">
@@ -79,19 +76,19 @@ if(isset($_POST['append_product'])){
                   <img class="img-avatar img-circle" src="uploads/products/<?php echo $product['image']; ?>" alt="">
                 <?php endif; ?>
                 </td> -->
-                <td> <?php echo remove_junk($product['name']); ?></td>
+                <td> <?php echo $name=remove_junk($product['name']); ?></td>
                 <!-- <td class="text-center"> <?php echo remove_junk($product['mark']); ?></td> -->
                 <!-- <td class="text-center"> <?php echo remove_junk($product['unit']); ?></td> -->
                 <!-- <td class="text-center"> <?php echo remove_junk($product['presentation']); ?></td> -->
                 <td class="text-center"> <?php echo remove_junk($product['categorie']); ?></td>
                 <td class="text-center"> <?php echo remove_junk($product['distributor']); ?></td>
-                <td class="text-center"> <?php echo remove_junk($product['quantity']); ?></td>
+                <td class="text-center"> <?php echo $quantity=remove_junk($product['quantity']); ?></td>
                 <td class="text-center"> <?php echo remove_junk($product['buy_price']); ?></td>
                 <td class="text-center"> <?php echo remove_junk($product['sale_price']); ?></td>
                 <td class="text-center"> <?php echo read_date($product['date']); ?></td>
                 <td class="text-center">
                   <div class="btn-group" >
-                    <a href="edit_product.php?id=<?php echo (int)$product['id'];?>" class="btn btn-info btn-xs"  title="Editar" data-toggle="tooltip">
+                    <a href="edit_product.php?id=<?php echo $id=(int)$product['id'];?>" class="btn btn-info btn-xs"  title="Editar" data-toggle="tooltip">
                       <span class="glyphicon glyphicon-edit"></span>
                     </a>                     
                      <a  <?php echo "onClick=\"idInventory('modalInventory.php','$id')\"" ?> class="btn btn-danger btn-xs" title="Eliminar" >
@@ -117,11 +114,12 @@ if(isset($_POST['append_product'])){
 
     idInventory = function(jRuta,jid,jquantity,jname)
     {
-
+        var number=1;
          var parametros = {
              "id" : jid,
              "quantity" : jquantity,
-             "name" : jname
+             "name" : jname,
+             "number" : number
          };
          
          $.ajax({
@@ -157,7 +155,7 @@ if(isset($_POST['append_product'])){
 
   <style type="text/css">
     .close{
-      margin-top: -50px;
+      margin-top: -70px;
       font-size: 38px;
     }
     .modal-footer{
