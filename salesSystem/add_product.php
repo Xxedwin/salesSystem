@@ -144,12 +144,12 @@
                    </div>
                   </div>
                  <div class="col-md-3">
-                  <label for="qty">Cantidad</label>
+                  <label for="qty">Cantidad inicial</label>
                    <div class="input-group">
                      <span class="input-group-addon">
                       <i class="glyphicon glyphicon-shopping-cart"></i>
                      </span>
-                     <input type="text" onblur="if(this.value == ''){this.value='0'}"  onKeyUp="cost();" class="form-control" id="product-quantity" name="product-quantity" placeholder="Cantidad">
+                     <input type="text" onblur="if(this.value == ''){this.value='0'}"  onKeyUp="cost();" class="form-control" id="product-quantity" name="product-quantity" placeholder="Cantidad inicial">
                   </div>
                  </div>        
                  <div class="col-md-3">

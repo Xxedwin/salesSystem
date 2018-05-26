@@ -6,10 +6,11 @@
   $all_categories = find_all('categories');
   $all_distributors = find_all('distributors');
   $all_photo = find_all('media');
+  $all_measures = find_all('measures');
 ?>
 <?php 
  if(isset($_POST['add_productExpense'])){
-   $req_fields = array('productExpense-title','productExpense-unit','productExpense-categorie','productExpense-quantity','buying-price' );
+   $req_fields = array('productExpense-title','productExpense-unit','productExpense-categorie','productExpense-quantity','buying-price','measure_id');
    validate_fields($req_fields);
    if(empty($errors)){
      $p_name  = remove_junk($db->escape($_POST['productExpense-title']));
@@ -20,6 +21,7 @@
      $p_dis   = remove_junk($db->escape($_POST['productExpense-distributor']));
      $p_qty   = remove_junk($db->escape($_POST['productExpense-quantity']));
      $p_buy   = remove_junk($db->escape($_POST['buying-price']));     
+     $p_measure   = remove_junk($db->escape($_POST['measure_id']));     
      if (is_null($_POST['productExpense-photo']) || $_POST['productExpense-photo'] === "") {
        $media_id = '0';
      } else {
@@ -27,9 +29,9 @@
      }
      $date    = make_date();
      $query  = "INSERT INTO production_expenses (";
-     $query .=" name,quantity,buy_price,categorie_id,distributor_id,media_id,date,mark,unit,presentation";
+     $query .=" name,quantity,buy_price,categorie_id,distributor_id,media_id,date,mark,unit,presentation,measure_id";
      $query .=") VALUES (";
-     $query .=" '{$p_name}', '{$p_qty}', '{$p_buy}', '{$p_cat}', '{$p_dis}', '{$media_id}', '{$date}','{$p_mark}','{$p_unit}','{$p_presentation}'";
+     $query .=" '{$p_name}', '{$p_qty}', '{$p_buy}', '{$p_cat}', '{$p_dis}', '{$media_id}', '{$date}','{$p_mark}','{$p_unit}','{$p_presentation}', '{$p_measure}'";
      $query .=")";
      $query .=" ON DUPLICATE KEY UPDATE name='{$p_name}'";
      if($db->query($query)){
@@ -83,12 +85,25 @@
                </div>
               </div>
               <div class="form-group">
-                <div class="input-group">
-                  <span class="input-group-addon">
-                   <i class="glyphicon glyphicon-th-large"></i>
-                  </span>
-                  <input type="text" class="form-control" name="productExpense-unit" placeholder="Unidad de medida">
-               </div>
+                <div class="row">                   
+                  <div class="col-md-4">
+                    <div class="input-group">
+                      <span class="input-group-addon">
+                       <i class="glyphicon glyphicon-th-large"></i>
+                      </span>
+                      <input type="text" class="form-control" name="productExpense-unit" placeholder="Unidad de medida">
+                   </div> 
+                  </div>
+                  <div class="col-md-8" >
+                    <select class="form-control" name="measure_id" id="measure_id">
+                      <option value="">Selecciona la medida</option>
+                    <?php  foreach ($all_measures as $measure): ?>
+                      <option value="<?php echo (int)$measure['id'] ?>">
+                        <?php echo $measure['name'] ?></option>
+                    <?php endforeach; ?>
+                    </select>
+                  </div>
+                </div>                
               </div>
               <div class="form-group">
                 <div class="input-group">
@@ -143,12 +158,12 @@
                    </div>
                   </div>
                  <div class="col-md-4">
-                  <label for="qty">Cantidad</label>
+                  <label for="qty">Cantidad incial</label>
                    <div class="input-group">
                      <span class="input-group-addon">
                       <i class="glyphicon glyphicon-shopping-cart"></i>
                      </span>
-                     <input type="text" onblur="if(this.value == ''){this.value='0'}"  onKeyUp="cost();" class="form-control" id="productExpense-quantity" name="productExpense-quantity" placeholder="Cantidad">
+                     <input type="text" onblur="if(this.value == ''){this.value='0'}"  onKeyUp="cost();" class="form-control" id="productExpense-quantity" name="productExpense-quantity" placeholder="Cantidad incial">
                   </div>
                  </div>        
                  <div class="col-md-4">

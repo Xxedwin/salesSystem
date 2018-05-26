@@ -131,32 +131,36 @@
 
               <div class="form-group">
                <div class="row">
-                  <div class="col-md-3">
-                    <div class="input-group">
+                  <!-- <div class="col-md-3">
+                    <label for="qty">Precio</label>
+                    <div class="input-group">                       
                       <span class="input-group-addon">
                         <i class="glyphicon glyphicon-usd"></i>
                       </span>
-                      <input type="text" onblur="if(this.value == ''){this.value='0'}"  onKeyUp="cost();" class="form-control" id="buying-price" name="buying-price" placeholder="Costo Unitario">
+                      <input type="text" onblur="if(this.value == ''){this.value='0'}"  onKeyUp="cost();" class="form-control" id="buying-price" name="buying-price" placeholder="Precio">
                       <span class="input-group-addon">.00</span>
                    </div>
-                  </div>
-                 <div class="col-md-3">
-                   <div class="input-group">
+                  </div> -->
+                 <div class="col-md-4">
+                  <label for="qty">Cantidad inicial</label>
+                   <div class="input-group">                    
                      <span class="input-group-addon">
                       <i class="glyphicon glyphicon-shopping-cart"></i>
                      </span>
-                     <input type="text" onblur="if(this.value == ''){this.value='0'}"  onKeyUp="cost();" class="form-control" id="processProduct-quantity" name="processProduct-quantity" placeholder="Cantidad">
+                     <input type="text" onblur="if(this.value == ''){this.value='0'}"  onKeyUp="cost();" class="form-control" id="processProduct-quantity" name="processProduct-quantity" placeholder="Cantidad inicial">
                   </div>
                  </div>        
-                 <div class="col-md-3">
-                   <div class="input-group">
+                 <div class="col-md-4">
+                  <label for="qty">Precio de costo</label>
+                   <div class="input-group">                    
                      <span class="input-group-addon">                      
                       <i class="glyphicon glyphicon-usd"></i>
                      </span>                     
                      <div id="resultado" readonly class="form-control">Costo</div>                      
                   </div>
                  </div>          
-                  <div class="col-md-3">
+                  <div class="col-md-4">
+                    <label for="qty">Precio de venta</label>
                     <div class="input-group">
                       <span class="input-group-addon">
                         <i class="glyphicon glyphicon-usd"></i>

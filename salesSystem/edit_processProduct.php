@@ -16,7 +16,7 @@ if(!$processProduct){
 ?>
 <?php
  if(isset($_POST['processProduct'])){
-    $req_fields = array('processProduct-title','processProduct-unit','processProduct-categorie','processProduct-distributor','processProduct-quantity','buying-price', 'saleing-price' );
+    $req_fields = array('processProduct-title','processProduct-unit','processProduct-categorie','processProduct-quantity','buying-price', 'saleing-price' );
     validate_fields($req_fields);
 
    if(empty($errors)){
@@ -80,14 +80,14 @@ if(!$processProduct){
                   <input type="text" placeholder="Descripcion" class="form-control" name="processProduct-title" value="<?php echo remove_junk($processProduct['name']);?>">
                </div>
               </div>
-              <div class="form-group">
+              <!-- <div class="form-group">
                 <div class="input-group">
                   <span class="input-group-addon">
                    <i class="glyphicon glyphicon-th-large"></i>
                   </span>
                   <input type="text" placeholder="Marca" class="form-control" name="processProduct-mark" value="<?php echo remove_junk($processProduct['mark']);?>">
                </div>
-              </div>
+              </div> -->
               <div class="form-group">
                 <div class="input-group">
                   <span class="input-group-addon">
@@ -106,7 +106,7 @@ if(!$processProduct){
               </div>
               <div class="form-group">
                 <div class="row">
-                  <div class="col-md-4">
+                  <div class="col-md-6">
                     <select class="form-control" name="processProduct-categorie">
                     <option value="">Selecciona una categoría</option>
                    <?php  foreach ($all_categories as $cat): ?>
@@ -115,7 +115,7 @@ if(!$processProduct){
                    <?php endforeach; ?>
                  </select>
                   </div>
-                   <div class="col-md-4">
+                   <!-- <div class="col-md-4">
                      <select class="form-control" name="processProduct-distributor">
                      <option value="">Selecciona una distribuidora</option>
                     <?php  foreach ($all_distributors as $dis): ?>
@@ -123,8 +123,8 @@ if(!$processProduct){
                         <?php echo remove_junk($dis['name']); ?></option>
                     <?php endforeach; ?>
                   </select>
-                   </div>
-                  <div class="col-md-4">
+                   </div> -->
+                  <div class="col-md-6">
                     <select class="form-control" name="processProduct-photo">
                       <option value=""> Sin imagen</option>
                       <?php  foreach ($all_photo as $photo): ?>

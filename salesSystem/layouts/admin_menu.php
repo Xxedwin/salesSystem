@@ -17,7 +17,7 @@
   </li>
   <li>
     <a href="categorie.php" >
-      <i class="glyphicon glyphicon-indent-left"></i>
+      <i class="glyphicon glyphicon-list-alt"></i>
       <span>Categorías</span>
     </a>
   </li>
@@ -25,6 +25,18 @@
     <a href="distributor.php" >
       <i class="glyphicon glyphicon-indent-left"></i>
       <span>Distribuidoras</span>
+    </a>
+  </li>
+  <li>
+    <a href="measure.php" >
+      <i class="glyphicon glyphicon-indent-left"></i>
+      <span>Medida</span>
+    </a>
+  </li>
+  <li>
+    <a href="cost_unit.php" >
+      <i class="glyphicon glyphicon-usd"></i>
+      <span>Costo Producto</span>
     </a>
   </li>
   <li>
@@ -65,7 +77,7 @@
   </li>
   <li>
     <a href="#" class="submenu-toggle">
-      <i class="glyphicon glyphicon-th-list"></i>
+      <i class="glyphicon glyphicon-shopping-cart"></i>
        <span>Ventas</span>
       </a>
       <ul class="nav submenu">

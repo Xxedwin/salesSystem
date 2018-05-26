@@ -9,6 +9,7 @@ $productExpense = find_by_id('production_expenses',(int)$_GET['id']);
 $all_categories = find_all('categories');
 $all_distributors = find_all('distributors');
 $all_photo = find_all('media');
+$all_measures = find_all('measures');
 if(!$productExpense){
   $session->msg("d","Missing product expenses id.");
   redirect('production_expenses.php');
@@ -86,14 +87,27 @@ if(!$productExpense){
                   </span>
                   <input type="text" placeholder="Mark" class="form-control" name="productExpense-mark" value="<?php echo remove_junk($productExpense['mark']);?>">
                </div>
-              </div>
+              </div>              
               <div class="form-group">
-                <div class="input-group">
-                  <span class="input-group-addon">
-                   <i class="glyphicon glyphicon-th-large"></i>
-                  </span>
-                  <input type="text" placeholder="Unidad de medida" class="form-control" name="productExpense-unit" value="<?php echo remove_junk($productExpense['unit']);?>">
-               </div>
+                <div class="row">                   
+                  <div class="col-md-4">
+                    <div class="input-group">
+                      <span class="input-group-addon">
+                       <i class="glyphicon glyphicon-th-large"></i>
+                      </span>                      
+                      <input type="text" placeholder="Unidad de medida" class="form-control" name="productExpense-unit" value="<?php echo remove_junk($productExpense['unit']);?>">
+                   </div> 
+                  </div>
+                  <div class="col-md-8" >                    
+                    <select class="form-control" name="measure_id" id="measure_id">
+                    <option value="">Selecciona una medida</option>
+                     <?php  foreach ($all_measures as $measure): ?>
+                       <option value="<?php echo (int)$measure['id']; ?>" <?php if($productExpense['measure_id'] === $measure['id']): echo "selected"; endif; ?> >
+                         <?php echo remove_junk($measure['name']); ?></option>
+                     <?php endforeach; ?>
+                    </select>
+                  </div>
+                </div>                
               </div>
               <div class="form-group">
                 <div class="input-group">
@@ -108,11 +122,11 @@ if(!$productExpense){
                   <div class="col-md-4">
                     <select class="form-control" name="productExpense-categorie">
                     <option value="">Selecciona una categoría</option>
-                   <?php  foreach ($all_categories as $cat): ?>
-                     <option value="<?php echo (int)$cat['id']; ?>" <?php if($productExpense['categorie_id'] === $cat['id']): echo "selected"; endif; ?> >
-                       <?php echo remove_junk($cat['name']); ?></option>
-                   <?php endforeach; ?>
-                 </select>
+                     <?php  foreach ($all_categories as $cat): ?>
+                       <option value="<?php echo (int)$cat['id']; ?>" <?php if($productExpense['categorie_id'] === $cat['id']): echo "selected"; endif; ?> >
+                         <?php echo remove_junk($cat['name']); ?></option>
+                     <?php endforeach; ?>
+                    </select>
                   </div>
                    <div class="col-md-4">
                      <select class="form-control" name="productExpense-distributor">
