@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 19-05-2018 a las 20:44:17
+-- Tiempo de generación: 27-05-2018 a las 03:33:34
 -- Versión del servidor: 10.1.31-MariaDB
 -- Versión de PHP: 7.2.4
 
@@ -38,8 +38,11 @@ CREATE TABLE `categories` (
 --
 
 INSERT INTO `categories` (`id`, `name`) VALUES
-(2, 'Abarrotesss'),
+(2, 'Abarrotes'),
 (3, 'gaseosas'),
+(7, 'Materias Directos'),
+(5, 'paneton'),
+(4, 'QUEQUE'),
 (1, 'Repuestos');
 
 -- --------------------------------------------------------
@@ -58,7 +61,30 @@ CREATE TABLE `distributors` (
 --
 
 INSERT INTO `distributors` (`id`, `name`) VALUES
-(2, 'Ssa');
+(2, 'Ssa'),
+(3, 'Roset Distribuciones');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `measures`
+--
+
+CREATE TABLE `measures` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) CHARACTER SET utf8 NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `measures`
+--
+
+INSERT INTO `measures` (`id`, `name`) VALUES
+(1, 'kl'),
+(3, 'lt'),
+(4, 'gr'),
+(5, 'paquete'),
+(6, 'ml');
 
 -- --------------------------------------------------------
 
@@ -77,7 +103,8 @@ CREATE TABLE `media` (
 --
 
 INSERT INTO `media` (`id`, `file_name`, `file_type`) VALUES
-(1, 'filter.jpg', 'image/jpeg');
+(1, 'filter.jpg', 'image/jpeg'),
+(2, 'bolsa.png', 'image/png');
 
 -- --------------------------------------------------------
 
@@ -105,7 +132,10 @@ CREATE TABLE `processed_products` (
 --
 
 INSERT INTO `processed_products` (`id`, `name`, `quantity`, `buy_price`, `sale_price`, `categorie_id`, `media_id`, `date`, `mark`, `unit`, `presentation`, `distributor_id`) VALUES
-(1, 'waa', '15', '10.00', '100.00', 1, 0, '2018-05-19 12:13:52', 'w', 'w', 'w', 2);
+(1, 'waa', '27', '10.00', '100.00', 1, 0, '2018-05-19 12:13:52', 'w', 'w', 'w', 2),
+(3, 'w', '1', '1.00', '1.00', 3, 0, '2018-05-19 17:11:24', NULL, 'w', 'w', 0),
+(4, 'q', '1', '1.00', '1.00', 2, 0, '2018-05-19 17:12:38', NULL, 'q', 'q', 0),
+(6, 'redondo', '1', '6.00', '12.00', 4, 0, '2018-05-19 17:20:42', NULL, 'molde', 'grande', 0);
 
 -- --------------------------------------------------------
 
@@ -124,16 +154,26 @@ CREATE TABLE `production_expenses` (
   `mark` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
   `unit` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
   `presentation` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
-  `distributor_id` int(11) UNSIGNED NOT NULL
+  `distributor_id` int(11) UNSIGNED NOT NULL,
+  `measure_id` int(11) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `production_expenses`
 --
 
-INSERT INTO `production_expenses` (`id`, `name`, `quantity`, `buy_price`, `categorie_id`, `media_id`, `date`, `mark`, `unit`, `presentation`, `distributor_id`) VALUES
-(1, 'sa', '2', '2.00', 3, 0, '2018-05-19 13:20:57', 'sa', 'a', 'a', 2),
-(3, 'q', '2', '1.00', 2, 0, '2018-05-19 13:35:38', 'q', 'q', 'q', 2);
+INSERT INTO `production_expenses` (`id`, `name`, `quantity`, `buy_price`, `categorie_id`, `media_id`, `date`, `mark`, `unit`, `presentation`, `distributor_id`, `measure_id`) VALUES
+(5, 'azucar', '1', '142.00', 7, 0, '2018-05-26 17:36:33', '', '50', 'saco', 3, 1),
+(6, 'sal', '1', '1.00', 7, 0, '2018-05-26 17:36:59', '', '1', 'paquete', 3, 2),
+(7, 'Harina', '1', '87.00', 7, 0, '2018-05-26 18:32:36', '', '50', 'saco', 3, 1),
+(8, 'Levadura', '1', '7.00', 7, 0, '2018-05-26 18:39:59', '', '0.48', 'paquete', 3, 5),
+(9, 'Manteca', '1', '55.00', 7, 0, '2018-05-26 18:57:25', '', '10', 'Caja', 3, 1),
+(10, 'Mejorador', '1', '35.00', 7, 0, '2018-05-26 18:57:59', '', '5', 'bolsa', 3, 1),
+(11, 'Antimoho', '1', '15.00', 7, 0, '2018-05-26 18:59:37', '', '1', 'bolsa', 3, 1),
+(12, 'Colorante', '1', '8.00', 7, 0, '2018-05-26 19:00:29', '', '0.37', 'Frasco', 3, 4),
+(13, 'Es. De paneton', '1', '15.00', 7, 0, '2018-05-26 19:01:06', '', '0.25', 'Frasco', 3, 6),
+(14, 'Fruta Confitada', '1', '70.00', 7, 0, '2018-05-26 19:01:34', '', '10', 'Caja ', 3, 1),
+(15, 'Leche ', '1', '4.50', 7, 0, '2018-05-26 19:03:11', '', '1000', 'Caja ', 3, 3);
 
 -- --------------------------------------------------------
 
@@ -161,13 +201,8 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`id`, `name`, `quantity`, `buy_price`, `sale_price`, `categorie_id`, `media_id`, `date`, `mark`, `unit`, `presentation`, `distributor_id`) VALUES
-(3, 'leche', '14', '10.00', '15.00', 2, 0, '2018-04-25 04:32:54', NULL, NULL, NULL, 0),
-(4, 'arroz', '10', '2.00', '3.00', 2, 0, '2018-04-25 04:42:27', NULL, NULL, NULL, 0),
-(8, 'fanta', '10', '0.00', '1.50', 3, 0, '2018-05-13 07:17:46', 'gloria', NULL, NULL, 0),
-(13, 'leaf', '12', '11.00', '1.50', 3, 0, '2018-05-13 07:54:40', 'gloria', '400ml', 'd', 2),
-(14, 'leaf teqq', '12', '11.00', '1.50', 2, 0, '2018-05-13 08:01:33', 'gloriaq', '400mlq', 'Paqx12q', 2),
-(15, 'd', '1', '1.00', '1.00', 3, 1, '2018-05-13 08:45:21', 'd', 'd', 'd', 2),
-(16, 'w', '1', '1.00', '1.00', 3, 0, '2018-05-13 09:28:36', 'w', 'w', 'w', 2);
+(21, 'qq', '32', '100.00', '12.00', 2, 0, '2018-05-23 17:00:19', 'q', 'q', 'qq', 2),
+(22, 'gaseosa oro', '10', '60.00', '10.00', 3, 0, '2018-05-23 17:04:11', 'oro', '1 L', 'grande', 2);
 
 -- --------------------------------------------------------
 
@@ -182,13 +217,6 @@ CREATE TABLE `sales` (
   `price` decimal(25,2) NOT NULL,
   `date` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Volcado de datos para la tabla `sales`
---
-
-INSERT INTO `sales` (`id`, `product_id`, `qty`, `price`, `date`) VALUES
-(6, 3, 1, '15.00', '2018-04-25');
 
 -- --------------------------------------------------------
 
@@ -212,7 +240,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `username`, `password`, `user_level`, `image`, `status`, `last_login`) VALUES
-(1, 'Admin Users', 'admin', 'd033e22ae348aeb5660fc2140aec35850c4da997', 1, 'pzg9wa7o1.jpg', 1, '2018-05-19 13:38:56'),
+(1, 'Admin Users', 'admin', 'd033e22ae348aeb5660fc2140aec35850c4da997', 1, 'pzg9wa7o1.jpg', 1, '2018-05-26 15:56:44'),
 (2, 'Special User', 'special', 'ba36b97a41e7faf742ab09bf88405ac04f99599a', 2, 'no_image.jpg', 1, '2017-06-16 07:11:26'),
 (3, 'Default User', 'user', '12dea96fec20593566ab75692c9949596833adc9', 3, 'no_image.jpg', 1, '2017-06-16 07:11:03');
 
@@ -253,6 +281,12 @@ ALTER TABLE `categories`
 -- Indices de la tabla `distributors`
 --
 ALTER TABLE `distributors`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `measures`
+--
+ALTER TABLE `measures`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -314,43 +348,49 @@ ALTER TABLE `user_groups`
 -- AUTO_INCREMENT de la tabla `categories`
 --
 ALTER TABLE `categories`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT de la tabla `distributors`
 --
 ALTER TABLE `distributors`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT de la tabla `measures`
+--
+ALTER TABLE `measures`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `media`
 --
 ALTER TABLE `media`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `processed_products`
 --
 ALTER TABLE `processed_products`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `production_expenses`
 --
 ALTER TABLE `production_expenses`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT de la tabla `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT de la tabla `sales`
 --
 ALTER TABLE `sales`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `users`

@@ -9,48 +9,7 @@
   $all_expenses = find_all('production_expenses');
   $all_measures = find_all('measures');
 ?>
-<?php 
- if(isset($_POST['add_product'])){
-   $req_fields = array('product-title','product-unit','product-categorie','product-quantity','buying-price', 'saleing-price' );
-   validate_fields($req_fields);
-   if(empty($errors)){
-     $p_name  = remove_junk($db->escape($_POST['product-title']));
-     $p_mark  = remove_junk($db->escape($_POST['product-mark']));
-     $p_unit  = remove_junk($db->escape($_POST['product-unit']));
-     $p_presentation  = remove_junk($db->escape($_POST['product-presentation']));
-     $p_cat   = remove_junk($db->escape($_POST['product-categorie']));
-     $p_dis   = remove_junk($db->escape($_POST['product-distributor']));
-     $p_qty   = remove_junk($db->escape($_POST['product-quantity']));
-     $p_buy   = remove_junk($db->escape($_POST['buying-price']));
-     $p_sale  = remove_junk($db->escape($_POST['saleing-price']));
-     if (is_null($_POST['product-photo']) || $_POST['product-photo'] === "") {
-       $media_id = '0';
-     } else {
-       $media_id = remove_junk($db->escape($_POST['product-photo']));
-     }
-     $date    = make_date();
-     $query  = "INSERT INTO products (";
-     $query .=" name,quantity,buy_price,sale_price,categorie_id,distributor_id,media_id,date,mark,unit,presentation";
-     $query .=") VALUES (";
-     $query .=" '{$p_name}', '{$p_qty}', '{$p_buy}', '{$p_sale}', '{$p_cat}', '{$p_dis}', '{$media_id}', '{$date}','{$p_mark}','{$p_unit}','{$p_presentation}'";
-     $query .=")";
-     $query .=" ON DUPLICATE KEY UPDATE name='{$p_name}'";
-     if($db->query($query)){
-       $session->msg('s',"Producto agregado exitosamente. ");
-       redirect('product.php', false);
-     } else {
-       $session->msg('d',' Lo siento, registro falló.');
-       redirect('add_product.php', false);
-     }
 
-   } else{
-     $session->msg("d", $errors);
-     redirect('add_product.php',false);
-   }
-
- }
-
-?>
 <?php include_once('layouts/header.php'); ?>
 <div class="row">
   <div class="col-md-12">
@@ -68,7 +27,7 @@
         </div>
         <div class="panel-body" style="padding: 15px 0px 15px 0px;">
          <div class="col-md-12">
-          <form method="post" action="add_product.php" class="clearfix">
+          <form id="frm_conformidad class="clearfix">
               <div class="form-group">
                 <div class="input-group">
                   <span class="input-group-addon">
@@ -110,9 +69,9 @@
                </strong>
               </div>
               <div class="form-group">
-               <div class="row clonedInput " id="input1" style="margin-bottom:4px;">
+               <div class="row clonedInput " id="entry1" style="margin-bottom:4px;">
                   <div class="col-md-6" >
-                    <select onchange="redireccionar(this);" class="form-control">
+                    <select onchange="redireccionar(this);" class="select_ttl form-control" name="expense" id="expense">
                       <option value="">Selecciona un insumo</option>
                     <?php  foreach ($all_expenses as $expense): ?>
                       <option value="<?php echo (int)$expense['id'] ?>">
@@ -125,39 +84,42 @@
                       <span class="input-group-addon">
                         <i class="glyphicon glyphicon-cutlery"></i>
                       </span>
-                      <div style="display:flex;">
-                        <input type="text" class="form-control" placeholder="Unidad">
-                        <input type="text" id="aqui" disabled class="form-control"                          
-                       >  
+                      <div style="display:flex;">                        
+                        <input id="unit" name="unit" type="text" placeholder="Unidad" class="input_fn form-control">
+                        <input id="measure" name="measure" type="text" placeholder="" disabled class="input_ln form-control">
                       </div>                      
                       
                    </div>
                   </div>
               </div>
-                <!-- <div id="input1" style="margin-bottom:4px;" class="clonedInput">
-                    Name: <input type="text" name="name1" id="name1" />
-                </div> -->
+                <div class="form-group">
+                  <div class="input-group">
+                    <span class="input-group-addon">
+                     <i class="glyphicon glyphicon-th-large"></i>
+                    </span>
+                    <input type="text" class="form-control" name="allBag" id="allBag" placeholder="Ingrese el Producto Total x Bolsa">
+                 </div>
+                </div>
                 
-                <div style="display: flex;justify-content: space-evenly;margin-top: 4%;">
-                    <input type="button" id="btnAdd" class="btn btn-primary"  value="Más insumos" title="Agregar" style="font-size: 120%;" />                                  
-                    <input type="button" id="btnDel" class="btn btn-primary"  value="Menos insumos" title="Quitar" style="font-size: 120%;" />                     
+                <div style="display: flex;justify-content: space-evenly;margin-top: 4%;">   
+                  <input type="button" id="btnAdd" class="btn btn-primary"  value="Más insumos" title="Agregar" style="font-size: 120%;" /> <input type="button" id="btnDel" class="btn btn-primary"  value="Menos insumos" title="Quitar" style="font-size: 120%;" />                     
                 </div>
 
                </div>
               </div>
-              <div class="col-md-12">
-                <button type="submit" name="add_product" class="btn btn-danger col-md-6 col-md-offset-3">ENVIAR</button>
+              <div class="col-md-12">                
+                <button class="btn btn-danger col-md-6 col-md-offset-3" type="button" id="ok">ENVIAR</button>
               </div>              
           </form>         
           
          </div>
         </div>
       </div>
+
       <div class="col-md-6">
           <div class="panel panel-default">
             <div class="panel-heading">
-              <strong>
-                
+              <strong>                
                 <div style="display: flex;justify-content: space-evenly;">
                   <span ><span class="glyphicon glyphicon-gift"></span> Producto: <span id="nameCost"></span></span>
                   <span ><span class="glyphicon glyphicon-gift"></span> Categoria: <span id="nameCost2"></span></span>  
@@ -187,23 +149,92 @@
       </div>
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
 
-  <script type="text/javascript">    
+  <script type="text/javascript">  
+
+    $("#ok").on('click', function() {
+          var formData= new FormData($("#frm_conformidad")[0]);
+          numero_compra='numcompra';
+          formData.append("numcompra", numero_compra);
+          
+          $.ajax({
+              method: "POST",
+              url: "verificar.php",
+              data: formData,
+              contentType: false,
+               processData: false,
+               beforeSend: function () {
+                 console.log(formData);
+               },
+              success: function(resp){
+                //alert(resp);
+                    $('#resultado').html(resp);
+                }   
+            })
+              formData.append('part_description', 'The best part ever!'); //esto no me lo reconoce en el archivo php que mando
+                          var datos='holas';
+            
+          });
+
+    function enviar(){              
+                //var allBag = $("#allBag").val();
+                var formData= new FormData($("#frm_conformidad")[0]);
+                $.post("verificar.php", { 'formData': formData}, function(data){
+                $("#resultado").html(data);
+                });     
+              }
+
     function redireccionar2(obj) {
     var valorSeleccionado = obj.options[obj.selectedIndex].text; 
     $("#nameCost2").html(valorSeleccionado);    
     }
     function redireccionar(obj) {
-      /*if ( valorSeleccionado != "" || valorSeleccionado2 != "" ) {                     
-      }*/
-    var valorSeleccionado = obj.options[obj.selectedIndex].value;        
-    var valorSeleccionado2 = obj.options[obj.selectedIndex].text;        
-      $.post("getData.php",{ 'valorSeleccionado': valorSeleccionado,'valorSeleccionado2': valorSeleccionado2 }, function(data){
-       if (data.length<=10) {                   
-         $("#aqui").val(data);           
-       }else{          
-         $("#content").html(data);           
-       }       
-    }); 
+      var valorSeleccionado = obj.options[obj.selectedIndex].value;        
+      var valorSeleccionado2 = obj.options[obj.selectedIndex].text; 
+
+      if ( valorSeleccionado != "") {  
+        $.post("getData.php",{ 'valorSeleccionado': valorSeleccionado }, function(data){
+        switch( obj.id ){
+           case "expense":
+                            $("#measure").val(data);
+                            break;
+           case "ID2_expense":
+                            $("#ID2_measure").val(data); 
+                            break;
+           case "ID3_expense":
+                            $("#ID3_measure").val(data);   
+                            break;
+           case "ID4_expense":
+                             $("#ID4_measure").val(data);
+                             break;
+           case "ID5_expense":
+                             $("#ID5_measure").val(data); 
+                             break;
+           case "ID6_expense":
+                             $("#ID6_measure").val(data);   
+                             break;
+           case "ID7_expense":
+                              $("#ID7_measure").val(data);
+                              break;
+           case "ID8_expense":
+                           $("#ID8_measure").val(data); 
+                            break;
+           case "ID9_expense":
+                            $("#ID9_measure").val(data);   
+                            break; 
+           case "ID10_expense":
+                             $("#ID10_measure").val(data);   
+                             break; 
+
+            }
+        }); 
+      }
+
+      if ( valorSeleccionado2 != "") {  
+
+            $.post("getData.php",{ 'valorSeleccionado': valorSeleccionado2 }, function(data){
+             $("#content").html(data);        
+          }); 
+      }        
     }    
     $(document).ready(function () {
         $("#product-title").keyup(function () {
@@ -214,27 +245,28 @@
         $('#btnAdd').click(function() {
             var num     = $('.clonedInput').length; // how many "duplicatable" input fields we currently have
             var newNum  = new Number(num + 1);      // the numeric ID of the new input field being added
-        
             // create the new element via clone(), and manipulate it's ID using newNum value
-            var newElem = $('#input' + num).clone().attr('id', 'input' + newNum);
-        
-            // manipulate the name/id values of the input inside the new element
-            newElem.children(':first').attr('id', 'name' + newNum).attr('name', 'name' + newNum);
+
+            var newElem = $('#entry' + num).clone().attr('id', 'entry' + newNum).fadeIn('slow'); 
+
+            newElem.find('.select_ttl').attr('id', 'ID' + newNum + '_expense').attr('name', 'ID' + newNum + '_expense').val('');
+            newElem.find('.input_fn').attr('id', 'ID' + newNum + '_unit').attr('name', 'ID' + newNum + '_unit').val('');
+            newElem.find('.input_ln').attr('id', 'ID' + newNum + '_measure').attr('name', 'ID' + newNum + '_measure').val('');
         
             // insert the new element after the last "duplicatable" input field
-            $('#input' + num).after(newElem);
+            $('#entry' + num).after(newElem);
         
             // enable the "remove" button
             $('#btnDel').attr('disabled',false);
         
             // business rule: you can only add 5 names
-            if (newNum == 6)
+            if (newNum == 10)
                 $('#btnAdd').attr('disabled','disabled');
         });               
         
         $('#btnDel').click(function() {
             var num = $('.clonedInput').length; // how many "duplicatable" input fields we currently have
-            $('#input' + num).remove();     // remove the last element
+            $('#entry' + num).remove();     // remove the last element
         
             // enable the "add" button
             $('#btnAdd').attr('disabled',false);

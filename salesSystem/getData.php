@@ -3,14 +3,11 @@
   // Checkin What level user has permission to view this page
   page_require_level(2);  
 ?>
-<?php $data = "";?>
-<?php $data2 = "";?>
 <?php $data = $_POST['valorSeleccionado'];?>
-<?php $data2 = $_POST['valorSeleccionado2'];?>
 
-<?php if (strlen($data2)>=4){?>
+<?php if (strlen($data)>=4){?>
 	<div style="text-align: center;">	
-		<?php echo "<img class='img-avatar img-circle' src='uploads/products/".$data2."' alt='' style='width: 250px;height: 240px;'>";?>
+		<?php echo "<img class='img-avatar img-circle' src='uploads/products/".$data."' alt='' style='width: 250px;height: 240px;'>";?>
 	</div>
 	<?php
 }else{
