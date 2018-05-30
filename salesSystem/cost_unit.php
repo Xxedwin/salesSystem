@@ -16,18 +16,18 @@
     <?php echo display_msg($msg); ?>
   </div>
 </div>
-  <div class="row">
+<div class="row">
+<form id="frm_conformidad">
   <div class="col-md-6">
       <div class="panel panel-default">
         <div class="panel-heading">
           <strong>
             <span class="glyphicon glyphicon-th"></span>
-            <span>Agregar costo del producto</span>
+            <span>Agregar datos del producto</span>
          </strong>
         </div>
         <div class="panel-body" style="padding: 15px 0px 15px 0px;">
-         <div class="col-md-12">
-          <form id="frm_conformidad" >
+         <div class="col-md-12">          
               <div class="form-group">
                 <div class="input-group">
                   <span class="input-group-addon">
@@ -61,14 +61,48 @@
                     </select>
                   </div>  
                 </div>
-              </div>              
-              <div class="panel-heading">
-                <strong>
-                  <span class="glyphicon glyphicon-th"></span>
-                  <span>AGREGAR INSUMOS:</span>
-               </strong>
+              </div>                          
+
+              <div class="panel panel-default">
+                <div class="panel-heading">
+                  <strong>                
+                    <div style="font-size: 12px;display: flex;justify-content: space-evenly;">
+                      <span ><span class="glyphicon glyphicon-gift"></span> Producto: <span id="nameCost"></span></span>
+                      <span ><span class="glyphicon glyphicon-gift"></span> Categoria: <span id="nameCost2"></span></span>  
+                    </div>                
+                 </strong>
+                </div>
+                <div class="panel-body">
+                 <div id="content" class="col-md-12">              
+                 </div>
+                 <div class="col-md-6 col-md-offset-3" style="margin-top: 20px;}">
+                  <div>
+                    <label  style="text-align: center; width: 100%;">COSTO UNITARIO</label>
+                  </div>             
+                  <div class="input-group">
+                     <span class="input-group-addon">                      
+                      <i class="glyphicon glyphicon-usd"></i>
+                     </span>                     
+                     <div id="result" readonly class="form-control"></div>                      
+                  </div>
+                 </div>
+                </div>
               </div>
-              <div class="form-group">
+         </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="panel panel-default">
+          <div class="panel-heading">
+            <strong>
+              <span class="glyphicon glyphicon-th"></span>
+              <span>AGREGAR INSUMOS DEL PRODUCTO</span>
+           </strong>
+          </div>
+          <div class="panel-body">
+             <div class="form-group">
                <div class="row clonedInput " id="entry1" style="margin-bottom:4px;">
                   <div class="col-md-6" >
                     <select onchange="redireccionar(this);" class="select_ttl form-control" name="expense" id="expense">
@@ -85,69 +119,37 @@
                         <i class="glyphicon glyphicon-cutlery"></i>
                       </span>
                       <div style="display:flex;">                        
-                        <input id="unit" name="unit" type="text" placeholder="Unidad" class="input_fn form-control">
-                        <input id="measure" name="measure" type="text" placeholder="" disabled class="input_ln form-control">
-                      </div>                      
-                      
+                        <div>
+                          <input id="unit" name="unit" type="text" placeholder="Unidad" class="input_fn form-control">  
+                        </div>
+                        <div>
+                          <input id="measure" name="measure" type="text" placeholder="" disabled class="input_ln form-control">  
+                        </div>
+                      </div>
                    </div>
                   </div>
               </div>
-                <div class="form-group">
-                  <div class="input-group">
-                    <span class="input-group-addon">
-                     <i class="glyphicon glyphicon-th-large"></i>
-                    </span>
-                    <input type="text" class="form-control" name="allBag" id="allBag" placeholder="Ingrese el Producto Total x Bolsa">
-                 </div>
-                </div>
-                
-                <div style="display: flex;justify-content: space-evenly;margin-top: 4%;">   
-                  <input type="button" onclick="more()" id="btnAdd" class="btn btn-primary"  value="Más insumos"  title="Agregar" style="font-size: 120%;" /> 
-                  <input type="button" onclick="less()" id="btnDel" class="btn btn-primary"  value="Menos insumos" title="Quitar" style="font-size: 120%;" />                     
-                </div>
-
+              <div class="form-group">
+                <div class="input-group">
+                  <span class="input-group-addon">
+                   <i class="glyphicon glyphicon-th-large"></i>
+                  </span>
+                  <input type="text" class="form-control" name="allBag" id="allBag" placeholder="Ingrese el Producto Total x Bolsa">
                </div>
-              </div>
-              <div class="col-md-12">                
-                <button class="btn btn-danger col-md-6 col-md-offset-3" type="button" id="ok">ENVIAR</button>
               </div>              
-          </form>         
-          
-         </div>
-        </div>
-      </div>
-
-      <div class="col-md-6">
-          <div class="panel panel-default">
-            <div class="panel-heading">
-              <strong>                
-                <div style="display: flex;justify-content: space-evenly;">
-                  <span ><span class="glyphicon glyphicon-gift"></span> Producto: <span id="nameCost"></span></span>
-                  <span ><span class="glyphicon glyphicon-gift"></span> Categoria: <span id="nameCost2"></span></span>  
-                </div>                
-             </strong>
-            </div>
-            <div class="panel-body">
-             <div id="content" class="col-md-12">              
-             </div>
-             <div class="col-md-6 col-md-offset-3" style="margin-top: 35px;}">
-              <div>
-                <label  style="text-align: center; width: 100%;">COSTO UNITARIO</label>
-              </div>             
-              <div class="input-group">
-                 <span class="input-group-addon">                      
-                  <i class="glyphicon glyphicon-usd"></i>
-                 </span>                     
-                 <div id="result" readonly class="form-control"></div>                      
+              <div style="display: flex;justify-content: space-evenly;margin-top: 4%;">   
+                <input type="button" onclick="more()" id="btnAdd" class="btn btn-primary"  value="Más insumos"  title="Agregar" style="font-size: 120%;" /> 
+                <input type="button" onclick="less()" id="btnDel" class="btn btn-primary"  value="Menos insumos" title="Quitar" style="font-size: 120%;" />                     
               </div>
-             </div>
             </div>
           </div>
-    </div>
-
-  </div>
-
-      </div>
+          </div>
+          <div class="col-md-12">                
+            <button class="btn btn-danger col-md-6 col-md-offset-3" type="button" id="ok">ENVIAR</button>
+          </div>
+      </div> 
+  </form>   
+</div>
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
 
   <script type="text/javascript">      
