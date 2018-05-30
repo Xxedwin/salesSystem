@@ -27,7 +27,7 @@
         </div>
         <div class="panel-body" style="padding: 15px 0px 15px 0px;">
          <div class="col-md-12">
-          <form id="frm_conformidad class="clearfix">
+          <form id="frm_conformidad" >
               <div class="form-group">
                 <div class="input-group">
                   <span class="input-group-addon">
@@ -39,7 +39,7 @@
               <div class="form-group">
                 <div class="row">
                   <div class="col-md-12">
-                    <select onchange="redireccionar2(this);" class="form-control" name="product-categorie">
+                    <select onchange="redireccionar(this);" class="form-control" name="product-categorie" id="product-categorie">
                       <option value="">Selecciona una categoría</option>
                     <?php  foreach ($all_categories as $cat): ?>
                       <option value="<?php echo (int)$cat['id'] ?>">
@@ -52,7 +52,7 @@
               <div class="form-group">
                 <div class="row">
                   <div class="col-md-12">
-                    <select onchange="redireccionar(this);" class="form-control" name="product-photo">
+                    <select onchange="redireccionar(this);" class="form-control" name="product-photo" id="product-photo">
                       <option value="">Selecciona una imagen</option>
                     <?php  foreach ($all_photo as $photo): ?>
                       <option value="<?php echo (int)$photo['id'] ?>">
@@ -102,7 +102,8 @@
                 </div>
                 
                 <div style="display: flex;justify-content: space-evenly;margin-top: 4%;">   
-                  <input type="button" id="btnAdd" class="btn btn-primary"  value="Más insumos" title="Agregar" style="font-size: 120%;" /> <input type="button" id="btnDel" class="btn btn-primary"  value="Menos insumos" title="Quitar" style="font-size: 120%;" />                     
+                  <input type="button" onclick="more()" id="btnAdd" class="btn btn-primary"  value="Más insumos"  title="Agregar" style="font-size: 120%;" /> 
+                  <input type="button" onclick="less()" id="btnDel" class="btn btn-primary"  value="Menos insumos" title="Quitar" style="font-size: 120%;" />                     
                 </div>
 
                </div>
@@ -137,7 +138,7 @@
                  <span class="input-group-addon">                      
                   <i class="glyphicon glyphicon-usd"></i>
                  </span>                     
-                 <div id="resultado" readonly class="form-control"></div>                      
+                 <div id="result" readonly class="form-control"></div>                      
               </div>
              </div>
             </div>
@@ -149,93 +150,113 @@
       </div>
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
 
-  <script type="text/javascript">  
-
-    $("#ok").on('click', function() {
-          var formData= new FormData($("#frm_conformidad")[0]);
-          numero_compra='numcompra';
-          formData.append("numcompra", numero_compra);
-          
-          $.ajax({
-              method: "POST",
-              url: "verificar.php",
-              data: formData,
-              contentType: false,
-               processData: false,
-               beforeSend: function () {
-                 console.log(formData);
-               },
-              success: function(resp){
-                //alert(resp);
-                    $('#resultado').html(resp);
-                }   
-            })
-              formData.append('part_description', 'The best part ever!'); //esto no me lo reconoce en el archivo php que mando
-                          var datos='holas';
-            
-          });
-
-    function enviar(){              
-                //var allBag = $("#allBag").val();
-                var formData= new FormData($("#frm_conformidad")[0]);
-                $.post("verificar.php", { 'formData': formData}, function(data){
-                $("#resultado").html(data);
-                });     
-              }
-
-    function redireccionar2(obj) {
-    var valorSeleccionado = obj.options[obj.selectedIndex].text; 
-    $("#nameCost2").html(valorSeleccionado);    
+  <script type="text/javascript">      
+    b=0;
+    function less(){
+      b=b+1;      
     }
+    a=1;
+    function more(){
+      a=a+1;
+    }   
     function redireccionar(obj) {
-      var valorSeleccionado = obj.options[obj.selectedIndex].value;        
-      var valorSeleccionado2 = obj.options[obj.selectedIndex].text; 
+      var valorSeleccionado = obj.options[obj.selectedIndex].value;              
+      var valorSeleccionado2 =  document.getElementById("product-photo").value;
+      var valorSeleccionado3 =  document.getElementById("product-categorie").value;
 
       if ( valorSeleccionado != "") {  
         $.post("getData.php",{ 'valorSeleccionado': valorSeleccionado }, function(data){
-        switch( obj.id ){
-           case "expense":
-                            $("#measure").val(data);
-                            break;
-           case "ID2_expense":
-                            $("#ID2_measure").val(data); 
-                            break;
-           case "ID3_expense":
-                            $("#ID3_measure").val(data);   
-                            break;
-           case "ID4_expense":
-                             $("#ID4_measure").val(data);
-                             break;
-           case "ID5_expense":
-                             $("#ID5_measure").val(data); 
-                             break;
-           case "ID6_expense":
-                             $("#ID6_measure").val(data);   
-                             break;
-           case "ID7_expense":
-                              $("#ID7_measure").val(data);
-                              break;
-           case "ID8_expense":
-                           $("#ID8_measure").val(data); 
-                            break;
-           case "ID9_expense":
-                            $("#ID9_measure").val(data);   
-                            break; 
-           case "ID10_expense":
-                             $("#ID10_measure").val(data);   
-                             break; 
-
+          if (obj.id=="expense") {
+            $("#measure").val(data);
+          }   
+          var i=2;                               
+          while(i<=(a-b)){
+            expense="ID"+i+"_expense";
+            measure="#ID"+i+"_measure";
+            switch( obj.id ){
+              case expense:
+                  $(measure).val(data);
+              break;
             }
+            i=i+1;               
+          }        
         }); 
       }
 
-      if ( valorSeleccionado2 != "") {  
-
+      if ( valorSeleccionado2 != "") {              
+            var id = document.getElementById("product-photo");
+            var valorSeleccionado2 = id.options[id.selectedIndex].text;            
             $.post("getData.php",{ 'valorSeleccionado': valorSeleccionado2 }, function(data){
              $("#content").html(data);        
           }); 
+      }
+
+      if ( valorSeleccionado3 != "") {              
+            var id = document.getElementById("product-categorie");
+            var valorSeleccionado3 = id.options[id.selectedIndex].text;            
+            $("#nameCost2").html(valorSeleccionado3); 
       }        
     }    
+
+    $("#ok").on('click', function() { 
+          var formData= new FormData();       
+          var expense =$('#expense').val();
+          formData.append("expense", expense);
+          var i=1;          
+          var array= new Array;
+          enumerate=0; 
+
+          while(i<(a-b)){          
+            i=i+1;                                           
+            array.push("#ID"+i+"_expense");             
+            var dataExpense =$(array[enumerate]).val();
+            formData.append(array[enumerate], dataExpense);
+            enumerate=enumerate+1;
+          }         
+          
+          $.ajax({
+              method: "POST",
+              url: "getCost.php",
+              data: formData,
+              contentType: false,
+               processData: false,
+               beforeSend: function () {                 
+                 /*for (var pair of formData.entries()) {
+                     console.log(pair[0]+ ', ' + pair[1]); 
+                 }*/                 
+               },
+              success: function(data){                
+                response = JSON.parse(data);                
+                size=Object.keys(response).length;               
+                unitFirst =$('#unit').val();
+                allBag =$('#allBag').val();
+                valueFirst=response[0]*parseFloat(unitFirst); 
+                i=1;
+                content=0;
+                enumerate=2;                
+                while(i<size){
+
+                  value='#ID'+enumerate+'_unit';
+                  valueResult =$(value).val();                  
+                  valueAll=response[i]*parseFloat(valueResult);
+                  content=parseFloat(content)+parseFloat(valueAll);                                       
+                  i=i+1;
+                  enumerate=enumerate+1;
+                }
+
+                allInput=parseFloat(content)+parseFloat(valueFirst);                
+                allLabor=parseFloat(2.5)*parseFloat(unitFirst);                
+                gas=parseFloat(0.36)*parseFloat(unitFirst);
+                allCost=parseFloat(allInput)+parseFloat(allLabor)+parseFloat(gas);                
+                costUnit=parseFloat(allCost)/parseFloat(allBag);
+                costUnit=costUnit.toFixed(2);
+
+                $("#result").html(costUnit);                    
+                }   
+            })
+                          
+          });    
+
     $(document).ready(function () {
         $("#product-title").keyup(function () {
             var value = $(this).val();
@@ -260,7 +281,7 @@
             $('#btnDel').attr('disabled',false);
         
             // business rule: you can only add 5 names
-            if (newNum == 10)
+            if (newNum == 15)
                 $('#btnAdd').attr('disabled','disabled');
         });               
         

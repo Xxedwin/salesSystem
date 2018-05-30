@@ -29,6 +29,7 @@ if(!$productExpense){
        $p_dis   = (int)$_POST['productExpense-distributor'];
        $p_qty   = remove_junk($db->escape($_POST['productExpense-quantity']));
        $p_buy   = remove_junk($db->escape($_POST['buying-price']));       
+       $p_measure   = remove_junk($db->escape($_POST['measure_id']));       
        if (is_null($_POST['productExpense-photo']) || $_POST['productExpense-photo'] === "") {
          $media_id = '0';
        } else {
@@ -36,7 +37,7 @@ if(!$productExpense){
        }
        $query   = "UPDATE production_expenses SET";
        $query  .=" name ='{$p_name}', mark ='{$p_mark}', unit ='{$p_unit}', presentation ='{$p_presentation}', quantity ='{$p_qty}',";
-       $query  .=" buy_price ='{$p_buy}', categorie_id ='{$p_cat}', distributor_id ='{$p_dis}',media_id='{$media_id}'";
+       $query  .=" buy_price ='{$p_buy}', categorie_id ='{$p_cat}', distributor_id ='{$p_dis}',media_id='{$media_id}',measure_id='{$p_measure}'";
        $query  .=" WHERE id ='{$productExpense['id']}'";
        $result = $db->query($query);
                if($result && $db->affected_rows() === 1){

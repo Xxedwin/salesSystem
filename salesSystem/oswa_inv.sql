@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 27-05-2018 a las 03:33:34
+-- Tiempo de generación: 30-05-2018 a las 07:44:32
 -- Versión del servidor: 10.1.31-MariaDB
 -- Versión de PHP: 7.2.4
 
@@ -42,6 +42,7 @@ INSERT INTO `categories` (`id`, `name`) VALUES
 (3, 'gaseosas'),
 (7, 'Materias Directos'),
 (5, 'paneton'),
+(8, 'Pasteles'),
 (4, 'QUEQUE'),
 (1, 'Repuestos');
 
@@ -84,7 +85,8 @@ INSERT INTO `measures` (`id`, `name`) VALUES
 (3, 'lt'),
 (4, 'gr'),
 (5, 'paquete'),
-(6, 'ml');
+(6, 'ml'),
+(7, 'Unit');
 
 -- --------------------------------------------------------
 
@@ -104,7 +106,8 @@ CREATE TABLE `media` (
 
 INSERT INTO `media` (`id`, `file_name`, `file_type`) VALUES
 (1, 'filter.jpg', 'image/jpeg'),
-(2, 'bolsa.png', 'image/png');
+(2, 'bolsa.png', 'image/png'),
+(3, 'pay_manzana.jpg', 'image/jpeg');
 
 -- --------------------------------------------------------
 
@@ -164,8 +167,8 @@ CREATE TABLE `production_expenses` (
 
 INSERT INTO `production_expenses` (`id`, `name`, `quantity`, `buy_price`, `categorie_id`, `media_id`, `date`, `mark`, `unit`, `presentation`, `distributor_id`, `measure_id`) VALUES
 (5, 'azucar', '1', '142.00', 7, 0, '2018-05-26 17:36:33', '', '50', 'saco', 3, 1),
-(6, 'sal', '1', '1.00', 7, 0, '2018-05-26 17:36:59', '', '1', 'paquete', 3, 2),
-(7, 'Harina', '1', '87.00', 7, 0, '2018-05-26 18:32:36', '', '50', 'saco', 3, 1),
+(6, 'sal', '1', '1.00', 7, 0, '2018-05-26 17:36:59', '', '1', 'paquete', 3, 1),
+(7, 'Harina', '5', '87.00', 7, 0, '2018-05-26 18:32:36', '', '50', 'saco', 3, 1),
 (8, 'Levadura', '1', '7.00', 7, 0, '2018-05-26 18:39:59', '', '0.48', 'paquete', 3, 5),
 (9, 'Manteca', '1', '55.00', 7, 0, '2018-05-26 18:57:25', '', '10', 'Caja', 3, 1),
 (10, 'Mejorador', '1', '35.00', 7, 0, '2018-05-26 18:57:59', '', '5', 'bolsa', 3, 1),
@@ -173,7 +176,12 @@ INSERT INTO `production_expenses` (`id`, `name`, `quantity`, `buy_price`, `categ
 (12, 'Colorante', '1', '8.00', 7, 0, '2018-05-26 19:00:29', '', '0.37', 'Frasco', 3, 4),
 (13, 'Es. De paneton', '1', '15.00', 7, 0, '2018-05-26 19:01:06', '', '0.25', 'Frasco', 3, 6),
 (14, 'Fruta Confitada', '1', '70.00', 7, 0, '2018-05-26 19:01:34', '', '10', 'Caja ', 3, 1),
-(15, 'Leche ', '1', '4.50', 7, 0, '2018-05-26 19:03:11', '', '1000', 'Caja ', 3, 3);
+(15, 'Leche ', '10', '4.50', 7, 0, '2018-05-26 19:03:11', '', '1000', 'Caja ', 3, 3),
+(16, 'Manzana', '1', '4.00', 7, 0, '2018-05-30 00:20:06', '', '1', '', 3, 1),
+(17, 'Crema pastelera', '1', '30.00', 7, 0, '2018-05-30 00:22:21', '', '4', '', 3, 1),
+(18, 'Aconcagua', '1', '5.50', 7, 0, '2018-05-30 00:24:26', '', '1', '', 3, 7),
+(19, 'Azucar impalpable', '1', '6.00', 7, 0, '2018-05-30 00:26:47', '', '1', '', 3, 1),
+(20, 'Huevos', '1', '12.00', 7, 0, '2018-05-30 00:29:39', '', '30', '', 3, 7);
 
 -- --------------------------------------------------------
 
@@ -240,7 +248,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `username`, `password`, `user_level`, `image`, `status`, `last_login`) VALUES
-(1, 'Admin Users', 'admin', 'd033e22ae348aeb5660fc2140aec35850c4da997', 1, 'pzg9wa7o1.jpg', 1, '2018-05-26 15:56:44'),
+(1, 'Admin Users', 'admin', 'd033e22ae348aeb5660fc2140aec35850c4da997', 1, 'pzg9wa7o1.jpg', 1, '2018-05-29 21:42:00'),
 (2, 'Special User', 'special', 'ba36b97a41e7faf742ab09bf88405ac04f99599a', 2, 'no_image.jpg', 1, '2017-06-16 07:11:26'),
 (3, 'Default User', 'user', '12dea96fec20593566ab75692c9949596833adc9', 3, 'no_image.jpg', 1, '2017-06-16 07:11:03');
 
@@ -348,7 +356,7 @@ ALTER TABLE `user_groups`
 -- AUTO_INCREMENT de la tabla `categories`
 --
 ALTER TABLE `categories`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT de la tabla `distributors`
@@ -360,13 +368,13 @@ ALTER TABLE `distributors`
 -- AUTO_INCREMENT de la tabla `measures`
 --
 ALTER TABLE `measures`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT de la tabla `media`
 --
 ALTER TABLE `media`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `processed_products`
@@ -378,7 +386,7 @@ ALTER TABLE `processed_products`
 -- AUTO_INCREMENT de la tabla `production_expenses`
 --
 ALTER TABLE `production_expenses`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT de la tabla `products`
