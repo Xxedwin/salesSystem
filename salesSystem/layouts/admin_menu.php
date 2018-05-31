@@ -34,11 +34,16 @@
     </a>
   </li>
   <li>
-    <a href="cost_unit.php" >
+    <a href="#" class="submenu-toggle">
       <i class="glyphicon glyphicon-usd"></i>
       <span>Costo Producto</span>
     </a>
+    <ul class="nav submenu">
+       <li><a href="cost_unit.php">Administrar costo producto</a> </li>
+       <li><a href="add_cost.php">Agregar costo producto</a> </li>
+   </ul>
   </li>
+
   <li>
     <a href="#" class="submenu-toggle">
       <i class="glyphicon glyphicon-th-large"></i>

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 30-05-2018 a las 22:19:28
+-- Tiempo de generación: 31-05-2018 a las 21:13:44
 -- Versión del servidor: 10.1.31-MariaDB
 -- Versión de PHP: 7.2.4
 
@@ -45,6 +45,36 @@ INSERT INTO `categories` (`id`, `name`) VALUES
 (8, 'Pasteles'),
 (4, 'QUEQUE'),
 (1, 'Repuestos');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `cost`
+--
+
+CREATE TABLE `cost` (
+  `id` int(11) NOT NULL,
+  `harina` varchar(50) CHARACTER SET utf8 DEFAULT NULL,
+  `manteca` varchar(50) CHARACTER SET utf8 DEFAULT NULL,
+  `azucar` varchar(50) CHARACTER SET utf8 DEFAULT NULL,
+  `sal` varchar(50) CHARACTER SET utf8 DEFAULT NULL,
+  `levadura` varchar(50) CHARACTER SET utf8 DEFAULT NULL,
+  `pollo` varchar(50) DEFAULT NULL,
+  `hot dog` varchar(50) CHARACTER SET utf8 DEFAULT NULL,
+  `queso` varchar(50) CHARACTER SET utf8 DEFAULT NULL,
+  `carne molida` varchar(50) CHARACTER SET utf8 DEFAULT NULL,
+  `mayonesa` varchar(50) CHARACTER SET utf8 DEFAULT NULL,
+  `cebolla` varchar(50) CHARACTER SET utf8 DEFAULT NULL,
+  `arveja moron` varchar(50) CHARACTER SET utf8 DEFAULT NULL,
+  `rocoto perejil` varchar(50) CHARACTER SET utf8 DEFAULT NULL,
+  `aceite` varchar(50) CHARACTER SET utf8 DEFAULT NULL,
+  `leche fresca` varchar(50) CHARACTER SET utf8 DEFAULT NULL,
+  `bicarbonato` varchar(50) CHARACTER SET utf8 DEFAULT NULL,
+  `escencia de vainilla` varchar(50) CHARACTER SET utf8 DEFAULT NULL,
+  `unit` varchar(50) CHARACTER SET utf8 DEFAULT NULL,
+  `esencia de paneton` varchar(50) CHARACTER SET utf8 DEFAULT NULL,
+  `expense_id` int(11) UNSIGNED NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -248,7 +278,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `username`, `password`, `user_level`, `image`, `status`, `last_login`) VALUES
-(1, 'Admin Users', 'admin', 'd033e22ae348aeb5660fc2140aec35850c4da997', 1, 'pzg9wa7o1.jpg', 1, '2018-05-30 15:13:11'),
+(1, 'Admin Users', 'admin', 'd033e22ae348aeb5660fc2140aec35850c4da997', 1, 'pzg9wa7o1.jpg', 1, '2018-05-31 13:53:10'),
 (2, 'Special User', 'special', 'ba36b97a41e7faf742ab09bf88405ac04f99599a', 2, 'no_image.jpg', 1, '2017-06-16 07:11:26'),
 (3, 'Default User', 'user', '12dea96fec20593566ab75692c9949596833adc9', 3, 'no_image.jpg', 1, '2017-06-16 07:11:03');
 
@@ -284,6 +314,12 @@ INSERT INTO `user_groups` (`id`, `group_name`, `group_level`, `group_status`) VA
 ALTER TABLE `categories`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `name` (`name`);
+
+--
+-- Indices de la tabla `cost`
+--
+ALTER TABLE `cost`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indices de la tabla `distributors`
@@ -357,6 +393,12 @@ ALTER TABLE `user_groups`
 --
 ALTER TABLE `categories`
   MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
+-- AUTO_INCREMENT de la tabla `cost`
+--
+ALTER TABLE `cost`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `distributors`
