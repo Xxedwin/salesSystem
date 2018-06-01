@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 01-06-2018 a las 03:11:29
+-- Tiempo de generación: 01-06-2018 a las 22:57:58
 -- Versión del servidor: 10.1.31-MariaDB
 -- Versión de PHP: 7.2.4
 
@@ -86,19 +86,18 @@ CREATE TABLE `cost_product` (
   `id` int(11) UNSIGNED NOT NULL,
   `expense_id` int(11) NOT NULL,
   `cost_unit` varchar(50) NOT NULL,
-  `quantity` varchar(50) CHARACTER SET utf8 NOT NULL
+  `quantity` varchar(50) CHARACTER SET utf8 NOT NULL,
+  `categorie_id` int(11) UNSIGNED NOT NULL,
+  `media_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `cost_product`
 --
 
-INSERT INTO `cost_product` (`id`, `expense_id`, `cost_unit`, `quantity`) VALUES
-(1, 3, '2', 'Array'),
-(2, 0, '3.86', '1'),
-(3, 28, '1.93', '4'),
-(4, 28, '0.77', '5'),
-(5, 8, '0.01', '555');
+INSERT INTO `cost_product` (`id`, `expense_id`, `cost_unit`, `quantity`, `categorie_id`, `media_id`) VALUES
+(10, 14, '0.10', '40', 8, 4),
+(11, 15, '0.43', '12', 8, 3);
 
 -- --------------------------------------------------------
 
@@ -167,6 +166,33 @@ INSERT INTO `media` (`id`, `file_name`, `file_type`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `presentations`
+--
+
+CREATE TABLE `presentations` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) CHARACTER SET utf8 NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `presentations`
+--
+
+INSERT INTO `presentations` (`id`, `name`) VALUES
+(1, 'Caja'),
+(2, 'saco'),
+(3, 'bolsa'),
+(4, 'balde'),
+(5, 'paquete'),
+(6, 'lata'),
+(7, 'sobre'),
+(8, 'botella'),
+(9, 'tarro'),
+(10, 'envase');
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `processed_products`
 --
 
@@ -196,7 +222,13 @@ INSERT INTO `processed_products` (`id`, `name`, `quantity`, `buy_price`, `sale_p
 (6, 'redondo', '1', '6.00', '12.00', 4, 0, '2018-05-19 17:20:42', NULL, 'molde', 'grande', 0),
 (7, 'TORTA CHOCOLATE', NULL, NULL, '0.00', 3, 3, '0000-00-00 00:00:00', NULL, NULL, NULL, 0),
 (8, 'ss', NULL, NULL, '0.00', 3, 3, '0000-00-00 00:00:00', NULL, NULL, NULL, 0),
-(9, 'ddd', NULL, NULL, '0.00', 2, 3, '0000-00-00 00:00:00', NULL, NULL, NULL, 0);
+(9, 'ddd', NULL, NULL, '0.00', 2, 3, '0000-00-00 00:00:00', NULL, NULL, NULL, 0),
+(10, 'AA', NULL, NULL, '0.00', 2, 2, '0000-00-00 00:00:00', NULL, NULL, NULL, 0),
+(11, 'eee', NULL, NULL, '0.00', 2, 2, '0000-00-00 00:00:00', NULL, NULL, NULL, 0),
+(12, 'qqq', NULL, NULL, '0.00', 2, 2, '0000-00-00 00:00:00', NULL, NULL, NULL, 0),
+(13, 'PAY DE MANZANA', NULL, NULL, '0.00', 8, 3, '0000-00-00 00:00:00', NULL, NULL, NULL, 0),
+(14, 'PASTEL DE CHOCOLATE', NULL, NULL, '0.00', 8, 4, '0000-00-00 00:00:00', NULL, NULL, NULL, 0),
+(15, 'PAY DE MANZANA', NULL, NULL, '0.00', 8, 3, '0000-00-00 00:00:00', NULL, NULL, NULL, 0);
 
 -- --------------------------------------------------------
 
@@ -314,7 +346,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `username`, `password`, `user_level`, `image`, `status`, `last_login`) VALUES
-(1, 'Admin Users', 'admin', 'd033e22ae348aeb5660fc2140aec35850c4da997', 1, 'pzg9wa7o1.jpg', 1, '2018-05-31 17:34:04'),
+(1, 'Admin Users', 'admin', 'd033e22ae348aeb5660fc2140aec35850c4da997', 1, 'pzg9wa7o1.jpg', 1, '2018-06-01 14:22:55'),
 (2, 'Special User', 'special', 'ba36b97a41e7faf742ab09bf88405ac04f99599a', 2, 'no_image.jpg', 1, '2017-06-16 07:11:26'),
 (3, 'Default User', 'user', '12dea96fec20593566ab75692c9949596833adc9', 3, 'no_image.jpg', 1, '2017-06-16 07:11:03');
 
@@ -383,6 +415,12 @@ ALTER TABLE `media`
   ADD KEY `id` (`id`);
 
 --
+-- Indices de la tabla `presentations`
+--
+ALTER TABLE `presentations`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indices de la tabla `processed_products`
 --
 ALTER TABLE `processed_products`
@@ -446,7 +484,7 @@ ALTER TABLE `cost`
 -- AUTO_INCREMENT de la tabla `cost_product`
 --
 ALTER TABLE `cost_product`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT de la tabla `distributors`
@@ -467,10 +505,16 @@ ALTER TABLE `media`
   MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
+-- AUTO_INCREMENT de la tabla `presentations`
+--
+ALTER TABLE `presentations`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
 -- AUTO_INCREMENT de la tabla `processed_products`
 --
 ALTER TABLE `processed_products`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT de la tabla `production_expenses`
