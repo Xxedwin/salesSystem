@@ -12,6 +12,21 @@ function find_all($table) {
    }
 }
 /*--------------------------------------------------------------*/
+/* Function for find the last element create
+/*--------------------------------------------------------------*/
+function  id_expenses() {
+   global $db;
+
+   if(tableExists($table))
+   {     
+     $sql = $db->query("SELECT id FROM processed_products ORDER BY id DESC LIMIT 1");
+     if($result = $db->fetch_assoc($sql))
+       return $result;
+     else
+       return null;
+   }
+}
+/*--------------------------------------------------------------*/
 /* Function for Perform queries
 /*--------------------------------------------------------------*/
 function find_by_sql($sql)
@@ -27,8 +42,11 @@ function find_by_sql($sql)
 function find_by_id($table,$id)
 {
   global $db;
+
   $id = (int)$id;
+
     if(tableExists($table)){
+
           $sql = $db->query("SELECT * FROM {$db->escape($table)} WHERE id='{$db->escape($id)}' LIMIT 1");
           if($result = $db->fetch_assoc($sql))
             return $result;

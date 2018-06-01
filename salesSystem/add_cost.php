@@ -17,7 +17,7 @@
   </div>
 </div>
 <div class="row">
-<form id="frm_conformidad">
+<form action="save_cost.php" method="post"  class="clearfix">
   <div class="col-md-6">
       <div class="panel panel-default">
         <div class="panel-heading">
@@ -75,7 +75,7 @@
                 <div class="panel-body">
                  <div id="content" class="col-md-12">              
                  </div>
-                 <div class="col-md-6 col-md-offset-3" style="margin-top: 20px;}">
+                 <div class="col-md-6 col-md-offset-3" style="margin-top: 20px;">
                   <div>
                     <label  style="text-align: center; width: 100%;">COSTO UNITARIO</label>
                   </div>             
@@ -83,7 +83,8 @@
                      <span class="input-group-addon">                      
                       <i class="glyphicon glyphicon-usd"></i>
                      </span>                     
-                     <div id="result" readonly class="form-control"></div>                      
+                     <!-- <div id="result" readonly class="form-control"></div>    -->
+                     <input type="text" readonly class="form-control" name="result" id="result" placeholder="resultado">                  
                   </div>
                  </div>
                 </div>
@@ -103,7 +104,7 @@
           </div>
           <div class="panel-body">
              <div class="form-group">
-               <div class="row clonedInput " id="entry1" style="margin-bottom:4px;">
+               <div class="row clonedInput " id="entry1" style="margin-bottom:4px;opacity: 15;">
                   <div class="col-md-6" >
                     <select onchange="redireccionar(this);" class="select_ttl form-control" name="expense" id="expense">
                       <option value="">Selecciona un insumo</option>
@@ -145,7 +146,8 @@
           </div>
           </div>
           <div class="col-md-12">                
-            <button class="btn btn-danger col-md-6 col-md-offset-3" type="button" id="ok">ENVIAR</button>
+            <button class="btn btn-danger col-md-6 col-md-offset-3" type="button" id="ok">VERIFICAR</button>
+            <button type="submit" name="add_product" class="btn btn-success col-md-6 col-md-offset-3" style="margin-top: 8px;">GUARDAR CAMBIOS</button>
           </div>
       </div> 
   </form>   
@@ -253,11 +255,37 @@
                 costUnit=parseFloat(allCost)/parseFloat(allBag);
                 costUnit=costUnit.toFixed(2);
 
-                $("#result").html(costUnit);                    
+                $("#result").val(costUnit);                    
                 }   
             })
                           
           });    
+
+
+    $("#frm_conformidad").submit(function(event){
+
+                event.preventDefault(); // cancel submit
+                        var formData= new FormData($("#frm_conformidad")[0]);
+                        //var incidente_id=$("#incidente_id").val();
+                        //console.log(incidente_id);
+                        $.ajax({
+                             type: "POST",
+                             url: 'save_cost.php',
+                             data: formData,
+                             contentType: false,
+                             processData: false,
+                             beforeSend: function (response) {
+                                /*$("frm_conformidad").submit();
+                                $("#modal-acta3").modal("toggle");*/
+                             },
+                              success: function(response)
+                              {                              
+                                  
+                                  //CargarDetalle('mesa_de_ayuda/detalle_incidente',incidente_id);
+                              }
+                          });
+                });
+
 
     $(document).ready(function () {
         $("#product-title").keyup(function () {
