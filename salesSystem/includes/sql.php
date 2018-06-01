@@ -255,6 +255,22 @@ function tableExists($table){
 
     }
      /*--------------------------------------------------------------*/
+     /* Function for Finding all processed_products name
+     /* JOIN with categorie  and media database table
+     /*--------------------------------------------------------------*/
+    function join_costProduct_table(){
+       global $db;
+       $sql  =" SELECT co.id,co.expense_id,co.cost_unit,co.media_id,c.name";
+      $sql  .=" AS categorie,m.file_name AS image,p.name AS name,p.unit AS unit,p.presentation AS presentation";
+      $sql  .=" FROM cost_product co";
+      $sql  .=" LEFT JOIN categories c ON c.id = co.categorie_id";      
+      $sql  .=" LEFT JOIN media m ON m.id = co.media_id";
+      $sql  .=" LEFT JOIN processed_products p ON p.id = co.expense_id";
+      $sql  .=" ORDER BY co.id ASC";
+      return find_by_sql($sql);
+
+     }
+     /*--------------------------------------------------------------*/
      /* Function for Finding all production_expenses name
      /* JOIN with categorie  and media database table
      /*--------------------------------------------------------------*/
