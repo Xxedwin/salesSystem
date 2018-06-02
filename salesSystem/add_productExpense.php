@@ -7,6 +7,8 @@
   $all_distributors = find_all('distributors');
   $all_photo = find_all('media');
   $all_measures = find_all('measures');
+  $all_presentations = find_all('presentations');
+
 ?>
 <?php 
  if(isset($_POST['add_productExpense'])){
@@ -29,9 +31,9 @@
      }
      $date    = make_date();
      $query  = "INSERT INTO production_expenses (";
-     $query .=" name,quantity,buy_price,categorie_id,distributor_id,media_id,date,mark,unit,presentation,measure_id";
+     $query .=" name,quantity,buy_price,categorie_id,distributor_id,media_id,date,mark,unit,measure_id,presentation_id";
      $query .=") VALUES (";
-     $query .=" '{$p_name}', '{$p_qty}', '{$p_buy}', '{$p_cat}', '{$p_dis}', '{$media_id}', '{$date}','{$p_mark}','{$p_unit}','{$p_presentation}', '{$p_measure}'";
+     $query .=" '{$p_name}', '{$p_qty}', '{$p_buy}', '{$p_cat}', '{$p_dis}', '{$media_id}', '{$date}','{$p_mark}','{$p_unit}', '{$p_measure}','{$p_presentation}'";
      $query .=")";
      $query .=" ON DUPLICATE KEY UPDATE name='{$p_name}'";
      if($db->query($query)){
@@ -110,7 +112,13 @@
                   <span class="input-group-addon">
                    <i class="glyphicon glyphicon-th-large"></i>
                   </span>
-                  <input type="text" class="form-control" name="productExpense-presentation" placeholder="Presentacion">
+                  <select class="form-control" name="productExpense-presentation">
+                    <option value="">Selecciona una presentacion</option>
+                  <?php  foreach ($all_presentations as $presentation): ?>
+                    <option value="<?php echo (int)$presentation['id'] ?>">
+                      <?php echo $presentation['name'] ?></option>
+                  <?php endforeach; ?>
+                  </select>
                </div>
               </div>
               <div class="form-group">

@@ -5,7 +5,9 @@
   page_require_level(2);
   $all_categories = find_all('categories');
   $all_distributors = find_all('distributors');
-  $all_photo = find_all('media');
+  $all_photo = find_all('media');  
+  $all_measures = find_all('measures');
+  $all_presentations = find_all('presentations');
 ?>
 <?php 
  if(isset($_POST['add_processProduct'])){
@@ -19,6 +21,7 @@
      $p_qty   = remove_junk($db->escape($_POST['processProduct-quantity']));
      $p_buy   = remove_junk($db->escape($_POST['buying-price']));
      $p_sale  = remove_junk($db->escape($_POST['saleing-price']));
+     $p_measure   = remove_junk($db->escape($_POST['measure_id']));   
      if (is_null($_POST['processProduct-photo']) || $_POST['processProduct-photo'] === "") {
        $media_id = '0';
      } else {
@@ -26,9 +29,9 @@
      }
      $date    = make_date();
      $query  = "INSERT INTO processed_products (";
-     $query .=" name,quantity,buy_price,sale_price,categorie_id,media_id,date,unit,presentation";
+     $query .=" name,quantity,buy_price,sale_price,categorie_id,media_id,date,unit,presentation_id,measure_id";
      $query .=") VALUES (";
-     $query .=" '{$p_name}', '{$p_qty}', '{$p_buy}', '{$p_sale}', '{$p_cat}', '{$media_id}', '{$date}','{$p_unit}','{$p_presentation}'";
+     $query .=" '{$p_name}', '{$p_qty}', '{$p_buy}', '{$p_sale}', '{$p_cat}', '{$media_id}', '{$date}','{$p_unit}','{$p_presentation}','{$p_measure}'";
      $query .=")";
      $query .=" ON DUPLICATE KEY UPDATE name='{$p_name}'";
      if($db->query($query)){
@@ -69,7 +72,7 @@
                 <div class="input-group">
                   <span class="input-group-addon">
                    <i class="glyphicon glyphicon-th-large"></i>
-                  </span>
+                  </span>                  
                   <input type="text" class="form-control" name="processProduct-title" placeholder="Descripción">
                </div>
               </div>
@@ -80,21 +83,40 @@
                   </span>
                   <input type="text" class="form-control" name="processProduct-mark" placeholder="Marca">
                </div>
-              </div> -->
+              </div> -->              
               <div class="form-group">
-                <div class="input-group">
-                  <span class="input-group-addon">
-                   <i class="glyphicon glyphicon-th-large"></i>
-                  </span>
-                  <input type="text" class="form-control" name="processProduct-unit" placeholder="Unidad de medida">
-               </div>
+                <div class="row">                   
+                  <div class="col-md-4">
+                    <div class="input-group">
+                      <span class="input-group-addon">
+                       <i class="glyphicon glyphicon-th-large"></i>
+                      </span>
+                      <input type="text" class="form-control" name="processProduct-unit" placeholder="Unidad de medida">
+                   </div> 
+                  </div>
+                  <div class="col-md-8" >
+                    <select class="form-control" name="measure_id" id="measure_id">
+                      <option value="">Selecciona la medida</option>
+                    <?php  foreach ($all_measures as $measure): ?>
+                      <option value="<?php echo (int)$measure['id'] ?>">
+                        <?php echo $measure['name'] ?></option>
+                    <?php endforeach; ?>
+                    </select>
+                  </div>  
+                </div>  
               </div>
               <div class="form-group">
                 <div class="input-group">
                   <span class="input-group-addon">
                    <i class="glyphicon glyphicon-th-large"></i>
                   </span>
-                  <input type="text" class="form-control" name="processProduct-presentation" placeholder="Presentacion">
+                  <select class="form-control" name="processProduct-presentation">
+                    <option value="">Selecciona una presentacion</option>
+                  <?php  foreach ($all_presentations as $presentation): ?>
+                    <option value="<?php echo (int)$presentation['id'] ?>">
+                      <?php echo $presentation['name'] ?></option>
+                  <?php endforeach; ?>
+                  </select>
                </div>
               </div>
               <div class="form-group">

@@ -10,6 +10,7 @@ $all_categories = find_all('categories');
 $all_distributors = find_all('distributors');
 $all_photo = find_all('media');
 $all_measures = find_all('measures');
+$all_presentations = find_all('presentations');
 if(!$productExpense){
   $session->msg("d","Missing product expenses id.");
   redirect('production_expenses.php');

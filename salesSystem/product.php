@@ -19,13 +19,13 @@ if(isset($_POST['append_product'])){
     $query  .=" quantity ='{$p_qty}'";
     $query  .=" WHERE id ='{$id}'"; 
     $result = $db->query($query);
-            if($result && $db->affected_rows() === 1){
-              $session->msg('s',"Producto ha sido actualizado. ");
-              redirect('product.php', false);
-            } else {
-              $session->msg('d',' Lo siento, actualización falló.');
-              /*redirect('edit_product.php?id='.$product['id'], false);*/
-            }
+    if($result && $db->affected_rows() === 1){
+      $session->msg('s',"Producto ha sido actualizado. ");
+      redirect('product.php', false);
+    } else {
+      $session->msg('d',' Lo siento, actualización falló.');
+      /*redirect('edit_product.php?id='.$product['id'], false);*/
+    }
   } else{
     $session->msg("d", $errors);
     redirect('product.php',false);
@@ -47,28 +47,28 @@ if(isset($_POST['append_product'])){
          </div>
         </div>
         <div class="panel-body">
-          <table class="table table-bordered">
+          <table id="example" class="table table-striped table-bordered" style="width:100%">
             <thead>
               <tr>
-                <th class="text-center" style="width: 50px;">#</th>
+                <th >#</th>
                 <th> Imagen</th>
                 <th> Descripción </th>
-                <!-- <th class="text-center" style="width: 10%;"> Marca </th> -->
-                <!-- <th class="text-center" style="width: 10%;"> Unidad de medida </th> -->
-                <!-- <th class="text-center" style="width: 10%;"> Presentacion </th> -->
-                <th class="text-center" style="width: 10%;"> Categoría </th>
-                <th class="text-center" style="width: 10%;"> Distribuidora </th>
-                <th class="text-center" style="width: 10%;"> Stock </th>
-                <th class="text-center" style="width: 10%;"> Precio de compra </th>
-                <th class="text-center" style="width: 10%;"> Precio de venta </th>
-                <th class="text-center" style="width: 10%;"> Agregado </th>
-                <th class="text-center" style="width: 100px;"> Acciones </th>
+                <!-- <th > Marca </th> -->
+                <!-- <th > Unidad de medida </th> -->
+                <!-- <th > Presentacion </th> -->
+                <th > Categoría </th>
+                <th > Distribuidora </th>
+                <th > Stock </th>
+                <th > Precio de compra </th>
+                <th > Precio de venta </th>
+                <th > Agregado </th>
+                <th > Acciones </th>
               </tr>
             </thead>
             <tbody>
               <?php foreach ($products as $product):?>
               <tr>
-                <td class="text-center"><?php echo count_id();?></td>
+                <td><?php echo count_id();?></td>
 
                 <td>
                   <?php if($product['media_id'] === '0'): ?>
@@ -79,16 +79,16 @@ if(isset($_POST['append_product'])){
                 </td>
                 
                 <td> <?php echo $name=remove_junk($product['name']); ?></td>
-                <!-- <td class="text-center"> <?php echo remove_junk($product['mark']); ?></td> -->
-                <!-- <td class="text-center"> <?php echo remove_junk($product['unit']); ?></td> -->
-                <!-- <td class="text-center"> <?php echo remove_junk($product['presentation']); ?></td> -->
-                <td class="text-center"> <?php echo remove_junk($product['categorie']); ?></td>
-                <td class="text-center"> <?php echo remove_junk($product['distributor']); ?></td>
-                <td class="text-center"> <?php echo $quantity=remove_junk($product['quantity']); ?></td>
-                <td class="text-center"> <?php echo remove_junk($product['buy_price']); ?></td>
-                <td class="text-center"> <?php echo remove_junk($product['sale_price']); ?></td>
-                <td class="text-center"> <?php echo read_date($product['date']); ?></td>
-                <td class="text-center">
+                <!-- <td> <?php echo remove_junk($product['mark']); ?></td> -->
+                <!-- <td> <?php echo remove_junk($product['unit']); ?></td> -->
+                <!-- <td> <?php echo remove_junk($product['presentation']); ?></td> -->
+                <td> <?php echo remove_junk($product['categorie']); ?></td>
+                <td> <?php echo remove_junk($product['distributor']); ?></td>
+                <td> <?php echo $quantity=remove_junk($product['quantity']); ?></td>
+                <td> <?php echo remove_junk($product['buy_price']); ?></td>
+                <td> <?php echo remove_junk($product['sale_price']); ?></td>
+                <td> <?php echo read_date($product['date']); ?></td>
+                <td>
                   <div class="btn-group" >
                     <a href="edit_product.php?id=<?php echo $id=(int)$product['id'];?>" class="btn btn-info btn-xs"  title="Editar" data-toggle="tooltip">
                       <span class="glyphicon glyphicon-edit"></span>
@@ -112,6 +112,26 @@ if(isset($_POST['append_product'])){
       </div>
     </div>
   </div>   
+
+  <style type="text/css">
+    .close{
+      margin-top: -70px;
+      font-size: 38px;
+    }
+    .modal-footer{
+      display: flex;
+      justify-content: space-around;
+      padding: 15px 0px 15px 0px;
+    }
+    .btn-group{
+      display: flex;
+      justify-content: 
+      space-between;      
+
+    }
+  </style>
+
+  <?php include_once('layouts/footer.php'); ?>
   <script type="text/javascript">
 
     idInventory = function(jRuta,jid,jquantity,jname)
@@ -152,25 +172,11 @@ if(isset($_POST['append_product'])){
                 }
          });
     } 
+
+    $('#example').DataTable({
+      "language": {
+        "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
+      }
+    });
            
   </script>
-
-  <style type="text/css">
-    .close{
-      margin-top: -70px;
-      font-size: 38px;
-    }
-    .modal-footer{
-      display: flex;
-      justify-content: space-around;
-      padding: 15px 0px 15px 0px;
-    }
-    .btn-group{
-      display: flex;
-      justify-content: 
-      space-between;      
-
-    }
-  </style>
-
-  <?php include_once('layouts/footer.php'); ?>

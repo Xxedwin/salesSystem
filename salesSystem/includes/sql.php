@@ -228,12 +228,13 @@ function tableExists($table){
    /*--------------------------------------------------------------*/
   function join_product_table(){
      global $db;
-     $sql  =" SELECT p.id,p.name,p.quantity,p.buy_price,p.sale_price,p.media_id,p.date,p.mark,p.unit,p.presentation,c.name";
-    $sql  .=" AS categorie,d.name AS distributor,m.file_name AS image";
+     $sql  =" SELECT p.id,p.name,p.quantity,p.buy_price,p.sale_price,p.media_id,p.date,p.mark,p.unit,c.name";
+    $sql  .=" AS categorie,d.name AS distributor,m.file_name AS image,pr.name AS presentation";
     $sql  .=" FROM products p";
     $sql  .=" LEFT JOIN categories c ON c.id = p.categorie_id";
     $sql  .=" LEFT JOIN distributors d ON d.id = p.distributor_id";
-    $sql  .=" LEFT JOIN media m ON m.id = p.media_id";
+    $sql  .=" LEFT JOIN media m ON m.id = p.media_id";    
+     $sql  .=" LEFT JOIN presentations pr ON pr.id = p.presentation_id";
     $sql  .=" ORDER BY p.id ASC";
     return find_by_sql($sql);
 
@@ -244,12 +245,13 @@ function tableExists($table){
     /*--------------------------------------------------------------*/
    function join_processProduct_table(){
       global $db;
-      $sql  =" SELECT p.id,p.name,p.quantity,p.buy_price,p.sale_price,p.media_id,p.date,p.mark,p.unit,p.presentation,c.name";
-     $sql  .=" AS categorie,d.name AS distributor,m.file_name AS image";
+      $sql  =" SELECT p.id,p.name,p.quantity,p.buy_price,p.sale_price,p.media_id,p.date,p.mark,p.unit,c.name";
+     $sql  .=" AS categorie,d.name AS distributor,m.file_name AS image,pr.name AS presentation";
      $sql  .=" FROM processed_products p";
      $sql  .=" LEFT JOIN categories c ON c.id = p.categorie_id";
      $sql  .=" LEFT JOIN distributors d ON d.id = p.distributor_id";
      $sql  .=" LEFT JOIN media m ON m.id = p.media_id";
+     $sql  .=" LEFT JOIN presentations pr ON pr.id = p.presentation_id";
      $sql  .=" ORDER BY p.id ASC";
      return find_by_sql($sql);
 
@@ -261,11 +263,12 @@ function tableExists($table){
     function join_costProduct_table(){
        global $db;
        $sql  =" SELECT co.id,co.expense_id,co.cost_unit,co.media_id,c.name";
-      $sql  .=" AS categorie,m.file_name AS image,p.name AS name,p.unit AS unit,p.presentation AS presentation";
+      $sql  .=" AS categorie,m.file_name AS image,p.name AS name,p.unit AS unit";
       $sql  .=" FROM cost_product co";
       $sql  .=" LEFT JOIN categories c ON c.id = co.categorie_id";      
       $sql  .=" LEFT JOIN media m ON m.id = co.media_id";
-      $sql  .=" LEFT JOIN processed_products p ON p.id = co.expense_id";
+      $sql  .=" LEFT JOIN processed_products p ON p.id = co.expense_id";  /*    
+      $sql  .=" LEFT JOIN presentations pr ON pr.id = p.presentation_id";*/
       $sql  .=" ORDER BY co.id ASC";
       return find_by_sql($sql);
 
@@ -276,12 +279,13 @@ function tableExists($table){
      /*--------------------------------------------------------------*/
     function join_productExpense_table(){
        global $db;
-       $sql  =" SELECT p.id,p.name,p.quantity,p.buy_price,p.media_id,p.date,p.mark,p.unit,p.presentation,c.name";
-      $sql  .=" AS categorie,d.name AS distributor,m.file_name AS image";
+       $sql  =" SELECT p.id,p.name,p.quantity,p.buy_price,p.media_id,p.date,p.mark,p.unit,c.name";
+      $sql  .=" AS categorie,d.name AS distributor,m.file_name AS image,pr.name AS presentation";
       $sql  .=" FROM production_expenses p";
       $sql  .=" LEFT JOIN categories c ON c.id = p.categorie_id";
       $sql  .=" LEFT JOIN distributors d ON d.id = p.distributor_id";
       $sql  .=" LEFT JOIN media m ON m.id = p.media_id";
+      $sql  .=" LEFT JOIN presentations pr ON pr.id = p.presentation_id";
       $sql  .=" ORDER BY p.id ASC";
       return find_by_sql($sql);
 

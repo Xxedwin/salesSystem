@@ -8,6 +8,7 @@
   $all_photo = find_all('media');
   $all_expenses = find_all('production_expenses');
   $all_measures = find_all('measures');
+  $all_presentations = find_all('presentations');
 ?>
 
 <?php include_once('layouts/header.php'); ?>
@@ -35,25 +36,58 @@
                   </span>
                   <input type="text" class="form-control" name="product-title" id="product-title" placeholder="Descripción">
                </div>
-              </div>              
+              </div>     
+
               <div class="form-group">
-                <div class="row">
-                  <div class="col-md-12">
+                <div class="row">                   
+                  <div class="col-md-6">
+                    <div class="input-group">
+                      <span class="input-group-addon">
+                       <i class="glyphicon glyphicon-th-large"></i>
+                      </span>
+                      <input type="text" class="form-control" name="product-unit" placeholder="Unidad de medida">
+                   </div> 
+                  </div>
+                  <div class="col-md-6" >
+                    <select class="form-control" name="measure_id" id="measure_id">
+                      <option value="">Selecciona la medida</option>
+                    <?php  foreach ($all_measures as $measure): ?>
+                      <option value="<?php echo (int)$measure['id'] ?>">
+                        <?php echo $measure['name'] ?></option>
+                    <?php endforeach; ?>
+                    </select>
+                  </div>  
+                </div>  
+              </div>       
+
+              <div class="form-group">
+                <div class="row">                   
+                  <div class="col-md-6">
+                    <select class="form-control" name="product-presentation">
+                      <option value="">Selecciona la presentacion</option>
+                    <?php  foreach ($all_presentations as $presentation): ?>
+                      <option value="<?php echo (int)$presentation['id'] ?>">
+                        <?php echo $presentation['name'] ?></option>
+                    <?php endforeach; ?>
+                    </select>
+                  </div>
+                  <div class="col-md-6" >
                     <select onchange="redireccionar(this);" class="form-control" name="product-categorie" id="product-categorie">
-                      <option value="">Selecciona una categoría</option>
+                      <option value="">Selecciona la categoría</option>
                     <?php  foreach ($all_categories as $cat): ?>
                       <option value="<?php echo (int)$cat['id'] ?>">
                         <?php echo $cat['name'] ?></option>
                     <?php endforeach; ?>
                     </select>
-                  </div>                                   
-                </div>
+                  </div>  
+                </div>  
               </div>
+
               <div class="form-group">
                 <div class="row">
                   <div class="col-md-12">
                     <select onchange="redireccionar(this);" class="form-control" name="product-photo" id="product-photo">
-                      <option value="">Selecciona una imagen</option>
+                      <option value="">Selecciona la imagen</option>
                     <?php  foreach ($all_photo as $photo): ?>
                       <option value="<?php echo (int)$photo['id'] ?>">
                         <?php echo $photo['file_name'] ?></option>
@@ -83,7 +117,6 @@
                      <span class="input-group-addon">                      
                       <i class="glyphicon glyphicon-usd"></i>
                      </span>                     
-                     <!-- <div id="result" readonly class="form-control"></div>    -->
                      <input type="text" readonly class="form-control" name="result" id="result" placeholder="resultado">                  
                   </div>
                  </div>

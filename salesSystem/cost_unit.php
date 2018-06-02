@@ -3,7 +3,6 @@
   require_once('includes/load.php');
   // Checkin What level user has permission to view this page
    page_require_level(2);
-  /*$productExpenses = join_processProduct_table();*/
   $productExpenses = join_costProduct_table();  
   
 ?>
@@ -48,26 +47,26 @@ if(isset($_POST['append_product'])){
          </div>
         </div>
         <div class="panel-body">
-          <table class="table table-bordered">
+          <table id="example" class="table table-striped table-bordered" style="width:100%">
             <thead>
               <tr>
-                <th class="text-center" style="width: 50px;">#</th>
+                <th >#</th>
                 <th> Imagen</th>
                 <th> Descripción </th>  
-                <!-- <th class="text-center" style="width: 10%;"> Marca </th> -->
-                <th class="text-center" style="width: 10%;"> Unidad de medida </th>
-                <th class="text-center" style="width: 10%;"> Presentacion </th>
-                <th class="text-center" style="width: 10%;"> Categoría </th>
-                <th class="text-center" style="width: 10%;"> Costo producto </th>
-                <!-- <th class="text-center" style="width: 10%;"> Precio de compra </th>  -->               
-                <!-- <th class="text-center" style="width: 10%;"> Agregado </th> -->
-                <th class="text-center" style="width: 100px;"> Acciones </th>
+                <!-- <th > Marca </th> -->
+                <th > Unidad de medida </th><!-- 
+                <th > Presentacion </th> -->
+                <th > Categoría </th>
+                <th > Costo producto </th>
+                <!-- <th > Precio de compra </th>  -->               
+                <!-- <th > Agregado </th> -->
+                <th > Acciones </th>
               </tr>
             </thead>
             <tbody>
               <?php foreach ($productExpenses as $productExpense):?>
               <tr>
-                <td class="text-center"><?php echo count_id();?></td>                
+                <td ><?php echo count_id();?></td>                
                  <td>
                   <?php if($productExpense['media_id'] === '0'): ?>
                     <img class="img-avatar img-circle" src="uploads/products/no_image.jpg" alt="">
@@ -76,14 +75,14 @@ if(isset($_POST['append_product'])){
                 <?php endif; ?>
                 </td> 
                 <td> <?php echo $name=remove_junk($productExpense['name']); ?></td>
-                <!-- <td class="text-center"> <?php echo remove_junk($productExpense['mark']); ?></td> -->
-                <td class="text-center"> <?php echo remove_junk($productExpense['unit']); ?></td>
-                <td class="text-center"> <?php echo remove_junk($productExpense['presentation']); ?></td>
-                <td class="text-center"> <?php echo remove_junk($productExpense['categorie']); ?></td>
-                <!-- <td class="text-center"> <?php echo $quantity=remove_junk($productExpense['quantity']); ?></td> -->
-                <td class="text-center"> <?php echo remove_junk($productExpense['cost_unit']); ?></td>                
-                <!-- <td class="text-center"> <?php echo read_date($productExpense['date']); ?></td> -->
-                <td class="text-center">
+                <!-- <td > <?php echo remove_junk($productExpense['mark']); ?></td> -->
+                <td > <?php echo remove_junk($productExpense['unit']); ?></td><!-- 
+                <td > <?php echo remove_junk($productExpense['presentation']); ?></td> -->
+                <td > <?php echo remove_junk($productExpense['categorie']); ?></td>
+                <!-- <td > <?php echo $quantity=remove_junk($productExpense['quantity']); ?></td> -->
+                <td > <?php echo remove_junk($productExpense['cost_unit']); ?></td>                
+                <!-- <td > <?php echo read_date($productExpense['date']); ?></td> -->
+                <td >
                   <div class="btn-group">
                     <a href="edit_productExpense.php?id=<?php echo $id=(int)$productExpense['id'];?>" class="btn btn-info btn-xs"  title="Editar" data-toggle="tooltip">
                       <span class="glyphicon glyphicon-edit"></span>
@@ -91,9 +90,6 @@ if(isset($_POST['append_product'])){
                      <a <?php echo "onClick=\"idInventory('modalInventory.php','$id')\"" ?> class="btn btn-danger btn-xs" title="Eliminar" >
                       <span class="glyphicon  glyphicon-trash" ></span>
                     </a> 
-<!--                     <a <?php echo "onClick=\"idInventory('modalInventory.php','$id','$quantity','$name')\"" ?> class="btn btn-danger btn-xs"  title="Agregar">
-                      <span class="glyphicon glyphicon-plus"></span>
-                    </a> -->
                   </div>
                 </td>
               </tr>
@@ -105,52 +101,7 @@ if(isset($_POST['append_product'])){
       </div>
     </div>
   </div>
-  <script type="text/javascript">
 
-    idInventory = function(jRuta,jid,jquantity,jname)
-    {
-         var number=3;
-         var parametros = {
-             "id" : jid,
-             "quantity" : jquantity,
-             "name" : jname,
-             "number" : number             
-         };
-         
-         $.ajax({
-               data:  parametros,
-               type: "POST",
-               url: jRuta,
-                beforeSend: function () {                
-                },
-                success: function(data)
-                { 
-                  
-                  response = JSON.parse(data);                                                                  
-                  var val=response[1];                  
-
-                  if (val=='') {
-                    $("#content").html(response[2]);     
-                    $('#id').val(response[0]);
-                    $("#modalDelete").modal("show");  
-                    
-                  }
-                  else{
-                      $("#content").html(response[3]);     
-                    $("#quantity").val(response[0]);
-                      $("#viewQuantity").html(response[0]);
-                      $("#idAdd").val(response[1]);
-                      $("#name").html(response[2]);                                        
-                      $('#modalAdd').modal('show');                  
-                  }
-
-                }
-         });
-    } 
-    
-
-       
-  </script>
 
   <style type="text/css">
     .close{
@@ -164,8 +115,58 @@ if(isset($_POST['append_product'])){
     }
     .btn-group{
       display: flex;
-      justify-content: 
-      space-evenly;
+      justify-content: space-evenly;
     }
   </style>  
   <?php include_once('layouts/footer.php'); ?>
+
+   <script type="text/javascript">
+
+     idInventory = function(jRuta,jid,jquantity,jname)
+     {
+          var number=3;
+          var parametros = {
+              "id" : jid,
+              "quantity" : jquantity,
+              "name" : jname,
+              "number" : number             
+          };
+          
+          $.ajax({
+                data:  parametros,
+                type: "POST",
+                url: jRuta,
+                 beforeSend: function () {                
+                 },
+                 success: function(data)
+                 { 
+                   
+                   response = JSON.parse(data);                                                                  
+                   var val=response[1];                  
+
+                   if (val=='') {
+                     $("#content").html(response[2]);     
+                     $('#id').val(response[0]);
+                     $("#modalDelete").modal("show");  
+                     
+                   }
+                   else{
+                       $("#content").html(response[3]);     
+                     $("#quantity").val(response[0]);
+                       $("#viewQuantity").html(response[0]);
+                       $("#idAdd").val(response[1]);
+                       $("#name").html(response[2]);                                        
+                       $('#modalAdd').modal('show');                  
+                   }
+
+                 }
+          });
+     } 
+
+     $('#example').DataTable({
+       "language": {
+         "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
+       }
+     }); 
+        
+   </script>

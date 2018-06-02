@@ -47,28 +47,28 @@ if(isset($_POST['append_product'])){
          </div>
         </div>
         <div class="panel-body">
-          <table class="table table-bordered">
+          <table id="example" class="table table-striped table-bordered" style="width:100%">
             <thead>
               <tr>
-                <th class="text-center" style="width: 50px;">#</th>
+                <th>#</th>
                 <!-- <th> Imagen</th> -->
                 <th> Descripción </th>
-                <!-- <th class="text-center" style="width: 10%;"> Marca </th> -->
-                <th class="text-center" style="width: 10%;"> Unidad de medida </th>
-                <th class="text-center" style="width: 10%;"> Presentacion </th>
-                <th class="text-center" style="width: 10%;"> Categoría </th>
-                <!-- <th class="text-center" style="width: 10%;"> Distribuidora </th> -->
-                <th class="text-center" style="width: 10%;"> Stock </th>
-                <th class="text-center" style="width: 10%;"> Costo Unitario </th>
-                <th class="text-center" style="width: 10%;"> Precio de venta </th>
-                <!-- <th class="text-center" style="width: 10%;"> Agregado </th> -->
-                <th class="text-center" style="width: 100px;"> Acciones </th>
+                <!-- <th> Marca </th> -->
+                <th> Unidad de medida </th>
+                <th> Presentacion </th>
+                <th> Categoría </th>
+                <!-- <th> Distribuidora </th> -->
+                <th> Stock </th>
+                <th> Costo Unitario </th>
+                <th> Precio de venta </th>
+                <!-- <th> Agregado </th> -->
+                <th> Acciones </th>
               </tr>
             </thead>
             <tbody>
               <?php foreach ($processed_products as $processed_product):?>
               <tr>
-                <td class="text-center"><?php echo count_id();?></td>                  
+                <td><?php echo count_id();?></td>                  
                 <!-- <td>
                   <?php if($product['media_id'] === '0'): ?>
                     <img class="img-avatar img-circle" src="uploads/products/no_image.jpg" alt="">
@@ -77,16 +77,16 @@ if(isset($_POST['append_product'])){
                 <?php endif; ?>
                 </td> -->
                 <td> <?php echo $name=remove_junk($processed_product['name']); ?></td>
-                <!-- <td class="text-center"> <?php echo remove_junk($processed_product['mark']); ?></td> -->
-                <td class="text-center"> <?php echo remove_junk($processed_product['unit']); ?></td>
-                <td class="text-center"> <?php echo remove_junk($processed_product['presentation']); ?></td>
-                <td class="text-center"> <?php echo remove_junk($processed_product['categorie']); ?></td>
-               <!--  <td class="text-center"> <?php echo remove_junk($processed_product['distributor']); ?></td> -->
-                <td class="text-center"> <?php echo $quantity=remove_junk($processed_product['quantity']); ?></td>
-                <td class="text-center"> <?php echo remove_junk($processed_product['buy_price']); ?></td>
-                <td class="text-center"> <?php echo remove_junk($processed_product['sale_price']); ?></td>
-                <!-- <td class="text-center"> <?php echo read_date($processed_product['date']); ?></td> -->
-                <td class="text-center">
+                <!-- <td> <?php echo remove_junk($processed_product['mark']); ?></td> -->
+                <td> <?php echo remove_junk($processed_product['unit']); ?></td>
+                <td> <?php echo remove_junk($processed_product['presentation']); ?></td>
+                <td> <?php echo remove_junk($processed_product['categorie']); ?></td>
+               <!--  <td> <?php echo remove_junk($processed_product['distributor']); ?></td> -->
+                <td> <?php echo $quantity=remove_junk($processed_product['quantity']); ?></td>
+                <td> <?php echo remove_junk($processed_product['buy_price']); ?></td>
+                <td> <?php echo remove_junk($processed_product['sale_price']); ?></td>
+                <!-- <td> <?php echo read_date($processed_product['date']); ?></td> -->
+                <td>
                   <div class="btn-group">
                     <a href="edit_processProduct.php?id=<?php echo $id=(int)$processed_product['id'];?>" class="btn btn-info btn-xs"  title="Editar" data-toggle="tooltip">
                       <span class="glyphicon glyphicon-edit"></span>
@@ -109,6 +109,26 @@ if(isset($_POST['append_product'])){
       </div>
     </div>
   </div>
+
+  <style type="text/css">
+    .close{
+      margin-top: -70px;
+      font-size: 38px;
+    }
+    .modal-footer{
+      display: flex;
+      justify-content: space-around;
+      padding: 15px 0px 15px 0px;
+    }
+    .btn-group{
+      display: flex;
+      justify-content: 
+      space-between;      
+
+    }
+  </style>
+
+  <?php include_once('layouts/footer.php'); ?>
 
   <script type="text/javascript">
 
@@ -151,26 +171,11 @@ if(isset($_POST['append_product'])){
                 }
          });
     } 
-    
 
-       
+    $('#example').DataTable({
+      "language": {
+        "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
+      }
+    }); 
+
   </script>
-
-  <style type="text/css">
-    .close{
-      margin-top: -70px;
-      font-size: 38px;
-    }
-    .modal-footer{
-      display: flex;
-      justify-content: space-around;
-      padding: 15px 0px 15px 0px;
-    }
-    .btn-group{
-      display: flex;
-      justify-content: 
-      space-between;      
-
-    }
-  </style>
-  <?php include_once('layouts/footer.php'); ?>

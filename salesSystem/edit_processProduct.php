@@ -9,6 +9,8 @@ $processProduct = find_by_id('processed_products',(int)$_GET['id']);
 $all_categories = find_all('categories');
 $all_distributors = find_all('distributors');
 $all_photo = find_all('media');
+$all_presentations = find_all('presentations');
+$all_measures = find_all('measures');
 if(!$processProduct){
   $session->msg("d","Missing processed product id.");
   redirect('processed_products.php');
@@ -28,15 +30,16 @@ if(!$processProduct){
        $p_dis   = (int)$_POST['processProduct-distributor'];
        $p_qty   = remove_junk($db->escape($_POST['processProduct-quantity']));
        $p_buy   = remove_junk($db->escape($_POST['buying-price']));
-       $p_sale  = remove_junk($db->escape($_POST['saleing-price']));
+       $p_sale  = remove_junk($db->escape($_POST['saleing-price']));           
+       $p_measure   = remove_junk($db->escape($_POST['measure_id']));  
        if (is_null($_POST['processProduct-photo']) || $_POST['processProduct-photo'] === "") {
          $media_id = '0';
        } else {
          $media_id = remove_junk($db->escape($_POST['processProduct-photo']));
        }
        $query   = "UPDATE processed_products SET";
-       $query  .=" name ='{$p_name}', mark ='{$p_mark}', unit ='{$p_unit}', presentation ='{$p_presentation}', quantity ='{$p_qty}',";
-       $query  .=" buy_price ='{$p_buy}', sale_price ='{$p_sale}', categorie_id ='{$p_cat}', distributor_id ='{$p_dis}',media_id='{$media_id}'";
+       $query  .=" name ='{$p_name}', mark ='{$p_mark}', unit ='{$p_unit}', presentation_id ='{$p_presentation}', quantity ='{$p_qty}',";
+       $query  .=" buy_price ='{$p_buy}', sale_price ='{$p_sale}', categorie_id ='{$p_cat}', distributor_id ='{$p_dis}',media_id='{$media_id}',measure_id='{$p_measure}'";
        $query  .=" WHERE id ='{$processProduct['id']}'";
        $result = $db->query($query);
                if($result && $db->affected_rows() === 1){
@@ -88,20 +91,41 @@ if(!$processProduct){
                   <input type="text" placeholder="Marca" class="form-control" name="processProduct-mark" value="<?php echo remove_junk($processProduct['mark']);?>">
                </div>
               </div> -->
+              
               <div class="form-group">
-                <div class="input-group">
-                  <span class="input-group-addon">
-                   <i class="glyphicon glyphicon-th-large"></i>
-                  </span>
-                  <input type="text" placeholder="Unidad de medida" class="form-control" name="processProduct-unit" value="<?php echo remove_junk($processProduct['unit']);?>">
-               </div>
+                <div class="row">                   
+                  <div class="col-md-4">
+                    <div class="input-group">
+                      <span class="input-group-addon">
+                       <i class="glyphicon glyphicon-th-large"></i>
+                      </span>                      
+                      <input type="text" placeholder="Unidad de medida" class="form-control" name="processProduct-unit" value="<?php echo remove_junk($processProduct['unit']);?>">
+                   </div> 
+                  </div>
+                  <div class="col-md-8" >                    
+                    <select class="form-control" name="measure_id" id="measure_id">
+                    <option value="">Selecciona una medida</option>
+                     <?php  foreach ($all_measures as $measure): ?>
+                       <option value="<?php echo (int)$measure['id']; ?>" <?php if($processProduct['measure_id'] === $measure['id']): echo "selected"; endif; ?> >
+                         <?php echo remove_junk($measure['name']); ?></option>
+                     <?php endforeach; ?>
+                    </select>
+                  </div>
+                </div>                
               </div>
+              
               <div class="form-group">
                 <div class="input-group">
                   <span class="input-group-addon">
                    <i class="glyphicon glyphicon-th-large"></i>
                   </span>
-                  <input type="text" placeholder="Presentacion" class="form-control" name="processProduct-presentation" value="<?php echo remove_junk($processProduct['presentation']);?>">
+                  <select class="form-control" name="processProduct-presentation">
+                   <option value="">Selecciona una presentacion</option>
+                  <?php  foreach ($all_presentations as $presentation): ?>
+                    <option value="<?php echo (int)$presentation['id']; ?>" <?php if($processProduct['presentation_id'] === $presentation['id']): echo "selected"; endif; ?> >
+                      <?php echo remove_junk($presentation['name']); ?></option>
+                  <?php endforeach; ?>
+                  </select>      
                </div>
               </div>
               <div class="form-group">
