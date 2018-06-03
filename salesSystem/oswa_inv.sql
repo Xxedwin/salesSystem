@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 02-06-2018 a las 03:18:46
+-- Tiempo de generación: 03-06-2018 a las 02:36:31
 -- Versión del servidor: 10.1.31-MariaDB
 -- Versión de PHP: 7.2.4
 
@@ -97,7 +97,9 @@ CREATE TABLE `cost_product` (
 
 INSERT INTO `cost_product` (`id`, `expense_id`, `cost_unit`, `quantity`, `categorie_id`, `media_id`) VALUES
 (10, 14, '0.10', '40', 8, 4),
-(11, 15, '0.43', '12', 8, 3);
+(11, 15, '0.43', '12', 8, 3),
+(12, 0, '4.60', '1', 3, 3),
+(14, 0, '3.86', '1', 0, NULL);
 
 -- --------------------------------------------------------
 
@@ -209,27 +211,29 @@ CREATE TABLE `processed_products` (
   `unit` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
   `distributor_id` int(11) UNSIGNED NOT NULL,
   `presentation_id` int(11) UNSIGNED NOT NULL,
-  `measure_id` int(11) UNSIGNED NOT NULL
+  `measure_id` int(11) UNSIGNED NOT NULL,
+  `cost_id` int(11) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `processed_products`
 --
 
-INSERT INTO `processed_products` (`id`, `name`, `quantity`, `buy_price`, `sale_price`, `categorie_id`, `media_id`, `date`, `mark`, `unit`, `distributor_id`, `presentation_id`, `measure_id`) VALUES
-(1, 'waa', '27', '10.00', '100.00', 1, 0, '2018-05-19 12:13:52', '', 'w', 0, 1, 1),
-(3, 'w', '1', '1.00', '1.00', 3, 0, '2018-05-19 17:11:24', NULL, 'w', 0, 0, 0),
-(4, 'q', '1', '1.00', '1.00', 2, 0, '2018-05-19 17:12:38', NULL, 'q', 0, 0, 0),
-(6, 'redondo', '1', '6.00', '12.00', 4, 0, '2018-05-19 17:20:42', NULL, 'molde', 0, 0, 0),
-(7, 'TORTA CHOCOLATE', NULL, NULL, '0.00', 3, 3, '0000-00-00 00:00:00', NULL, NULL, 0, 0, 0),
-(8, 'ss', NULL, NULL, '0.00', 3, 3, '0000-00-00 00:00:00', NULL, NULL, 0, 0, 0),
-(9, 'ddd', NULL, NULL, '0.00', 2, 3, '0000-00-00 00:00:00', NULL, NULL, 0, 0, 0),
-(10, 'AA', NULL, NULL, '0.00', 2, 2, '0000-00-00 00:00:00', NULL, NULL, 0, 0, 0),
-(11, 'eee', NULL, NULL, '0.00', 2, 2, '0000-00-00 00:00:00', NULL, NULL, 0, 0, 0),
-(12, 'qqq', NULL, NULL, '0.00', 2, 2, '0000-00-00 00:00:00', NULL, NULL, 0, 0, 0),
-(13, 'PAY DE MANZANA', NULL, NULL, '0.00', 8, 3, '0000-00-00 00:00:00', NULL, NULL, 0, 0, 0),
-(14, 'PASTEL DE CHOCOLATE', NULL, NULL, '0.00', 8, 4, '0000-00-00 00:00:00', NULL, NULL, 0, 0, 0),
-(15, 'PAY DE MANZANA', NULL, NULL, '0.00', 8, 3, '0000-00-00 00:00:00', NULL, NULL, 0, 0, 0);
+INSERT INTO `processed_products` (`id`, `name`, `quantity`, `buy_price`, `sale_price`, `categorie_id`, `media_id`, `date`, `mark`, `unit`, `distributor_id`, `presentation_id`, `measure_id`, `cost_id`) VALUES
+(1, 'waa', '27', '10.00', '100.00', 1, 0, '2018-05-19 12:13:52', '', 'w', 0, 1, 1, 0),
+(3, 'w', '1', '1.00', '1.00', 3, 0, '2018-05-19 17:11:24', NULL, 'w', 0, 0, 0, 0),
+(4, 'q', '1', '1.00', '1.00', 2, 0, '2018-05-19 17:12:38', NULL, 'q', 0, 0, 0, 0),
+(6, 'redondo', '1', '6.00', '12.00', 4, 0, '2018-05-19 17:20:42', NULL, 'molde', 0, 0, 0, 0),
+(7, 'TORTA CHOCOLATE', NULL, NULL, '0.00', 3, 3, '0000-00-00 00:00:00', NULL, NULL, 0, 0, 0, 0),
+(8, 'ss', NULL, NULL, '0.00', 3, 3, '0000-00-00 00:00:00', NULL, NULL, 0, 0, 0, 0),
+(9, 'ddd', NULL, NULL, '0.00', 2, 3, '0000-00-00 00:00:00', NULL, NULL, 0, 0, 0, 0),
+(10, 'AA', NULL, NULL, '0.00', 2, 2, '0000-00-00 00:00:00', NULL, NULL, 0, 0, 0, 0),
+(11, 'eee', NULL, NULL, '0.00', 2, 2, '0000-00-00 00:00:00', NULL, NULL, 0, 0, 0, 0),
+(12, 'qqq', NULL, NULL, '0.00', 2, 2, '0000-00-00 00:00:00', NULL, NULL, 0, 0, 0, 0),
+(13, 'PAY DE MANZANA', NULL, NULL, '0.00', 8, 3, '0000-00-00 00:00:00', NULL, NULL, 0, 0, 0, 0),
+(14, 'PASTEL DE CHOCOLATE', NULL, NULL, '0.00', 8, 4, '0000-00-00 00:00:00', NULL, NULL, 0, 0, 0, 0),
+(15, 'PAY DE MANZANA', NULL, NULL, '0.00', 8, 3, '0000-00-00 00:00:00', NULL, NULL, 0, 0, 0, 0),
+(17, 'ww', NULL, NULL, '0.00', 2, 3, '0000-00-00 00:00:00', NULL, '1', 0, 3, 3, 14);
 
 -- --------------------------------------------------------
 
@@ -266,7 +270,6 @@ INSERT INTO `production_expenses` (`id`, `name`, `quantity`, `buy_price`, `categ
 (12, 'Colorante', '1', '8.00', 7, 0, '2018-05-26 19:00:29', '', '0.37', 3, 4, 0),
 (13, 'Es. De paneton', '1', '15.00', 7, 0, '2018-05-26 19:01:06', '', '0.25', 3, 6, 0),
 (14, 'Fruta Confitada', '1', '70.00', 7, 0, '2018-05-26 19:01:34', '', '10', 3, 1, 0),
-(15, 'Leche ', '10', '4.50', 7, 0, '2018-05-26 19:03:11', '', '1000', 3, 3, 0),
 (16, 'Manzana', '1', '4.00', 7, 0, '2018-05-30 00:20:06', '', '1', 3, 1, 0),
 (17, 'Crema pastelera', '1', '30.00', 7, 0, '2018-05-30 00:22:21', '', '4', 3, 1, 0),
 (18, 'Aconcagua', '1', '5.50', 7, 0, '2018-05-30 00:24:26', '', '1', 3, 7, 0),
@@ -350,7 +353,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `username`, `password`, `user_level`, `image`, `status`, `last_login`) VALUES
-(1, 'Admin Users', 'admin', 'd033e22ae348aeb5660fc2140aec35850c4da997', 1, 'pzg9wa7o1.jpg', 1, '2018-06-01 16:55:51'),
+(1, 'Admin Users', 'admin', 'd033e22ae348aeb5660fc2140aec35850c4da997', 1, 'pzg9wa7o1.jpg', 1, '2018-06-02 17:07:23'),
 (2, 'Special User', 'special', 'ba36b97a41e7faf742ab09bf88405ac04f99599a', 2, 'no_image.jpg', 1, '2017-06-16 07:11:26'),
 (3, 'Default User', 'user', '12dea96fec20593566ab75692c9949596833adc9', 3, 'no_image.jpg', 1, '2017-06-16 07:11:03');
 
@@ -488,7 +491,7 @@ ALTER TABLE `cost`
 -- AUTO_INCREMENT de la tabla `cost_product`
 --
 ALTER TABLE `cost_product`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT de la tabla `distributors`
@@ -518,7 +521,7 @@ ALTER TABLE `presentations`
 -- AUTO_INCREMENT de la tabla `processed_products`
 --
 ALTER TABLE `processed_products`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT de la tabla `production_expenses`

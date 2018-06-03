@@ -14,12 +14,12 @@ function find_all($table) {
 /*--------------------------------------------------------------*/
 /* Function for find the last element create
 /*--------------------------------------------------------------*/
-function  id_expenses() {
+function  id_cost() {
    global $db;
 
    if(tableExists($table))
    {     
-     $sql = $db->query("SELECT id FROM processed_products ORDER BY id DESC LIMIT 1");
+     $sql = $db->query("SELECT id FROM cost_product ORDER BY id DESC LIMIT 1");
      if($result = $db->fetch_assoc($sql))
        return $result;
      else
@@ -260,19 +260,37 @@ function tableExists($table){
      /* Function for Finding all processed_products name
      /* JOIN with categorie  and media database table
      /*--------------------------------------------------------------*/
-    function join_costProduct_table(){
+    /*function join_costProduct_table(){
        global $db;
        $sql  =" SELECT co.id,co.expense_id,co.cost_unit,co.media_id,c.name";
       $sql  .=" AS categorie,m.file_name AS image,p.name AS name,p.unit AS unit";
       $sql  .=" FROM cost_product co";
       $sql  .=" LEFT JOIN categories c ON c.id = co.categorie_id";      
       $sql  .=" LEFT JOIN media m ON m.id = co.media_id";
-      $sql  .=" LEFT JOIN processed_products p ON p.id = co.expense_id";  /*    
-      $sql  .=" LEFT JOIN presentations pr ON pr.id = p.presentation_id";*/
+      $sql  .=" LEFT JOIN processed_products p ON p.id = co.expense_id";    
+      $sql  .=" LEFT JOIN presentations pr ON pr.id = p.presentation_id";
       $sql  .=" ORDER BY co.id ASC";
       return find_by_sql($sql);
 
-     }
+     }*/
+      /*--------------------------------------------------------------*/
+      /* Function for Finding all processed_products name
+      /* JOIN with categorie  and media database table
+      /*--------------------------------------------------------------*/
+     function join_costProduct_table(){
+       global $db;
+       $sql  =" SELECT p.id,p.name,p.quantity,p.buy_price,p.sale_price,p.media_id,p.date,p.mark,p.unit,c.name";
+      $sql  .=" AS categorie,d.name AS distributor,m.file_name AS image,pr.name AS presentation,cos.cost_unit AS cost_unit";
+      $sql  .=" FROM processed_products p";
+      $sql  .=" LEFT JOIN categories c ON c.id = p.categorie_id";
+      $sql  .=" LEFT JOIN distributors d ON d.id = p.distributor_id";
+      $sql  .=" LEFT JOIN media m ON m.id = p.media_id";
+      $sql  .=" LEFT JOIN presentations pr ON pr.id = p.presentation_id";
+      $sql  .=" LEFT JOIN cost_product cos ON cos.id = p.cost_id";
+      $sql  .=" ORDER BY p.id ASC";
+      return find_by_sql($sql);
+
+      }
      /*--------------------------------------------------------------*/
      /* Function for Finding all production_expenses name
      /* JOIN with categorie  and media database table

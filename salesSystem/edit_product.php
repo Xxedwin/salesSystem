@@ -81,7 +81,7 @@ if(!$product){
                   <span class="input-group-addon">
                    <i class="glyphicon glyphicon-th-large"></i>
                   </span>
-                  <input type="text" placeholder="Descripcion" class="form-control" name="product-title" value="<?php echo remove_junk($product['name']);?>">
+                  <inpt type="text" placeholder="Descripcion" class="form-control" name="product-title" value="<?php echo remove_junk($product['name']);?>">
                </div>
               </div>
               <div class="form-group">

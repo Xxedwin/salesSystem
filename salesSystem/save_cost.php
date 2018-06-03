@@ -6,17 +6,20 @@
   $all_categories = find_all('categories');
   $all_distributors = find_all('distributors');
   $all_photo = find_all('media');
-
 ?>
 
 <?php 
+
  if(isset($_POST['add_product'])){
 
-   $req_fields = array('product-title','product-categorie','result','allBag');
+   $req_fields = array('product-title','product-categorie','product-unit','product-presentation','measure_id','result','allBag');
    validate_fields($req_fields);
    if(empty($errors)){
      $p_name  = remove_junk($db->escape($_POST['product-title']));     
      $p_cat   = remove_junk($db->escape($_POST['product-categorie']));
+     $p_unit   = remove_junk($db->escape($_POST['product-unit']));
+     $p_pre   = remove_junk($db->escape($_POST['product-presentation']));   
+     $p_mea   = remove_junk($db->escape($_POST['measure_id']));            
      $p_result  = remove_junk($db->escape($_POST['result']));
      $p_allBag  = remove_junk($db->escape($_POST['allBag']));     
      
@@ -25,26 +28,28 @@
      } else {
        $media_id = remove_junk($db->escape($_POST['product-photo']));
      }
-     $date    = make_date();
-     $query  = "INSERT INTO processed_products (";
-     $query .=" name,categorie_id,media_id";
-     $query .=") VALUES (";
-     $query .=" '{$p_name}','{$p_cat}', '{$media_id}'";
-     $query .=")";
-     $query .=" ON DUPLICATE KEY UPDATE name='{$p_name}'";    
 
-     if($db->query($query)){
+     $date2    = make_date();
+     $query2  = "INSERT INTO cost_product (";
+     $query2 .=" cost_unit,quantity";
+     $query2 .=") VALUES (";
+     $query2 .=" '{$p_result}', '{$p_allBag}'";
+     $query2 .=")";
+        
+     if($db->query($query2)){
 
-      $expense_id = id_expenses();
-      $expense_id =$expense_id['id'];
+      $cost_id = id_cost();
+      $cost_id =$cost_id['id'];
 
-      $date2    = make_date();
-      $query2  = "INSERT INTO cost_product (";
-      $query2 .=" expense_id,cost_unit,quantity,categorie_id,media_id";
-      $query2 .=") VALUES (";
-      $query2 .=" '{$expense_id}', '{$p_result}', '{$p_allBag}', '{$p_cat}', '{$media_id}'";
-      $query2 .=")";
-      if ($db->query($query2)) {
+      $date    = make_date();
+      $query  = "INSERT INTO processed_products (";
+      $query .=" name,categorie_id,media_id,unit,presentation_id,measure_id,cost_id";
+      $query .=") VALUES (";
+      $query .=" '{$p_name}','{$p_cat}', '{$media_id}', '{$p_unit}', '{$p_pre}', '{$p_mea}', '{$cost_id}'";
+      $query .=")";
+      $query .=" ON DUPLICATE KEY UPDATE name='{$p_name}'"; 
+
+      if ($db->query($query)) {
        $session->msg('s',"Costo agregado exitosamente. ");
        redirect('cost_unit.php', false);
       }
@@ -57,5 +62,6 @@
      redirect('cost_unit.php',false);
    }
  }
+
 ?>
 

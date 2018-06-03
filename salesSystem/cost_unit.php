@@ -1,5 +1,5 @@
 <?php
-  $page_title = 'Lista de gastos en producción';
+  $page_title = 'Lista de costo de producto';
   require_once('includes/load.php');
   // Checkin What level user has permission to view this page
    page_require_level(2);
@@ -84,7 +84,7 @@ if(isset($_POST['append_product'])){
                 <!-- <td > <?php echo read_date($productExpense['date']); ?></td> -->
                 <td >
                   <div class="btn-group">
-                    <a href="edit_productExpense.php?id=<?php echo $id=(int)$productExpense['id'];?>" class="btn btn-info btn-xs"  title="Editar" data-toggle="tooltip">
+                    <a href="edit_cost2.php?id=<?php echo $id=(int)$productExpense['id'];?>" class="btn btn-info btn-xs"  title="Editar" data-toggle="tooltip">
                       <span class="glyphicon glyphicon-edit"></span>
                     </a>                     
                      <a <?php echo "onClick=\"idInventory('modalInventory.php','$id')\"" ?> class="btn btn-danger btn-xs" title="Eliminar" >
@@ -124,7 +124,7 @@ if(isset($_POST['append_product'])){
 
      idInventory = function(jRuta,jid,jquantity,jname)
      {
-          var number=3;
+          var number=4;
           var parametros = {
               "id" : jid,
               "quantity" : jquantity,

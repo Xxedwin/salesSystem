@@ -16,7 +16,7 @@ $html ='
         </button>
       </div>
       <form method="post" action=';      
-      switch ($_POST['number']) {
+      switch ($_POST['number']) {   
         case 3:
           $html.='"production_expenses.php">';          
           break;
@@ -62,6 +62,9 @@ $html2='
       </div> 
       <form method="post" action=';
       switch ($_POST['number']) {
+        case 4:
+          $html2.='"delete_cost.php">';  
+          break;
         case 3:
           $html2.='"delete_productExpense.php">';          
           break;

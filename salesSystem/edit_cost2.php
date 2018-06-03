@@ -3,25 +3,26 @@
   require_once('includes/load.php');
   // Checkin What level user has permission to view this page.
   page_require_level(2);
+
 ?>
+
 <?php
+$product = find_by_id('processed_products',(int)$_GET['id']);
 $all_categories = find_all('categories');
 $all_distributors = find_all('distributors');
 $all_photo = find_all('media');
 $all_expenses = find_all('production_expenses');
 $all_measures = find_all('measures');
+$all_presentations = find_all('presentations');
+$all_cost = find_all('cost_product');
 
-$product = find_by_id('cost_product',(int)$_GET['id']);
-$all_categories = find_all('categories');
-$all_distributors = find_all('distributors');
-$all_photo = find_all('media');
 if(!$product){
   $session->msg("d","Missing product id.");
-  redirect('cost_unit.php');
+  redirect('product.php');
 }
 ?>
 <?php
- if(isset($_POST['cost_product'])){
+ if(isset($_POST['product'])){
     $req_fields = array('product-title','product-unit','product-categorie','product-quantity','buying-price', 'saleing-price' );
     validate_fields($req_fields);
 
@@ -34,15 +35,16 @@ if(!$product){
        $p_dis   = (int)$_POST['product-distributor'];
        $p_qty   = remove_junk($db->escape($_POST['product-quantity']));
        $p_buy   = remove_junk($db->escape($_POST['buying-price']));
-       $p_sale  = remove_junk($db->escape($_POST['saleing-price']));
+       $p_sale  = remove_junk($db->escape($_POST['saleing-price']));          
+       $p_measure   = remove_junk($db->escape($_POST['measure_id'])); 
        if (is_null($_POST['product-photo']) || $_POST['product-photo'] === "") {
          $media_id = '0';
        } else {
          $media_id = remove_junk($db->escape($_POST['product-photo']));
        }
        $query   = "UPDATE products SET";
-       $query  .=" name ='{$p_name}', mark ='{$p_mark}', unit ='{$p_unit}', presentation ='{$p_presentation}', quantity ='{$p_qty}',";
-       $query  .=" buy_price ='{$p_buy}', sale_price ='{$p_sale}', categorie_id ='{$p_cat}', distributor_id ='{$p_dis}',media_id='{$media_id}'";
+       $query  .=" name ='{$p_name}', mark ='{$p_mark}', unit ='{$p_unit}', presentation_id ='{$p_presentation}', quantity ='{$p_qty}',";
+       $query  .=" buy_price ='{$p_buy}', sale_price ='{$p_sale}', categorie_id ='{$p_cat}', distributor_id ='{$p_dis}',media_id='{$media_id}',measure_id='{$p_measure}'";
        $query  .=" WHERE id ='{$product['id']}'";
        $result = $db->query($query);
                if($result && $db->affected_rows() === 1){
@@ -62,7 +64,6 @@ if(!$product){
 
 ?>
 
-
 <?php include_once('layouts/header.php'); ?>
 <div class="row">
   <div class="col-md-12">
@@ -70,13 +71,13 @@ if(!$product){
   </div>
 </div>
 <div class="row">
-<form method="post" action="edit_product.php?id=<?php echo (int)$product['id'] ?>">
+<form action="save_cost.php" method="post"  class="clearfix">
   <div class="col-md-6">
       <div class="panel panel-default">
         <div class="panel-heading">
           <strong>
             <span class="glyphicon glyphicon-th"></span>
-            <span>Editar costo del producto</span>
+            <span>Agregar datos del producto</span>
          </strong>
         </div>
         <div class="panel-body" style="padding: 15px 0px 15px 0px;">
@@ -86,27 +87,60 @@ if(!$product){
                   <span class="input-group-addon">
                    <i class="glyphicon glyphicon-th-large"></i>
                   </span>
-                  <input type="text" class="form-control" name="product-title" id="product-title"  placeholder="Descripción" value="<?php echo remove_junk($product['name']);?>">
+                  <input type="text" class="form-control" name="product-title" id="product-title" placeholder="Descripción" value="<?php echo remove_junk($product['name']);?>">
                </div>
-              </div>              
+              </div>     
+
               <div class="form-group">
-                <div class="row">
-                  <div class="col-md-12">
-                    <select onchange="redireccionar(this);" class="form-control" name="product-categorie" id="product-categorie">
-                      <option value="">Selecciona una categoría</option>
-                    <?php  foreach ($all_categories as $cat): ?>
-                      <option value="<?php echo (int)$cat['id'] ?>"<?php if($product['categorie_id'] === $cat['id']): echo "selected"; endif; ?> >
-                        <?php remove_junk($cat['name']); ?></option>
+                <div class="row">                   
+                  <div class="col-md-6">
+                    <div class="input-group">
+                      <span class="input-group-addon">
+                       <i class="glyphicon glyphicon-th-large"></i>
+                      </span>
+                      <input type="text" class="form-control" name="product-unit" placeholder="Unidad de medida" value="<?php echo remove_junk($product['unit']);?>">
+                   </div> 
+                  </div>
+                  <div class="col-md-6" >
+                    <select class="form-control" name="measure_id" id="measure_id">
+                      <option value="">Selecciona la medida</option>
+                    <?php  foreach ($all_measures as $measure): ?>
+                      <option value="<?php echo (int)$measure['id'] ?>" <?php if($product['measure_id'] === $measure['id']): echo "selected"; endif; ?>>
+                        <?php remove_junk($measure['name']); ?></option>
                     <?php endforeach; ?>
                     </select>
-                  </div>                                   
-                </div>
+                  </div>  
+                </div>  
+              </div>       
+
+              <div class="form-group">
+                <div class="row">                   
+                  <div class="col-md-6">
+                    <select class="form-control" name="product-presentation">
+                      <option value="">Selecciona la presentacion</option>
+                    <?php  foreach ($all_presentations as $presentation): ?>
+                      <option value="<?php echo (int)$presentation['id'] ?>"  <?php if($product['presentation_id'] === $presentation['id']): echo "selected"; endif; ?>>
+                        <?php echo remove_junk($presentation['name']); ?></option>
+                    <?php endforeach; ?>
+                    </select>
+                  </div>
+                  <div class="col-md-6" >
+                    <select onchange="redireccionar(this);" class="form-control" name="product-categorie" id="product-categorie">
+                      <option value="">Selecciona la categoría</option>
+                    <?php  foreach ($all_categories as $cat): ?>
+                      <option value="<?php echo (int)$cat['id'] ?>" <?php if($product['categorie_id'] === $cat['id']): echo "selected"; endif; ?>>
+                        <?php echo remove_junk($cat['name']); ?></option>
+                    <?php endforeach; ?>
+                    </select>
+                  </div>  
+                </div>  
               </div>
+
               <div class="form-group">
                 <div class="row">
                   <div class="col-md-12">
                     <select onchange="redireccionar(this);" class="form-control" name="product-photo" id="product-photo">
-                      <option value="">Selecciona una imagen</option>
+                      <option value="">Selecciona la imagen</option>
                     <?php  foreach ($all_photo as $photo): ?>
                       <option value="<?php echo (int)$photo['id'] ?>" <?php if($product['media_id'] === $photo['id']): echo "selected"; endif; ?>>
                         <?php echo $photo['file_name'] ?></option>
@@ -135,9 +169,12 @@ if(!$product){
                   <div class="input-group">
                      <span class="input-group-addon">                      
                       <i class="glyphicon glyphicon-usd"></i>
-                     </span>                     
-                     <!-- <div id="result" readonly class="form-control"></div>    -->
-                     <input type="text" readonly class="form-control" name="result" id="result" placeholder="resultado" value="<?php echo remove_junk($product['cost_unit']); ?>">                  
+                     </span>   
+                     <?php  foreach ($all_cost as $cost): ?>
+                         <?php if ($product['cost_id'] === $cost['id']): ?>
+                           <input type="text" readonly class="form-control" name="result" id="result" value="<?php echo remove_junk($cost['cost_unit']);?>">   
+                         <?php endif ?>
+                     <?php endforeach; ?> 
                   </div>
                  </div>
                 </div>
@@ -188,7 +225,12 @@ if(!$product){
                   <span class="input-group-addon">
                    <i class="glyphicon glyphicon-th-large"></i>
                   </span>
-                  <input type="text" class="form-control" name="allBag" id="allBag" placeholder="Ingrese el Producto Total x Bolsa">
+                <?php  foreach ($all_cost as $cost): ?>
+                    <?php if ($product['cost_id'] === $cost['id']): ?> 
+                  <input type="text" class="form-control" name="allBag" id="allBag" placeholder="Ingrese el Producto Total x Bolsa" value="<?php echo remove_junk($cost['quantity']);?>">
+                    <?php endif ?>
+                <?php endforeach; ?> 
+
                </div>
               </div>              
               <div style="display: flex;justify-content: space-evenly;margin-top: 4%;">   
@@ -313,6 +355,7 @@ if(!$product){
             })
                           
           });    
+
 
     $("#frm_conformidad").submit(function(event){
 
