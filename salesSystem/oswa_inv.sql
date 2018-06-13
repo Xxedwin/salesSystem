@@ -1,22 +1,20 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.0
--- https://www.phpmyadmin.net/
+-- version 4.0.9
+-- http://www.phpmyadmin.net
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 03-06-2018 a las 02:36:31
--- Versión del servidor: 10.1.31-MariaDB
--- Versión de PHP: 7.2.4
+-- Tiempo de generación: 13-06-2018 a las 16:00:05
+-- Versión del servidor: 5.6.14
+-- Versión de PHP: 5.5.6
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
-START TRANSACTION;
 SET time_zone = "+00:00";
 
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
+/*!40101 SET NAMES utf8 */;
 
 --
 -- Base de datos: `oswa_inv`
@@ -28,10 +26,12 @@ SET time_zone = "+00:00";
 -- Estructura de tabla para la tabla `categories`
 --
 
-CREATE TABLE `categories` (
-  `id` int(11) UNSIGNED NOT NULL,
-  `name` varchar(60) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE IF NOT EXISTS `categories` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(60) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `name` (`name`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=9 ;
 
 --
 -- Volcado de datos para la tabla `categories`
@@ -52,8 +52,8 @@ INSERT INTO `categories` (`id`, `name`) VALUES
 -- Estructura de tabla para la tabla `cost`
 --
 
-CREATE TABLE `cost` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `cost` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `harina` varchar(50) CHARACTER SET utf8 DEFAULT NULL,
   `manteca` varchar(50) CHARACTER SET utf8 DEFAULT NULL,
   `azucar` varchar(50) CHARACTER SET utf8 DEFAULT NULL,
@@ -73,8 +73,9 @@ CREATE TABLE `cost` (
   `escencia de vainilla` varchar(50) CHARACTER SET utf8 DEFAULT NULL,
   `unit` varchar(50) CHARACTER SET utf8 DEFAULT NULL,
   `esencia de paneton` varchar(50) CHARACTER SET utf8 DEFAULT NULL,
-  `expense_id` int(11) UNSIGNED NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `expense_id` int(11) unsigned NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -82,14 +83,15 @@ CREATE TABLE `cost` (
 -- Estructura de tabla para la tabla `cost_product`
 --
 
-CREATE TABLE `cost_product` (
-  `id` int(11) UNSIGNED NOT NULL,
+CREATE TABLE IF NOT EXISTS `cost_product` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `expense_id` int(11) NOT NULL,
   `cost_unit` varchar(50) NOT NULL,
   `quantity` varchar(50) CHARACTER SET utf8 NOT NULL,
-  `categorie_id` int(11) UNSIGNED NOT NULL,
-  `media_id` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `categorie_id` int(11) unsigned NOT NULL,
+  `media_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=17 ;
 
 --
 -- Volcado de datos para la tabla `cost_product`
@@ -99,7 +101,9 @@ INSERT INTO `cost_product` (`id`, `expense_id`, `cost_unit`, `quantity`, `catego
 (10, 14, '0.10', '40', 8, 4),
 (11, 15, '0.43', '12', 8, 3),
 (12, 0, '4.60', '1', 3, 3),
-(14, 0, '3.86', '1', 0, NULL);
+(14, 0, '3.86', '1', 0, NULL),
+(15, 0, '3.86', '1', 0, NULL),
+(16, 0, '3.86', '1', 0, NULL);
 
 -- --------------------------------------------------------
 
@@ -107,10 +111,11 @@ INSERT INTO `cost_product` (`id`, `expense_id`, `cost_unit`, `quantity`, `catego
 -- Estructura de tabla para la tabla `distributors`
 --
 
-CREATE TABLE `distributors` (
-  `id` int(11) UNSIGNED NOT NULL,
-  `name` varchar(255) CHARACTER SET utf8 NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+CREATE TABLE IF NOT EXISTS `distributors` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) CHARACTER SET utf8 NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
 
 --
 -- Volcado de datos para la tabla `distributors`
@@ -126,10 +131,11 @@ INSERT INTO `distributors` (`id`, `name`) VALUES
 -- Estructura de tabla para la tabla `measures`
 --
 
-CREATE TABLE `measures` (
-  `id` int(11) NOT NULL,
-  `name` varchar(255) CHARACTER SET utf8 NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+CREATE TABLE IF NOT EXISTS `measures` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) CHARACTER SET utf8 NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=9 ;
 
 --
 -- Volcado de datos para la tabla `measures`
@@ -150,11 +156,13 @@ INSERT INTO `measures` (`id`, `name`) VALUES
 -- Estructura de tabla para la tabla `media`
 --
 
-CREATE TABLE `media` (
-  `id` int(11) UNSIGNED NOT NULL,
+CREATE TABLE IF NOT EXISTS `media` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `file_name` varchar(255) NOT NULL,
-  `file_type` varchar(100) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `file_type` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `id` (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
 
 --
 -- Volcado de datos para la tabla `media`
@@ -171,10 +179,11 @@ INSERT INTO `media` (`id`, `file_name`, `file_type`) VALUES
 -- Estructura de tabla para la tabla `presentations`
 --
 
-CREATE TABLE `presentations` (
-  `id` int(11) NOT NULL,
-  `name` varchar(255) CHARACTER SET utf8 NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+CREATE TABLE IF NOT EXISTS `presentations` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) CHARACTER SET utf8 NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=11 ;
 
 --
 -- Volcado de datos para la tabla `presentations`
@@ -198,42 +207,37 @@ INSERT INTO `presentations` (`id`, `name`) VALUES
 -- Estructura de tabla para la tabla `processed_products`
 --
 
-CREATE TABLE `processed_products` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `processed_products` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) CHARACTER SET utf8 NOT NULL,
   `quantity` varchar(50) CHARACTER SET utf8 DEFAULT NULL,
   `buy_price` decimal(25,2) DEFAULT NULL,
   `sale_price` decimal(25,2) NOT NULL,
-  `categorie_id` int(11) UNSIGNED NOT NULL,
+  `categorie_id` int(11) unsigned NOT NULL,
   `media_id` int(11) DEFAULT '0',
   `date` datetime NOT NULL,
   `mark` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
   `unit` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
-  `distributor_id` int(11) UNSIGNED NOT NULL,
-  `presentation_id` int(11) UNSIGNED NOT NULL,
-  `measure_id` int(11) UNSIGNED NOT NULL,
-  `cost_id` int(11) UNSIGNED NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `distributor_id` int(11) unsigned NOT NULL,
+  `presentation_id` int(11) unsigned NOT NULL,
+  `measure_id` int(11) unsigned NOT NULL,
+  `cost_unit` varchar(50) CHARACTER SET utf8 DEFAULT NULL,
+  `productTotalUnit` varchar(50) CHARACTER SET utf8 DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=22 ;
 
 --
 -- Volcado de datos para la tabla `processed_products`
 --
 
-INSERT INTO `processed_products` (`id`, `name`, `quantity`, `buy_price`, `sale_price`, `categorie_id`, `media_id`, `date`, `mark`, `unit`, `distributor_id`, `presentation_id`, `measure_id`, `cost_id`) VALUES
-(1, 'waa', '27', '10.00', '100.00', 1, 0, '2018-05-19 12:13:52', '', 'w', 0, 1, 1, 0),
-(3, 'w', '1', '1.00', '1.00', 3, 0, '2018-05-19 17:11:24', NULL, 'w', 0, 0, 0, 0),
-(4, 'q', '1', '1.00', '1.00', 2, 0, '2018-05-19 17:12:38', NULL, 'q', 0, 0, 0, 0),
-(6, 'redondo', '1', '6.00', '12.00', 4, 0, '2018-05-19 17:20:42', NULL, 'molde', 0, 0, 0, 0),
-(7, 'TORTA CHOCOLATE', NULL, NULL, '0.00', 3, 3, '0000-00-00 00:00:00', NULL, NULL, 0, 0, 0, 0),
-(8, 'ss', NULL, NULL, '0.00', 3, 3, '0000-00-00 00:00:00', NULL, NULL, 0, 0, 0, 0),
-(9, 'ddd', NULL, NULL, '0.00', 2, 3, '0000-00-00 00:00:00', NULL, NULL, 0, 0, 0, 0),
-(10, 'AA', NULL, NULL, '0.00', 2, 2, '0000-00-00 00:00:00', NULL, NULL, 0, 0, 0, 0),
-(11, 'eee', NULL, NULL, '0.00', 2, 2, '0000-00-00 00:00:00', NULL, NULL, 0, 0, 0, 0),
-(12, 'qqq', NULL, NULL, '0.00', 2, 2, '0000-00-00 00:00:00', NULL, NULL, 0, 0, 0, 0),
-(13, 'PAY DE MANZANA', NULL, NULL, '0.00', 8, 3, '0000-00-00 00:00:00', NULL, NULL, 0, 0, 0, 0),
-(14, 'PASTEL DE CHOCOLATE', NULL, NULL, '0.00', 8, 4, '0000-00-00 00:00:00', NULL, NULL, 0, 0, 0, 0),
-(15, 'PAY DE MANZANA', NULL, NULL, '0.00', 8, 3, '0000-00-00 00:00:00', NULL, NULL, 0, 0, 0, 0),
-(17, 'ww', NULL, NULL, '0.00', 2, 3, '0000-00-00 00:00:00', NULL, '1', 0, 3, 3, 14);
+INSERT INTO `processed_products` (`id`, `name`, `quantity`, `buy_price`, `sale_price`, `categorie_id`, `media_id`, `date`, `mark`, `unit`, `distributor_id`, `presentation_id`, `measure_id`, `cost_unit`, `productTotalUnit`) VALUES
+(13, 'PAY DE MANZANA', NULL, NULL, '0.00', 8, 3, '0000-00-00 00:00:00', NULL, NULL, 0, 0, 0, '0', NULL),
+(14, 'PASTEL DE CHOCOLATE', NULL, NULL, '0.00', 8, 4, '0000-00-00 00:00:00', NULL, NULL, 0, 0, 0, '0', NULL),
+(17, 'ww', NULL, NULL, '0.00', 2, 3, '0000-00-00 00:00:00', NULL, '1', 0, 3, 3, '14', NULL),
+(18, 'ee', NULL, NULL, '0.00', 2, 2, '0000-00-00 00:00:00', NULL, '400ml', 0, 1, 1, '15', NULL),
+(19, 'PAY DE MANZANA', NULL, NULL, '0.00', 2, 2, '0000-00-00 00:00:00', NULL, '400ml', 0, 1, 1, '16', NULL),
+(20, 'p', NULL, NULL, '0.00', 2, 2, '2018-06-13 15:47:04', NULL, '1', 0, 1, 1, '5.10', '1'),
+(21, 'a', NULL, NULL, '0.00', 2, 2, '2018-06-13 15:48:33', NULL, '1', 0, 1, 7, '5.10', '1');
 
 -- --------------------------------------------------------
 
@@ -241,20 +245,21 @@ INSERT INTO `processed_products` (`id`, `name`, `quantity`, `buy_price`, `sale_p
 -- Estructura de tabla para la tabla `production_expenses`
 --
 
-CREATE TABLE `production_expenses` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `production_expenses` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) CHARACTER SET utf8 NOT NULL,
   `quantity` varchar(50) CHARACTER SET utf8 DEFAULT NULL,
   `buy_price` decimal(25,2) DEFAULT NULL,
-  `categorie_id` int(11) UNSIGNED NOT NULL,
+  `categorie_id` int(11) unsigned NOT NULL,
   `media_id` int(11) DEFAULT '0',
   `date` datetime NOT NULL,
   `mark` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
   `unit` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
-  `distributor_id` int(11) UNSIGNED NOT NULL,
-  `measure_id` int(11) UNSIGNED NOT NULL,
-  `presentation_id` int(11) UNSIGNED NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `distributor_id` int(11) unsigned NOT NULL,
+  `measure_id` int(11) unsigned NOT NULL,
+  `presentation_id` int(11) unsigned NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=31 ;
 
 --
 -- Volcado de datos para la tabla `production_expenses`
@@ -291,21 +296,26 @@ INSERT INTO `production_expenses` (`id`, `name`, `quantity`, `buy_price`, `categ
 -- Estructura de tabla para la tabla `products`
 --
 
-CREATE TABLE `products` (
-  `id` int(11) UNSIGNED NOT NULL,
+CREATE TABLE IF NOT EXISTS `products` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
   `quantity` varchar(50) DEFAULT NULL,
   `buy_price` decimal(25,2) DEFAULT NULL,
   `sale_price` decimal(25,2) NOT NULL,
-  `categorie_id` int(11) UNSIGNED NOT NULL,
+  `categorie_id` int(11) unsigned NOT NULL,
   `media_id` int(11) DEFAULT '0',
   `date` datetime NOT NULL,
   `mark` varchar(255) DEFAULT NULL,
   `unit` varchar(255) DEFAULT NULL,
-  `distributor_id` int(11) UNSIGNED NOT NULL,
-  `presentation_id` int(11) UNSIGNED NOT NULL,
-  `measure_id` int(11) UNSIGNED NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `distributor_id` int(11) unsigned NOT NULL,
+  `presentation_id` int(11) unsigned NOT NULL,
+  `measure_id` int(11) unsigned NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `name` (`name`),
+  KEY `categorie_id` (`categorie_id`),
+  KEY `media_id` (`media_id`),
+  KEY `distributor_id` (`distributor_id`) USING BTREE
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=25 ;
 
 --
 -- Volcado de datos para la tabla `products`
@@ -323,13 +333,15 @@ INSERT INTO `products` (`id`, `name`, `quantity`, `buy_price`, `sale_price`, `ca
 -- Estructura de tabla para la tabla `sales`
 --
 
-CREATE TABLE `sales` (
-  `id` int(11) UNSIGNED NOT NULL,
-  `product_id` int(11) UNSIGNED NOT NULL,
+CREATE TABLE IF NOT EXISTS `sales` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `product_id` int(11) unsigned NOT NULL,
   `qty` int(11) NOT NULL,
   `price` decimal(25,2) NOT NULL,
-  `date` date NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `date` date NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `product_id` (`product_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -337,23 +349,26 @@ CREATE TABLE `sales` (
 -- Estructura de tabla para la tabla `users`
 --
 
-CREATE TABLE `users` (
-  `id` int(11) UNSIGNED NOT NULL,
+CREATE TABLE IF NOT EXISTS `users` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(60) NOT NULL,
   `username` varchar(50) NOT NULL,
   `password` varchar(255) NOT NULL,
   `user_level` int(11) NOT NULL,
   `image` varchar(255) DEFAULT 'no_image.jpg',
   `status` int(1) NOT NULL,
-  `last_login` datetime DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `last_login` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `username` (`username`),
+  KEY `user_level` (`user_level`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
 
 --
 -- Volcado de datos para la tabla `users`
 --
 
 INSERT INTO `users` (`id`, `name`, `username`, `password`, `user_level`, `image`, `status`, `last_login`) VALUES
-(1, 'Admin Users', 'admin', 'd033e22ae348aeb5660fc2140aec35850c4da997', 1, 'pzg9wa7o1.jpg', 1, '2018-06-02 17:07:23'),
+(1, 'Admin Users', 'admin', 'd033e22ae348aeb5660fc2140aec35850c4da997', 1, 'pzg9wa7o1.jpg', 1, '2018-06-13 12:03:16'),
 (2, 'Special User', 'special', 'ba36b97a41e7faf742ab09bf88405ac04f99599a', 2, 'no_image.jpg', 1, '2017-06-16 07:11:26'),
 (3, 'Default User', 'user', '12dea96fec20593566ab75692c9949596833adc9', 3, 'no_image.jpg', 1, '2017-06-16 07:11:03');
 
@@ -363,12 +378,14 @@ INSERT INTO `users` (`id`, `name`, `username`, `password`, `user_level`, `image`
 -- Estructura de tabla para la tabla `user_groups`
 --
 
-CREATE TABLE `user_groups` (
-  `id` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `user_groups` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `group_name` varchar(150) NOT NULL,
   `group_level` int(11) NOT NULL,
-  `group_status` int(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `group_status` int(1) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `group_level` (`group_level`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
 
 --
 -- Volcado de datos para la tabla `user_groups`
@@ -378,180 +395,6 @@ INSERT INTO `user_groups` (`id`, `group_name`, `group_level`, `group_status`) VA
 (1, 'Admin', 1, 1),
 (2, 'Special', 2, 0),
 (3, 'User', 3, 1);
-
---
--- Índices para tablas volcadas
---
-
---
--- Indices de la tabla `categories`
---
-ALTER TABLE `categories`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `name` (`name`);
-
---
--- Indices de la tabla `cost`
---
-ALTER TABLE `cost`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indices de la tabla `cost_product`
---
-ALTER TABLE `cost_product`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indices de la tabla `distributors`
---
-ALTER TABLE `distributors`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indices de la tabla `measures`
---
-ALTER TABLE `measures`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indices de la tabla `media`
---
-ALTER TABLE `media`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `id` (`id`);
-
---
--- Indices de la tabla `presentations`
---
-ALTER TABLE `presentations`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indices de la tabla `processed_products`
---
-ALTER TABLE `processed_products`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indices de la tabla `production_expenses`
---
-ALTER TABLE `production_expenses`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indices de la tabla `products`
---
-ALTER TABLE `products`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `name` (`name`),
-  ADD KEY `categorie_id` (`categorie_id`),
-  ADD KEY `media_id` (`media_id`),
-  ADD KEY `distributor_id` (`distributor_id`) USING BTREE;
-
---
--- Indices de la tabla `sales`
---
-ALTER TABLE `sales`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `product_id` (`product_id`);
-
---
--- Indices de la tabla `users`
---
-ALTER TABLE `users`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `username` (`username`),
-  ADD KEY `user_level` (`user_level`);
-
---
--- Indices de la tabla `user_groups`
---
-ALTER TABLE `user_groups`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `group_level` (`group_level`);
-
---
--- AUTO_INCREMENT de las tablas volcadas
---
-
---
--- AUTO_INCREMENT de la tabla `categories`
---
-ALTER TABLE `categories`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
-
---
--- AUTO_INCREMENT de la tabla `cost`
---
-ALTER TABLE `cost`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `cost_product`
---
-ALTER TABLE `cost_product`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
-
---
--- AUTO_INCREMENT de la tabla `distributors`
---
-ALTER TABLE `distributors`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
---
--- AUTO_INCREMENT de la tabla `measures`
---
-ALTER TABLE `measures`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
-
---
--- AUTO_INCREMENT de la tabla `media`
---
-ALTER TABLE `media`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-
---
--- AUTO_INCREMENT de la tabla `presentations`
---
-ALTER TABLE `presentations`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
-
---
--- AUTO_INCREMENT de la tabla `processed_products`
---
-ALTER TABLE `processed_products`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
-
---
--- AUTO_INCREMENT de la tabla `production_expenses`
---
-ALTER TABLE `production_expenses`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
-
---
--- AUTO_INCREMENT de la tabla `products`
---
-ALTER TABLE `products`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
-
---
--- AUTO_INCREMENT de la tabla `sales`
---
-ALTER TABLE `sales`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `users`
---
-ALTER TABLE `users`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
---
--- AUTO_INCREMENT de la tabla `user_groups`
---
-ALTER TABLE `user_groups`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- Restricciones para tablas volcadas
@@ -574,7 +417,6 @@ ALTER TABLE `sales`
 --
 ALTER TABLE `users`
   ADD CONSTRAINT `FK_user` FOREIGN KEY (`user_level`) REFERENCES `user_groups` (`group_level`) ON DELETE CASCADE ON UPDATE CASCADE;
-COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

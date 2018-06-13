@@ -22,28 +22,26 @@ if(!$product){
 }
 ?>
 <?php
- if(isset($_POST['product'])){
-    $req_fields = array('product-title','product-unit','product-categorie','product-quantity','buying-price', 'saleing-price' );
+ if(isset($_POST['edit_product'])){
+    $req_fields = array('product-title','product-unit','product-categorie','product-quantity','measure_id','result','allBag');
     validate_fields($req_fields);
 
    if(empty($errors)){
-       $p_name  = remove_junk($db->escape($_POST['product-title']));
-       $p_mark  = remove_junk($db->escape($_POST['product-mark']));
-       $p_unit  = remove_junk($db->escape($_POST['product-unit']));
-       $p_presentation  = remove_junk($db->escape($_POST['product-presentation']));
-       $p_cat   = (int)$_POST['product-categorie'];
-       $p_dis   = (int)$_POST['product-distributor'];
-       $p_qty   = remove_junk($db->escape($_POST['product-quantity']));
-       $p_buy   = remove_junk($db->escape($_POST['buying-price']));
-       $p_sale  = remove_junk($db->escape($_POST['saleing-price']));          
-       $p_measure   = remove_junk($db->escape($_POST['measure_id'])); 
+
+      $p_name  = remove_junk($db->escape($_POST['product-title']));     
+      $p_cat   = remove_junk($db->escape($_POST['product-categorie']));
+      $p_unit   = remove_junk($db->escape($_POST['product-unit']));
+      $p_pre   = remove_junk($db->escape($_POST['product-presentation']));   
+      $p_mea   = remove_junk($db->escape($_POST['measure_id']));            
+      $p_result  = remove_junk($db->escape($_POST['result']));
+      $p_allBag  = remove_junk($db->escape($_POST['allBag']));     
        if (is_null($_POST['product-photo']) || $_POST['product-photo'] === "") {
          $media_id = '0';
        } else {
          $media_id = remove_junk($db->escape($_POST['product-photo']));
        }
-       $query   = "UPDATE products SET";
-       $query  .=" name ='{$p_name}', mark ='{$p_mark}', unit ='{$p_unit}', presentation_id ='{$p_presentation}', quantity ='{$p_qty}',";
+       $query   = "UPDATE processed_products SET";
+       $query  .=" name ='{$p_name}', unit ='{$p_unit}', presentation_id ='{$p_presentation}', quantity ='{$p_qty}',";
        $query  .=" buy_price ='{$p_buy}', sale_price ='{$p_sale}', categorie_id ='{$p_cat}', distributor_id ='{$p_dis}',media_id='{$media_id}',measure_id='{$p_measure}'";
        $query  .=" WHERE id ='{$product['id']}'";
        $result = $db->query($query);
@@ -71,7 +69,7 @@ if(!$product){
   </div>
 </div>
 <div class="row">
-<form action="save_cost.php" method="post"  class="clearfix">
+<form method="post" action="edit_cost2.php?id=<?php echo (int)$product['id'] ?>">
   <div class="col-md-6">
       <div class="panel panel-default">
         <div class="panel-heading">
@@ -106,7 +104,7 @@ if(!$product){
                       <option value="">Selecciona la medida</option>
                     <?php  foreach ($all_measures as $measure): ?>
                       <option value="<?php echo (int)$measure['id'] ?>" <?php if($product['measure_id'] === $measure['id']): echo "selected"; endif; ?>>
-                        <?php remove_junk($measure['name']); ?></option>
+                        <?php echo remove_junk($measure['name']); ?></option>
                     <?php endforeach; ?>
                     </select>
                   </div>  
@@ -170,11 +168,7 @@ if(!$product){
                      <span class="input-group-addon">                      
                       <i class="glyphicon glyphicon-usd"></i>
                      </span>   
-                     <?php  foreach ($all_cost as $cost): ?>
-                         <?php if ($product['cost_id'] === $cost['id']): ?>
-                           <input type="text" readonly class="form-control" name="result" id="result" value="<?php echo remove_junk($cost['cost_unit']);?>">   
-                         <?php endif ?>
-                     <?php endforeach; ?> 
+                    <input type="text" readonly class="form-control" name="result" id="result" value="<?php echo remove_junk($product['cost_unit']);?>">
                   </div>
                  </div>
                 </div>
@@ -225,12 +219,7 @@ if(!$product){
                   <span class="input-group-addon">
                    <i class="glyphicon glyphicon-th-large"></i>
                   </span>
-                <?php  foreach ($all_cost as $cost): ?>
-                    <?php if ($product['cost_id'] === $cost['id']): ?> 
-                  <input type="text" class="form-control" name="allBag" id="allBag" placeholder="Ingrese el Producto Total x Bolsa" value="<?php echo remove_junk($cost['quantity']);?>">
-                    <?php endif ?>
-                <?php endforeach; ?> 
-
+                  <input type="text" class="form-control" name="allBag" id="allBag" placeholder="Ingrese el Producto Total x Bolsa" value="<?php echo remove_junk($product['productTotalUnit']);?>">
                </div>
               </div>              
               <div style="display: flex;justify-content: space-evenly;margin-top: 4%;">   
@@ -242,7 +231,7 @@ if(!$product){
           </div>
           <div class="col-md-12">                
             <button class="btn btn-danger col-md-6 col-md-offset-3" type="button" id="ok">VERIFICAR</button>
-            <button type="submit" name="add_product" class="btn btn-success col-md-6 col-md-offset-3" style="margin-top: 8px;">GUARDAR CAMBIOS</button>
+            <button type="submit" name="edit_product" class="btn btn-success col-md-6 col-md-offset-3" style="margin-top: 8px;">GUARDAR CAMBIOS</button>
           </div>
       </div> 
   </form>   

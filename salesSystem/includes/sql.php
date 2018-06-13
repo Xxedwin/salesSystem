@@ -279,14 +279,13 @@ function tableExists($table){
       /*--------------------------------------------------------------*/
      function join_costProduct_table(){
        global $db;
-       $sql  =" SELECT p.id,p.name,p.quantity,p.buy_price,p.sale_price,p.media_id,p.date,p.mark,p.unit,c.name";
-      $sql  .=" AS categorie,d.name AS distributor,m.file_name AS image,pr.name AS presentation,cos.cost_unit AS cost_unit";
+       $sql  =" SELECT p.id,p.name,p.quantity,p.buy_price,p.sale_price,p.media_id,p.date,p.mark,p.unit,p.cost_unit,p.productTotalUnit,c.name";
+      $sql  .=" AS categorie,d.name AS distributor,m.file_name AS image,pr.name AS presentation";
       $sql  .=" FROM processed_products p";
       $sql  .=" LEFT JOIN categories c ON c.id = p.categorie_id";
       $sql  .=" LEFT JOIN distributors d ON d.id = p.distributor_id";
       $sql  .=" LEFT JOIN media m ON m.id = p.media_id";
-      $sql  .=" LEFT JOIN presentations pr ON pr.id = p.presentation_id";
-      $sql  .=" LEFT JOIN cost_product cos ON cos.id = p.cost_id";
+      $sql  .=" LEFT JOIN presentations pr ON pr.id = p.presentation_id";      
       $sql  .=" ORDER BY p.id ASC";
       return find_by_sql($sql);
 
