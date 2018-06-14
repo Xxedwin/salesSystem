@@ -8,38 +8,38 @@
   $all_photo = find_all('media');  
   $all_measures = find_all('measures');
   $all_presentations = find_all('presentations');
+  $all_products = findAllProcessed('processed_products');
 ?>
 <?php 
  if(isset($_POST['add_processProduct'])){
-   $req_fields = array('processProduct-title','processProduct-unit','processProduct-categorie','processProduct-quantity','buying-price', 'saleing-price' );
+   $req_fields = array('processProduct-title','processProduct-unit','processProduct-categorie','processProduct-quantity','saleing-price' );
    validate_fields($req_fields);
    if(empty($errors)){
-     $p_name  = remove_junk($db->escape($_POST['processProduct-title']));
+     $p_id  = remove_junk($db->escape($_POST['processProduct-title']));
      $p_unit  = remove_junk($db->escape($_POST['processProduct-unit']));
-     $p_presentation  = remove_junk($db->escape($_POST['processProduct-presentation']));
+     $p_pre  = remove_junk($db->escape($_POST['processProduct-presentation']));
      $p_cat   = remove_junk($db->escape($_POST['processProduct-categorie']));
-     $p_qty   = remove_junk($db->escape($_POST['processProduct-quantity']));
-     $p_buy   = remove_junk($db->escape($_POST['buying-price']));
+     $p_qty   = remove_junk($db->escape($_POST['processProduct-quantity']));     
+     $p_result  = remove_junk($db->escape($_POST['result']));
      $p_sale  = remove_junk($db->escape($_POST['saleing-price']));
-     $p_measure   = remove_junk($db->escape($_POST['measure_id']));   
+     $p_mea   = remove_junk($db->escape($_POST['measure_id']));   
      if (is_null($_POST['processProduct-photo']) || $_POST['processProduct-photo'] === "") {
        $media_id = '0';
      } else {
        $media_id = remove_junk($db->escape($_POST['processProduct-photo']));
      }
-     $date    = make_date();
-     $query  = "INSERT INTO processed_products (";
-     $query .=" name,quantity,buy_price,sale_price,categorie_id,media_id,date,unit,presentation_id,measure_id";
-     $query .=") VALUES (";
-     $query .=" '{$p_name}', '{$p_qty}', '{$p_buy}', '{$p_sale}', '{$p_cat}', '{$media_id}', '{$date}','{$p_unit}','{$p_presentation}','{$p_measure}'";
-     $query .=")";
-     $query .=" ON DUPLICATE KEY UPDATE name='{$p_name}'";
-     if($db->query($query)){
-       $session->msg('s',"Producto elaborado agregado exitosamente. ");
+
+     $query   = "UPDATE processed_products SET";
+     $query  .=" quantity='{$p_qty}',unit ='{$p_unit}', presentation_id ='{$p_pre}',";
+     $query  .=" sale_price ='{$p_sale}',categorie_id ='{$p_cat}',media_id='{$media_id}',measure_id='{$p_mea}',cost_unit='{$p_result}'";
+     $query  .=" WHERE id ='{$p_id}'";
+     $result = $db->query($query);
+     if($result && $db->affected_rows() === 1){
+       $session->msg('s',"El producto elaborado ha sido actualizado. ");
        redirect('processed_products.php', false);
      } else {
-       $session->msg('d',' Lo siento, registro falló.');
-       redirect('processed_products.php', false);
+       $session->msg('d',' Lo siento, actualización falló.');
+       redirect('add_processedProduct.php?id='.$p_id, false);
      }
 
    } else{
@@ -67,23 +67,21 @@
         </div>
         <div class="panel-body">
          <div class="col-md-12">
-          <form method="post" action="add_processProduct.php" class="clearfix">
+          <form method="post" action="add_processProduct.php">
               <div class="form-group">
                 <div class="input-group">
                   <span class="input-group-addon">
                    <i class="glyphicon glyphicon-th-large"></i>
-                  </span>                  
-                  <input type="text" class="form-control" name="processProduct-title" placeholder="Descripción">
+                  </span> 
+                  <select class="form-control" onchange="redireccionar(this);" name="processProduct-title" id="processProduct-title">
+                    <option value="">Selecciona el producto</option>
+                  <?php  foreach ($all_products as $product): ?>
+                    <option value="<?php echo (int)$product['id'] ?>">
+                      <?php echo $product['name'] ?></option>
+                  <?php endforeach; ?>
+                  </select>                                   
                </div>
-              </div>
-              <!-- <div class="form-group">
-                <div class="input-group">
-                  <span class="input-group-addon">
-                   <i class="glyphicon glyphicon-th-large"></i>
-                  </span>
-                  <input type="text" class="form-control" name="processProduct-mark" placeholder="Marca">
-               </div>
-              </div> -->              
+              </div>     
               <div class="form-group">
                 <div class="row">                   
                   <div class="col-md-4">
@@ -91,7 +89,7 @@
                       <span class="input-group-addon">
                        <i class="glyphicon glyphicon-th-large"></i>
                       </span>
-                      <input type="text" class="form-control" name="processProduct-unit" placeholder="Unidad de medida">
+                      <input type="text" class="form-control" name="processProduct-unit" id="processProduct-unit" placeholder="Unidad de medida">
                    </div> 
                   </div>
                   <div class="col-md-8" >
@@ -110,7 +108,7 @@
                   <span class="input-group-addon">
                    <i class="glyphicon glyphicon-th-large"></i>
                   </span>
-                  <select class="form-control" name="processProduct-presentation">
+                  <select class="form-control" name="processProduct-presentation" id="processProduct-presentation">
                     <option value="">Selecciona una presentacion</option>
                   <?php  foreach ($all_presentations as $presentation): ?>
                     <option value="<?php echo (int)$presentation['id'] ?>">
@@ -122,7 +120,7 @@
               <div class="form-group">
                 <div class="row">
                   <div class="col-md-6">
-                    <select class="form-control" name="processProduct-categorie">
+                    <select class="form-control" name="processProduct-categorie" id="processProduct-categorie">
                       <option value="">Selecciona una categoría</option>
                     <?php  foreach ($all_categories as $cat): ?>
                       <option value="<?php echo (int)$cat['id'] ?>">
@@ -130,17 +128,8 @@
                     <?php endforeach; ?>
                     </select>
                   </div>
-                  <!-- <div class="col-md-4">
-                    <select class="form-control" name="processProduct-distributor">
-                      <option value="">Selecciona una distribuidora</option>
-                    <?php  foreach ($all_distributors as $dis): ?>
-                      <option value="<?php echo (int)$dis['id'] ?>">
-                        <?php echo $dis['name'] ?></option>
-                    <?php endforeach; ?>
-                    </select>
-                  </div> -->
                   <div class="col-md-6">
-                    <select class="form-control" name="processProduct-photo">
+                    <select class="form-control" name="processProduct-photo" id="processProduct-photo">
                       <option value="">Selecciona una imagen</option>
                     <?php  foreach ($all_photo as $photo): ?>
                       <option value="<?php echo (int)$photo['id'] ?>">
@@ -153,23 +142,13 @@
 
               <div class="form-group">
                <div class="row">
-                  <!-- <div class="col-md-3">
-                    <label for="qty">Precio</label>
-                    <div class="input-group">                       
-                      <span class="input-group-addon">
-                        <i class="glyphicon glyphicon-usd"></i>
-                      </span>
-                      <input type="text" onblur="if(this.value == ''){this.value='0'}"  onKeyUp="cost();" class="form-control" id="buying-price" name="buying-price" placeholder="Precio">
-                      <span class="input-group-addon">.00</span>
-                   </div>
-                  </div> -->
                  <div class="col-md-4">
                   <label for="qty">Cantidad inicial</label>
                    <div class="input-group">                    
                      <span class="input-group-addon">
                       <i class="glyphicon glyphicon-shopping-cart"></i>
                      </span>
-                     <input type="text" onblur="if(this.value == ''){this.value='0'}"  onKeyUp="cost();" class="form-control" id="processProduct-quantity" name="processProduct-quantity" placeholder="Cantidad inicial">
+                     <input type="text" class="form-control" id="processProduct-quantity" name="processProduct-quantity" placeholder="Cantidad inicial">
                   </div>
                  </div>        
                  <div class="col-md-4">
@@ -177,8 +156,9 @@
                    <div class="input-group">                    
                      <span class="input-group-addon">                      
                       <i class="glyphicon glyphicon-usd"></i>
-                     </span>                     
-                     <div id="resultado" readonly class="form-control">Costo</div>                      
+                     </span>                                          
+                     <input type="text" readonly class="form-control" name="result" id="result">                  
+
                   </div>
                  </div>          
                   <div class="col-md-4">
@@ -202,13 +182,23 @@
   </div>
 
   <script type="text/javascript">
-    function cost(){
-    var num1 = document.getElementById("buying-price");
-    var num2 = document.getElementById("processProduct-quantity");
-    var div = document.getElementById("resultado");
-    resultado = parseInt(num1.value) / parseInt(num2.value);
-    div.innerHTML= resultado; 
-    }
+    function redireccionar(obj) {                 
+      var valorSeleccionado =  document.getElementById("processProduct-title").value;          
+
+      if ( valorSeleccionado != "") {  
+
+        $.post("getDataProduct.php",{ 'valorSeleccionado': valorSeleccionado }, function(data){
+            response = JSON.parse(data);                                                                  
+              $('#measure_id').val(response[0]);
+              $('#processProduct-categorie').val(response[1]);
+              $('#processProduct-photo').val(response[2]);
+              $('#processProduct-unit').val(response[3]);
+              $('#result').val(response[4]);              
+             
+        }); 
+      }
+             
+    } 
   </script>
 
 <?php include_once('layouts/footer.php'); ?>

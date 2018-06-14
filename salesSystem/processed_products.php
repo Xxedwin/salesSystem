@@ -67,41 +67,44 @@ if(isset($_POST['append_product'])){
             </thead>
             <tbody>
               <?php foreach ($processed_products as $processed_product):?>
-              <tr>
-                <td><?php echo count_id();?></td>                  
-                <!-- <td>
-                  <?php if($product['media_id'] === '0'): ?>
-                    <img class="img-avatar img-circle" src="uploads/products/no_image.jpg" alt="">
-                  <?php else: ?>
-                  <img class="img-avatar img-circle" src="uploads/products/<?php echo $product['image']; ?>" alt="">
-                <?php endif; ?>
-                </td> -->
-                <td> <?php echo $name=remove_junk($processed_product['name']); ?></td>
-                <!-- <td> <?php echo remove_junk($processed_product['mark']); ?></td> -->
-                <td> <?php echo remove_junk($processed_product['unit']); ?></td>
-                <td> <?php echo remove_junk($processed_product['presentation']); ?></td>
-                <td> <?php echo remove_junk($processed_product['categorie']); ?></td>
-               <!--  <td> <?php echo remove_junk($processed_product['distributor']); ?></td> -->
-                <td> <?php echo $quantity=remove_junk($processed_product['quantity']); ?></td>
-                <td> <?php echo remove_junk($processed_product['buy_price']); ?></td>
-                <td> <?php echo remove_junk($processed_product['sale_price']); ?></td>
-                <!-- <td> <?php echo read_date($processed_product['date']); ?></td> -->
-                <td>
-                  <div class="btn-group">
-                    <a href="edit_processProduct.php?id=<?php echo $id=(int)$processed_product['id'];?>" class="btn btn-info btn-xs"  title="Editar" data-toggle="tooltip">
-                      <span class="glyphicon glyphicon-edit"></span>
-                    </a>
-                     <a <?php echo "onClick=\"idInventory('modalInventory.php','$id')\"" ?> class="btn btn-danger btn-xs" title="Eliminar" >
-                      <span class="glyphicon  glyphicon-trash" ></span>
-                    </a> 
-                    <a <?php echo "onClick=\"idInventory('modalInventory.php','$id','$quantity','$name')\"" ?> class="btn btn-danger btn-xs"  title="Agregar">
-                      <span class="glyphicon glyphicon-plus"></span>
-                    </a> 
-                  </div>
-                </td>
-              </tr>
+                <?php if ($processed_product['sale_price']!='0.00'): ?>
+                  <tr>
+                    <td><?php echo count_id();?></td>                  
+                    <!-- <td>
+                      <?php if($product['media_id'] === '0'): ?>
+                        <img class="img-avatar img-circle" src="uploads/products/no_image.jpg" alt="">
+                      <?php else: ?>
+                      <img class="img-avatar img-circle" src="uploads/products/<?php echo $product['image']; ?>" alt="">
+                    <?php endif; ?>
+                    </td> -->
+                    <td> <?php echo $name=remove_junk($processed_product['name']); ?></td>
+                    <!-- <td> <?php echo remove_junk($processed_product['mark']); ?></td> -->
+                    <td> <?php echo remove_junk($processed_product['unit']); ?></td>
+                    <td> <?php echo remove_junk($processed_product['presentation']); ?></td>
+                    <td> <?php echo remove_junk($processed_product['categorie']); ?></td>
+                   <!--  <td> <?php echo remove_junk($processed_product['distributor']); ?></td> -->
+                    <td> <?php echo $quantity=remove_junk($processed_product['quantity']); ?></td>
+                    <td> <?php echo remove_junk($processed_product['buy_price']); ?></td>
+                    <td> <?php echo remove_junk($processed_product['sale_price']); ?></td>
+                    <!-- <td> <?php echo read_date($processed_product['date']); ?></td> -->
+                    <td>
+                      <div class="btn-group">
+                        <a href="edit_processProduct.php?id=<?php echo $id=(int)$processed_product['id'];?>" class="btn btn-info btn-xs"  title="Editar" data-toggle="tooltip">
+                          <span class="glyphicon glyphicon-edit"></span>
+                        </a>
+                         <a <?php echo "onClick=\"idInventory('modalInventory.php','$id')\"" ?> class="btn btn-danger btn-xs" title="Eliminar" >
+                          <span class="glyphicon  glyphicon-trash" ></span>
+                        </a> 
+                        <a <?php echo "onClick=\"idInventory('modalInventory.php','$id','$quantity','$name')\"" ?> class="btn btn-danger btn-xs"  title="Agregar">
+                          <span class="glyphicon glyphicon-plus"></span>
+                        </a> 
+                      </div>
+                    </td>
+                  </tr>    
 
-              <div id="content"></div>
+                  <div id="content"></div>
+                <?php endif ?>            
+              
              <?php endforeach; ?>
             </tbody>
           </table>

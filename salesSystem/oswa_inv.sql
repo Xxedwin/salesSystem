@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 13-06-2018 a las 16:00:05
+-- Tiempo de generación: 14-06-2018 a las 16:59:08
 -- Versión del servidor: 5.6.14
 -- Versión de PHP: 5.5.6
 
@@ -135,7 +135,7 @@ CREATE TABLE IF NOT EXISTS `measures` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) CHARACTER SET utf8 NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=9 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=10 ;
 
 --
 -- Volcado de datos para la tabla `measures`
@@ -148,7 +148,8 @@ INSERT INTO `measures` (`id`, `name`) VALUES
 (5, 'paquete'),
 (6, 'ml'),
 (7, 'Unit'),
-(8, 'sobre');
+(8, 'sobre'),
+(9, 'tajada');
 
 -- --------------------------------------------------------
 
@@ -224,20 +225,18 @@ CREATE TABLE IF NOT EXISTS `processed_products` (
   `cost_unit` varchar(50) CHARACTER SET utf8 DEFAULT NULL,
   `productTotalUnit` varchar(50) CHARACTER SET utf8 DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=22 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=24 ;
 
 --
 -- Volcado de datos para la tabla `processed_products`
 --
 
 INSERT INTO `processed_products` (`id`, `name`, `quantity`, `buy_price`, `sale_price`, `categorie_id`, `media_id`, `date`, `mark`, `unit`, `distributor_id`, `presentation_id`, `measure_id`, `cost_unit`, `productTotalUnit`) VALUES
-(13, 'PAY DE MANZANA', NULL, NULL, '0.00', 8, 3, '0000-00-00 00:00:00', NULL, NULL, 0, 0, 0, '0', NULL),
-(14, 'PASTEL DE CHOCOLATE', NULL, NULL, '0.00', 8, 4, '0000-00-00 00:00:00', NULL, NULL, 0, 0, 0, '0', NULL),
 (17, 'ww', NULL, NULL, '0.00', 2, 3, '0000-00-00 00:00:00', NULL, '1', 0, 3, 3, '14', NULL),
 (18, 'ee', NULL, NULL, '0.00', 2, 2, '0000-00-00 00:00:00', NULL, '400ml', 0, 1, 1, '15', NULL),
-(19, 'PAY DE MANZANA', NULL, NULL, '0.00', 2, 2, '0000-00-00 00:00:00', NULL, '400ml', 0, 1, 1, '16', NULL),
 (20, 'p', NULL, NULL, '0.00', 2, 2, '2018-06-13 15:47:04', NULL, '1', 0, 1, 1, '5.10', '1'),
-(21, 'a', NULL, NULL, '0.00', 2, 2, '2018-06-13 15:48:33', NULL, '1', 0, 1, 7, '5.10', '1');
+(22, 'PAY DE MANZANA', '7', NULL, '2.50', 8, 3, '2018-06-13 22:53:39', NULL, '1', 0, 0, 7, '0.64', '12'),
+(23, 'PASTEL DE CHOCOLATE', '2', NULL, '2.00', 8, 4, '2018-06-13 22:56:30', NULL, '1', 0, 0, 9, '0.65', '40');
 
 -- --------------------------------------------------------
 
@@ -285,7 +284,7 @@ INSERT INTO `production_expenses` (`id`, `name`, `quantity`, `buy_price`, `categ
 (23, 'bicarbonato', '1', '4.00', 7, 0, '2018-05-31 17:23:54', '', '1', 3, 3, 0),
 (24, 'escencia de vainilla', '1', '6.00', 7, 0, '2018-05-31 17:24:42', '', '1', 3, 3, 0),
 (25, 'Escencia de Paneton', '1', '10.00', 7, 0, '2018-05-31 17:25:19', '', '0.25', 3, 3, 0),
-(26, 'manjar-decoracion', '19', '87.00', 7, 0, '2018-05-31 17:26:21', '', '19', 3, 3, 0),
+(26, 'manjar-decoracion', '19', '87.00', 7, 0, '2018-05-31 17:26:21', '', '19', 3, 1, 1),
 (27, 'cocoa', '1', '6.50', 7, 0, '2018-05-31 17:27:32', '', '1', 3, 8, 0),
 (28, 'Canela Molida', '1', '50.00', 7, 0, '2018-05-31 17:28:01', '', '1', 3, 1, 0),
 (30, 'prueba', '1', '1.00', 3, 3, '2018-06-01 17:21:17', 'e', 'e', 3, 3, 3);
@@ -368,7 +367,7 @@ CREATE TABLE IF NOT EXISTS `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `username`, `password`, `user_level`, `image`, `status`, `last_login`) VALUES
-(1, 'Admin Users', 'admin', 'd033e22ae348aeb5660fc2140aec35850c4da997', 1, 'pzg9wa7o1.jpg', 1, '2018-06-13 12:03:16'),
+(1, 'Admin Users', 'admin', 'd033e22ae348aeb5660fc2140aec35850c4da997', 1, 'pzg9wa7o1.jpg', 1, '2018-06-14 14:44:30'),
 (2, 'Special User', 'special', 'ba36b97a41e7faf742ab09bf88405ac04f99599a', 2, 'no_image.jpg', 1, '2017-06-16 07:11:26'),
 (3, 'Default User', 'user', '12dea96fec20593566ab75692c9949596833adc9', 3, 'no_image.jpg', 1, '2017-06-16 07:11:03');
 

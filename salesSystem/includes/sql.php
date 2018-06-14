@@ -11,6 +11,13 @@ function find_all($table) {
      return find_by_sql("SELECT * FROM ".$db->escape($table));
    }
 }
+function findAllProcessed($table) {
+   global $db;
+   if(tableExists($table))
+   {
+     return find_by_sql("SELECT * FROM ".$db->escape($table)." where sale_price='0.00'" );
+   }
+}
 /*--------------------------------------------------------------*/
 /* Function for find the last element create
 /*--------------------------------------------------------------*/

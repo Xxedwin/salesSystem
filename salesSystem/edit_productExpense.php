@@ -37,7 +37,7 @@ if(!$productExpense){
          $media_id = remove_junk($db->escape($_POST['productExpense-photo']));
        }
        $query   = "UPDATE production_expenses SET";
-       $query  .=" name ='{$p_name}', mark ='{$p_mark}', unit ='{$p_unit}', presentation ='{$p_presentation}', quantity ='{$p_qty}',";
+       $query  .=" name ='{$p_name}', mark ='{$p_mark}', unit ='{$p_unit}', presentation_id ='{$p_presentation}', quantity ='{$p_qty}',";
        $query  .=" buy_price ='{$p_buy}', categorie_id ='{$p_cat}', distributor_id ='{$p_dis}',media_id='{$media_id}',measure_id='{$p_measure}'";
        $query  .=" WHERE id ='{$productExpense['id']}'";
        $result = $db->query($query);
@@ -111,14 +111,22 @@ if(!$productExpense){
                   </div>
                 </div>                
               </div>
-              <div class="form-group">
+
+              <div class="form-group">                
                 <div class="input-group">
                   <span class="input-group-addon">
                    <i class="glyphicon glyphicon-th-large"></i>
                   </span>
-                  <input type="text"  placeholder="Presentacion" class="form-control" name="productExpense-presentation" value="<?php echo remove_junk($productExpense['presentation']);?>">
+                  <select class="form-control" name="productExpense-presentation">
+                  <option value="">Selecciona una presentacion</option>
+                   <?php  foreach ($all_presentations as $presentation): ?>
+                     <option value="<?php echo (int)$presentation['id']; ?>" <?php if($productExpense['presentation_id'] === $presentation['id']): echo "selected"; endif; ?> >
+                       <?php echo remove_junk($presentation['name']); ?></option>
+                   <?php endforeach; ?>
+                  </select>
                </div>
               </div>
+
               <div class="form-group">
                 <div class="row">
                   <div class="col-md-4">
