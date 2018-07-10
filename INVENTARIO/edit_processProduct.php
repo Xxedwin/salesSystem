@@ -44,7 +44,7 @@ if(!$processProduct){
                  redirect('processed_products.php', false);
                } else {
                  $session->msg('d',' Lo siento, actualización falló.');
-                 redirect('edit_processProduct.php?id='.$processProduct['id'], false);
+                 redirect('processed_products.php?id='.$processProduct['id'], false);
                }
 
    } else{

@@ -73,7 +73,7 @@
                   <span class="input-group-addon">
                    <i class="glyphicon glyphicon-th-large"></i>
                   </span> 
-                  <select class="form-control" onchange="redireccionar(this);" name="processProduct-title" id="processProduct-title">
+                  <select class="form-control" required onchange="redireccionar(this);" name="processProduct-title" id="processProduct-title">
                     <option value="">Selecciona el producto</option>
                   <?php  foreach ($all_products as $product): ?>
                     <option value="<?php echo (int)$product['id'] ?>">
@@ -148,7 +148,7 @@
                      <span class="input-group-addon">
                       <i class="glyphicon glyphicon-shopping-cart"></i>
                      </span>
-                     <input type="text" class="form-control" id="processProduct-quantity" name="processProduct-quantity" placeholder="Cantidad inicial">
+                     <input type="text" required class="form-control" id="processProduct-quantity" name="processProduct-quantity" placeholder="Cantidad inicial">
                   </div>
                  </div>        
                  <div class="col-md-4">
@@ -167,7 +167,7 @@
                       <span class="input-group-addon">
                         <i class="glyphicon glyphicon-usd"></i>
                       </span>
-                      <input type="text" class="form-control" name="saleing-price" placeholder="Precio de venta">
+                      <input type="text" required class="form-control" name="saleing-price" placeholder="Precio de venta">
                       <span class="input-group-addon">.00</span>
                    </div>
                   </div>

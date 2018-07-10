@@ -75,7 +75,7 @@
                   <span class="input-group-addon">
                    <i class="glyphicon glyphicon-th-large"></i>
                   </span>
-                  <input type="text" class="form-control" name="product-title" placeholder="Descripción">
+                  <input type="text" required class="form-control" name="product-title" placeholder="Descripción">
                </div>
               </div>
               <div class="form-group">
@@ -93,11 +93,11 @@
                       <span class="input-group-addon">
                        <i class="glyphicon glyphicon-th-large"></i>
                       </span>
-                      <input type="text" class="form-control" name="product-unit" placeholder="Unidad de medida">
+                      <input type="text" required class="form-control" name="product-unit" placeholder="Unidad de medida">
                    </div> 
                   </div>
                   <div class="col-md-8" >
-                    <select class="form-control" name="measure_id" id="measure_id">
+                    <select class="form-control" required name="measure_id" id="measure_id">
                       <option value="">Selecciona la medida</option>
                     <?php  foreach ($all_measures as $measure): ?>
                       <option value="<?php echo (int)$measure['id'] ?>">
@@ -125,7 +125,7 @@
               <div class="form-group">
                 <div class="row">
                   <div class="col-md-4">
-                    <select class="form-control" name="product-categorie">
+                    <select class="form-control" required name="product-categorie">
                       <option value="">Selecciona una categoría</option>
                     <?php  foreach ($all_categories as $cat): ?>
                       <option value="<?php echo (int)$cat['id'] ?>">
@@ -162,7 +162,7 @@
                       <span class="input-group-addon">
                         <i class="glyphicon glyphicon-usd"></i>
                       </span>
-                      <input type="text" onblur="if(this.value == ''){this.value='0'}"  onKeyUp="cost();" class="form-control" id="buying-price" name="buying-price" placeholder="Precio de compra">
+                      <input type="text" required onblur="if(this.value == ''){this.value='0'}"  onKeyUp="cost();" class="form-control" id="buying-price" name="buying-price" placeholder="Precio de compra">
                       <span class="input-group-addon">.00</span>
                    </div>
                   </div>
@@ -172,7 +172,7 @@
                      <span class="input-group-addon">
                       <i class="glyphicon glyphicon-shopping-cart"></i>
                      </span>
-                     <input type="text" onblur="if(this.value == ''){this.value='0'}"  onKeyUp="cost();" class="form-control" id="product-quantity" name="product-quantity" placeholder="Cantidad inicial">
+                     <input type="text" required onblur="if(this.value == ''){this.value='0'}"  onKeyUp="cost();" class="form-control" id="product-quantity" name="product-quantity" placeholder="Cantidad inicial">
                   </div>
                  </div>        
                  <div class="col-md-3">
@@ -190,7 +190,7 @@
                       <span class="input-group-addon">
                         <i class="glyphicon glyphicon-usd"></i>
                       </span>
-                      <input type="text" class="form-control" name="saleing-price" placeholder="Precio de venta">
+                      <input type="text" required class="form-control" name="saleing-price" placeholder="Precio de venta">
                       <span class="input-group-addon">.00</span>
                    </div>
                   </div>

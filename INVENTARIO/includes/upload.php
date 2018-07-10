@@ -8,8 +8,8 @@ class  Media {
   public $fileTempPath;
   //Set destination for upload
   //this is moment
-  //public $userPath = SITE_ROOT.DS.'..'.DS.'uploads/users';
-  //public $productPath = SITE_ROOT.DS.'..'.DS.'uploads/products';
+  /*public $userPath = SITE_ROOT.DS.'..'.DS.'uploads/users';
+  public $productPath = SITE_ROOT.DS.'..'.DS.'uploads/products';*/
 
 
   public $errors = array();
