@@ -161,6 +161,7 @@ body{
   top: 0;
   padding: 40px 0 0;
   /*padding: 65px 0 0;*/
+  overflow-y: scroll;
   height: 100%;
   width: 250px;
   background: #2a3542;
